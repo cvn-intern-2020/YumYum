@@ -20,7 +20,7 @@ module.exports = {
       "react/prop-types": [0],
       "react/display-name": ["off"],
       "react/no-unescaped-entities": ["off"],
-      "linebreak-style": ["error", "windows"],
+      "linebreak-style": ["error", "unix"],
       semi: ["error", "always"],
       "no-console": [
         "warn",
