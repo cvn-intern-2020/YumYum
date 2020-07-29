@@ -13,7 +13,7 @@ export default class Body extends Component {
         }}
       >
         <div
-        className="text-center"
+          className="text-center"
           style={{
             backgroundColor: "rgba(255, 255, 255, 0.4)",
             position: "absolute",
@@ -25,7 +25,7 @@ export default class Body extends Component {
             height: "8rem",
           }}
         >
-            <Impression/>
+          <Impression />
         </div>
       </div>
     );
