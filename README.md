@@ -42,6 +42,11 @@ $ npm run fe
 $ npm run be
 ```
 
+- Run in development mode of Both Fronten and Backen
+```shell
+$ npm run dev
+```
+
 ## Authors
 
 **Nguyen Quang Lam** - [lamnguyencse17](https://github.com/lamnguyencse17)
