@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "be": "nodemon --exec babel-node src/server/server.js --ignore 'src/client/*'",
+    "fe": "webpack-dev-server --mode development"
   },
   "repository": {
     "type": "git",
