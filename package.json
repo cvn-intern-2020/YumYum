@@ -7,6 +7,8 @@
     "be": "nodemon --exec babel-node src/server/server.js --ignore 'src/client/*'",
     "fe": "webpack-dev-server --mode development",
     "dev": "concurrently --kill-others \"npm run be\" \"npm run fe\""
+    "eslint": "eslint .",
+    "eslint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",

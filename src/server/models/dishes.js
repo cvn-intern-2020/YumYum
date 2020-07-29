@@ -11,7 +11,7 @@ export const DishesSchema = new Dishes({
 
 DishesSchema.statics.getDishById = async function(dishId){
     let result = await this.findOne({_id: mongoose.Types.ObjectId(dishId)}).select("-_id").lean();
-    return result
+    return result;
 };
 
 const dishesModel = mongoose.model("Dishes", DishesSchema);
