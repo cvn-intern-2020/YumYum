@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "be": "nodemon --exec babel-node src/server/server.js --ignore 'src/client/*'",
-    "fe": "webpack-dev-server --mode development"
+    "fe": "webpack-dev-server --mode development",
+    "eslint": "eslint .",
+    "eslint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
