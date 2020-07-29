@@ -29,6 +29,7 @@ module.exports = {
       curly: "error",
       "no-else-return": "error",
       "no-unneeded-ternary": "error",
+      "no-unused-vars": "warn",
       "no-useless-return": "error",
       "no-var": "error",
       "one-var": ["error", "never"],
