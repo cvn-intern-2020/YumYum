@@ -3,6 +3,9 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+
 export default class MainNavBar extends Component {
   render() {
     return (
@@ -25,15 +28,42 @@ export default class MainNavBar extends Component {
                 />
               </Navbar.Brand>
             </div>
-            <div className="col-5"></div>
+            <div className="col-4"></div>
             <div className="col p-0">
-            <img
-                  src="../../../public/UserMenu.png"
-                  width="40"
-                  height="40"
-                  alt="React Bootstrap logo"
-                  className = "float-right mt-2 mr-2"
+              <img
+                src="../../../public/UserMenu.png"
+                width="40"
+                height="40"
+                alt="React Bootstrap logo"
+                className="float-right mt-2 mr-2"
+              />
+              <img
+                src="../../../public/notification-icon.png"
+                width="40"
+                height="40"
+                alt="React Bootstrap logo"
+                className="float-right mt-2 mr-2"
+              />
+              <img
+                src="../../../public/MYGROUP-Icon.png"
+                width="40"
+                height="40"
+                alt="React Bootstrap logo"
+                className="float-right mt-2 mr-2"
+              />
+              <Form inline className = "float-right mr-2">
+                <FormControl
+                  type="text"
+                  placeholder="Search"
+                  className="mt-2"
                 />
+                <Button
+                  style={{ backgroundColor: "#48BDFF", color: "#080024" }}
+                  className="mt-2"
+                >
+                  Search
+                </Button>
+              </Form>
             </div>
           </div>
         </Navbar>
