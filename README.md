@@ -29,7 +29,7 @@ $ npm install
 ```
 - Install npm global package
 ```shell
-$ npm install -g babel-node @babel/cli @babel/core @babel/node babel-loader
+$ npm install -g @babel/node
 ```
 
 - Run in development mode of Frontend
