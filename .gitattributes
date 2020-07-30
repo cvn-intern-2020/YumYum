@@ -52,9 +52,9 @@
 
 *.ini             text
 
-*.js              text
+*.js              text eol=lf
 
-*.json            text
+*.json            text eol=lf
 
 *.jsx             text
 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import GroupCard from "./GroupCard";
 export default class MainBody extends Component {
   render() {
+    let mock = [1, 2, 3, 4, 5, 6];
     return (
       <div
         style={{
@@ -11,7 +12,9 @@ export default class MainBody extends Component {
           height: "94%",
         }}
       >
-          <GroupCard></GroupCard>
+          {mock.map((mockValue) => (
+            <GroupCard key={mockValue}/>
+          ))}
       </div>
     );
   }
