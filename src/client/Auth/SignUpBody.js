@@ -1,7 +1,39 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
+import Validator from "validator";
 export default class SignUpBody extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      name: "",
+      phone: "",
+    };
+  }
+  handleChange = (e) => {
+    this.setState({ ...this.state, [e.target.name]: e.target.value });
+  };
+  handleClick = () =>{
+    if(this.state.email == "" || this.state.password == ""|| this.state.name == "" || this.state.phone == ""){
+      alert("empty field");
+      return -1;
+    }
+
+    if (!Validator.isEmail(this.state.email)){
+      alert("not email");
+      return -1;
+    }
+    if (this.state.password.length < 6){
+      alert("not valid pass");
+      return -1;
+    }
+    if (this.state.phone.length < 10 || this.state.phone.length > 11 || !Validator.isNumeric(this.state.phone)){
+      alert("not valid phone");
+      return -1;
+    }
+  }
   render() {
     return (
       <div
@@ -33,10 +65,11 @@ export default class SignUpBody extends Component {
                 marginTop: "2rem",
               }}
             >
-             <b>SIGN UP</b> 
+              <b>SIGN UP</b>
             </Form.Label>
             <Form.Control
               type="email"
+              name="email"
               placeholder="Enter email"
               style={{
                 width: "14rem",
@@ -47,6 +80,7 @@ export default class SignUpBody extends Component {
                 opacity: "0.8",
                 border: "1px solid #000000",
               }}
+              onChange={this.handleChange}
             />
           </Form.Group>
 
@@ -54,6 +88,7 @@ export default class SignUpBody extends Component {
             <Form.Control
               type="password"
               placeholder="Password"
+              name="password"
               style={{
                 width: "14rem",
                 marginLeft: "auto",
@@ -63,12 +98,14 @@ export default class SignUpBody extends Component {
                 opacity: "0.8",
                 border: "1px solid #000000",
               }}
+              onChange={this.handleChange}
             />
           </Form.Group>
           <Form.Group controlId="formBasicName">
             <Form.Control
               type="text"
               placeholder="Name"
+              name="name"
               style={{
                 width: "14rem",
                 marginLeft: "auto",
@@ -78,12 +115,14 @@ export default class SignUpBody extends Component {
                 opacity: "0.8",
                 border: "1px solid #000000",
               }}
+              onChange={this.handleChange}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPhone">
             <Form.Control
               type="text"
               placeholder="Phone"
+              name="phone"
               style={{
                 width: "14rem",
                 marginLeft: "auto",
@@ -93,14 +132,18 @@ export default class SignUpBody extends Component {
                 opacity: "0.8",
                 border: "1px solid #000000",
               }}
+              onChange={this.handleChange}
             />
           </Form.Group>
 
           <div style={{ textAlign: "center" }}>
-            
             <Button
-              style={{ backgroundColor: "#48BDFF", color: "#080024" , width:"50%" }}
-              type="submit"
+              style={{
+                backgroundColor: "#48BDFF",
+                color: "#080024",
+                width: "50%",
+              }}
+              onClick = {this.handleClick}
             >
               <b>SignUp</b>
             </Button>

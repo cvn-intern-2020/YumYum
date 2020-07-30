@@ -1,9 +1,34 @@
 import React, { Component } from "react";
-import Impression from "../Landing/Impression";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
+import Validator from "validator";
+
 export default class BodyLogin extends Component {
-  render() {
+  constructor(props){
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+    };
+  }
+  handleChange = (e) => {
+    this.setState({ ...this.state, [e.target.name]: e.target.value });
+  };
+  handleClick = () => {
+    if (this.state.email == "" || this.state.password == ""){
+      alert("WTF");
+      return -1;
+    }
+    if (!Validator.isEmail(this.state.email)){
+      alert("not email");
+      return -1;
+    }
+    if (this.state.password.length < 6){
+      alert("not valid pass");
+      return -1;
+    }
+  };
+  render() { 
     return (
       <div
         style={{
@@ -39,6 +64,7 @@ export default class BodyLogin extends Component {
             <Form.Control
               type="email"
               placeholder="Enter email"
+              name="email"
               style={{
                 width: "14rem",
                 marginLeft: "auto",
@@ -48,6 +74,7 @@ export default class BodyLogin extends Component {
                 opacity: "0.8",
                 border: "1px solid #000000",
               }}
+              onChange={this.handleChange}
             />
           </Form.Group>
 
@@ -55,6 +82,7 @@ export default class BodyLogin extends Component {
             <Form.Control
               type="password"
               placeholder="Password"
+              name="password"
               style={{
                 width: "14rem",
                 marginLeft: "auto",
@@ -64,6 +92,7 @@ export default class BodyLogin extends Component {
                 opacity: "0.8",
                 border: "1px solid #000000",
               }}
+              onChange={this.handleChange}
             />
           </Form.Group>
 
@@ -74,7 +103,7 @@ export default class BodyLogin extends Component {
                 backgroundColor: "#48BDFF",
                 color: "#080024",
               }}
-              type="submit"
+              onClick={this.handleClick}
             >
               <b>Login</b>
             </Button>

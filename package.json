@@ -22,6 +22,7 @@
   "homepage": "https://github.com/cvn-intern-2020/YumYum#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.0",
     "compression": "^1.7.4",
@@ -38,7 +39,8 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-spring": "^8.0.27",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "validator": "^13.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
