@@ -27,7 +27,7 @@ export default class BodyLogin extends Component {
       alert("not valid pass");
       return -1;
     }
-  }
+  };
   render() { 
     return (
       <div
