@@ -14,5 +14,26 @@ GroupSchema.statics.getGroups = async function () {
   return result;
 };
 
+GroupSchema.statics.getGroupById = async function (groupId) {
+  let result = await this.findOne({ _id: mongoose.Types.ObjectId(groupId)});
+  return result;
+};
+
+GroupSchema.statics.createGroup = async function (name, owner, description) {
+  let result = await this.create({
+    name: name,
+    owner: owner,
+    description: description
+  });
+  return result;
+};
+
+GroupSchema.statics.deleteGroupById = async function (groupId) {
+  let result = await this.deleteOne({
+    _id: mongoose.Types.ObjectId(groupId)
+  });
+  return result;
+};
+
 const groupModel = mongoose.model("Groups", GroupSchema);
 export default groupModel;
