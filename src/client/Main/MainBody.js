@@ -5,7 +5,7 @@ export default class MainBody extends Component {
     return (
       <div
         style={{
-          backgroundImage: "url(../../../public/backgroundImage.png)",
+          backgroundImage: "url(../../../public/bgimage.png)",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           height: "94%",

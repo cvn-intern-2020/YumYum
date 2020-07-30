@@ -20,7 +20,7 @@ export default class MainNavBar extends Component {
               <Navbar.Brand href="#home">
                 {" "}
                 <img
-                  src="../../../public/landingLogo.png"
+                  src="../../../public/logo.png"
                   width="250"
                   height="44"
                   className="d-inline-block align-top"
@@ -31,21 +31,21 @@ export default class MainNavBar extends Component {
             <div className="col-4"></div>
             <div className="col p-0">
               <img
-                src="../../../public/userMenu.png"
+                src="../../../public/user.png"
                 width="40"
                 height="40"
                 alt="React Bootstrap logo"
                 className="float-right mt-2 mr-2"
               />
               <img
-                src="../../../public/notificationIcon.png"
+                src="../../../public/notification.png"
                 width="40"
                 height="40"
                 alt="React Bootstrap logo"
                 className="float-right mt-2 mr-2"
               />
               <img
-                src="../../../public/myGroupIcon.png"
+                src="../../../public/mygroupicon.png"
                 width="40"
                 height="40"
                 alt="React Bootstrap logo"

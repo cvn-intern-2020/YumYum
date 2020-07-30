@@ -6,9 +6,9 @@ export default class Body extends Component {
     return (
       <div
         style={{
-          backgroundImage: "url(../../../public/backgroundImage.png)",
+          backgroundImage: "url(../../../public/bgimage.png)",
           backgroundRepeat: "no-repeat",
-          "background-size": "cover",
+          backgroundSize: "cover",
           height: "94%",
         }}
       >
@@ -19,8 +19,8 @@ export default class Body extends Component {
             position: "absolute",
             top: "50%",
             left: "50%",
-            "margin-top": "-4rem",
-            "margin-left": "-30rem",
+            marginTop: "-4rem",
+            marginLeft: "-30rem",
             width: "60rem",
             height: "8rem",
           }}
