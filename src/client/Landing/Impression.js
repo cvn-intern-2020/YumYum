@@ -7,13 +7,7 @@ export default class Impression extends Component {
       <>
       <div className="h1">THE ONLY FOOD SERVICE YOU CAN'T RESIST</div>
       <p></p>
-        <Button
-          style={{
-            backgroundColor: "#48BDFF",
-            border: 0,
-            color: "#080024",
-          }}
-        >
+        <Button className = "landing-button">
           START ORDERING
         </Button>
       </>

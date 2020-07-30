@@ -1,0 +1,18 @@
+.landing-button {
+  background-color: #48bdff;
+  border: 0;
+  color: #080024;
+}
+.group-card{
+    width: 18rem;
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+    border-radius:25px;
+}
+.group-cardtext{
+    background-color:#48BDFF;
+    border-bottom-left-radius:25px;
+    border-bottom-right-radius:25px;
+    padding: 10px;
+}

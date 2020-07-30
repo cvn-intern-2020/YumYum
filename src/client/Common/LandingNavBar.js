@@ -18,7 +18,7 @@ export default class LandingNavBar extends Component {
               <Navbar.Brand href="#home">
                 {" "}
                 <img
-                  src="../../../public/image2.png"
+                  src="../../../public/logo.png"
                   width="250"
                   height="44"
                   className="d-inline-block align-top"
@@ -29,22 +29,12 @@ export default class LandingNavBar extends Component {
             <div className="col-5"></div>
             <div className="col p-0">
               <Button
-                className="float-right mt-2 mr-3 ml-2"
-                style={{
-                  backgroundColor: "#48BDFF",
-                  border: 0,
-                  color: "#080024",
-                }}
+                className="float-right mt-2 mr-3 ml-2 landing-button"
               >
                 Sign Up
               </Button>
               <Button
-                className="float-right mt-2"
-                style={{
-                  backgroundColor: "#48BDFF",
-                  border: 0,
-                  color: "#080024",
-                }}
+                className="float-right mt-2 landing-button"
               >
                 Login
               </Button>
