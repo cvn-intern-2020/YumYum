@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import Impression from "../Landing/Impression";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
-export default class BodyLogin extends Component {
+export default class SignUpBody extends Component {
   render() {
     return (
       <div
@@ -20,9 +19,9 @@ export default class BodyLogin extends Component {
             top: "50%",
             left: "50%",
             marginTop: "-8rem",
-            marginLeft: "-10rem",
+            marginLeft: "-8rem",
             width: "20rem",
-            height: "16rem",
+            height: "25rem",
           }}
         >
           <Form.Group controlId="formBasicEmail">
@@ -34,7 +33,7 @@ export default class BodyLogin extends Component {
                 marginTop: "2rem",
               }}
             >
-              <b>LOGIN</b>
+             <b>SIGN UP</b> 
             </Form.Label>
             <Form.Control
               type="email"
@@ -66,20 +65,41 @@ export default class BodyLogin extends Component {
               }}
             />
           </Form.Group>
+          <Form.Group controlId="formBasicName">
+            <Form.Control
+              type="text"
+              placeholder="Name"
+              style={{
+                width: "14rem",
+                marginLeft: "auto",
+                marginRight: "auto",
+                backgroundColor: "#FFFFFF",
+                color: "#000000",
+                opacity: "0.8",
+                border: "1px solid #000000",
+              }}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicPhone">
+            <Form.Control
+              type="text"
+              placeholder="Phone"
+              style={{
+                width: "14rem",
+                marginLeft: "auto",
+                marginRight: "auto",
+                backgroundColor: "#FFFFFF",
+                color: "#000000",
+                opacity: "0.8",
+                border: "1px solid #000000",
+              }}
+            />
+          </Form.Group>
 
           <div style={{ textAlign: "center" }}>
+            
             <Button
-              style={{
-                marginRight: "10px",
-                backgroundColor: "#48BDFF",
-                color: "#080024",
-              }}
-              type="submit"
-            >
-              <b>Login</b>
-            </Button>
-            <Button
-              style={{ backgroundColor: "#48BDFF", color: "#080024" }}
+              style={{ backgroundColor: "#48BDFF", color: "#080024" , width:"50%" }}
               type="submit"
             >
               <b>SignUp</b>
