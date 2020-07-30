@@ -6,6 +6,7 @@
   "scripts": {
     "be": "nodemon --exec babel-node src/server/server.js --ignore 'src/client/*'",
     "fe": "webpack-dev-server --mode development",
+    "dev": "concurrently --kill-others \"npm run be\" \"npm run fe\"",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix"
   },
@@ -50,6 +51,7 @@
     "@babel/preset-react": "^7.10.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
+    "concurrently": "^5.2.0",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.20.4",
     "morgan": "^1.10.0",
