@@ -18,7 +18,7 @@ export default class LandingNavBar extends Component {
               <Navbar.Brand href="#home">
                 {" "}
                 <img
-                  src="../../../public/image2.png"
+                  src="../../../public/landingLogo.png"
                   width="250"
                   height="44"
                   className="d-inline-block align-top"
