@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
-import Validator from "validator"
+import Validator from "validator";
 
 export default class BodyLogin extends Component {
   constructor(props){
