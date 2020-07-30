@@ -17,7 +17,6 @@ export default class App extends Component {
           <Route exact path="/main" render={(props) => <Main {...props} />} />
           <Route exact path="/login" render={(props) => <Login {...props} />} />
           <Route exact path="/signup" render={(props) => <Signup {...props} />} />
-
         </Switch>
       </>
     );

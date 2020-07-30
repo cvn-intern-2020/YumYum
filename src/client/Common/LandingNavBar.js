@@ -28,16 +28,18 @@ export default class LandingNavBar extends Component {
             </div>
             <div className="col-5"></div>
             <div className="col p-0">
-              <Button
-                className="float-right mt-2 mr-3 ml-2 landing-button"
-              >
-                Sign Up
-              </Button>
-              <Button
-                className="float-right mt-2 landing-button"
-              >
-                Login
-              </Button>
+              {this.props.location.pathname == "/" ? (
+                <>
+                  <Button className="float-right mt-2 mr-3 ml-2 landing-button">
+                    Sign Up
+                  </Button>
+                  <Button className="float-right mt-2 landing-button">
+                    Login
+                  </Button>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </Navbar>
