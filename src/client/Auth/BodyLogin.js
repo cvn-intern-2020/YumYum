@@ -3,8 +3,12 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import Validator from "validator";
 import axios from "axios";
+import { setUser } from "../actions/user";
+import { withRouter} from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-export default class BodyLogin extends Component {
+class BodyLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +42,8 @@ export default class BodyLogin extends Component {
         if (err) {
           console.log(err);
         } else {
-          console.log(res);
+          this.props.setUser(res.data.token);
+          this.props.history.push("/main", { token: res.data.token });
         }
       });
   };
@@ -133,3 +138,9 @@ export default class BodyLogin extends Component {
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setUser }, dispatch);
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(BodyLogin));

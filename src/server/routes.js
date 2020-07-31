@@ -22,4 +22,10 @@ router.use(
   },
   require("./routes/auth/signup")
 );
+
+router.use(
+  "/users",
+  passport.authenticate("jwt", { session: false }),
+  require("./routes/users")
+);
 module.exports = router;

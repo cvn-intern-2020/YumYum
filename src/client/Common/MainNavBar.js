@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
@@ -17,8 +15,7 @@ export default class MainNavBar extends Component {
         >
           <div className="row w-100 m-0">
             <div className="col-4">
-              <Navbar.Brand href="#home">
-                {" "}
+              <Navbar.Brand href="/main">
                 <img
                   src="../../../public/yumyum.png"
                   width="250"

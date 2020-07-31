@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 export default class LandingNavBar extends Component {
   render() {
@@ -15,7 +14,7 @@ export default class LandingNavBar extends Component {
         >
           <div className="row w-100 m-0">
             <div className="col-4">
-              <Navbar.Brand href="#home">
+              <Navbar.Brand href="/">
                 {" "}
                 <img
                   src="../../../public/yumyum.png"
@@ -30,12 +29,13 @@ export default class LandingNavBar extends Component {
             <div className="col p-0">
               {this.props.location.pathname == "/" ? (
                 <>
-                  <Button className="float-right mt-2 mr-3 ml-2 landing-button">
+                <Link to="/signup"><Button className="float-right mt-2 mr-3 ml-2 landing-button">
                     Sign Up
-                  </Button>
-                  <Button className="float-right mt-2 landing-button">
+                  </Button></Link>
+                  <Link to="/login"><Button className="float-right mt-2 landing-button">
                     Login
-                  </Button>
+                  </Button></Link>
+                  
                 </>
               ) : (
                 <></>

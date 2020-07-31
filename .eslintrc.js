@@ -15,7 +15,7 @@ module.exports = {
       },
       sourceType: "module",
     },
-    plugins: ["react"],
+    plugins: ["react", "import"],
     rules: {
       "react/prop-types": [0],
       "react/display-name": ["off"],
@@ -27,6 +27,7 @@ module.exports = {
         { allow: ["clear", "info", "error", "dir", "trace"] },
       ],
       curly: "error",
+      "import/named": 2,
       "no-else-return": "error",
       "no-unneeded-ternary": "error",
       "no-unused-vars": "warn",
