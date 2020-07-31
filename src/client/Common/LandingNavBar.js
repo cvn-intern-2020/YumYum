@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
@@ -16,7 +14,7 @@ export default class LandingNavBar extends Component {
         >
           <div className="row w-100 m-0">
             <div className="col-4">
-              <Navbar.Brand href="#home">
+              <Navbar.Brand href="/">
                 {" "}
                 <img
                   src="../../../public/yumyum.png"

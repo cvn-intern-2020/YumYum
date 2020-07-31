@@ -8,19 +8,31 @@ import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 class App extends Component {
-  constructor() {
-    super();
-  }
   render() {
     return (
       <>
         <Switch>
-          <Route exact path="/" render={(props) => <Landing {...props} />} />
+          <Route
+            exact
+            path="/"
+            render={(props) =>
+              this.props.token == "" ? (
+                <Landing {...props} />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/main",
+                    state: { from: props.locations },
+                  }}
+                />
+              )
+            }
+          />
           <Route
             exact
             path="/main"
             render={(props) =>
-              props.token == "" ? (
+              this.props.token == "" ? (
                 <Redirect
                   to={{
                     pathname: "/login",
@@ -36,7 +48,7 @@ class App extends Component {
             exact
             path="/login"
             render={(props) =>
-              props.token == "" ? (
+              this.props.token == "" ? (
                 <Login {...props} />
               ) : (
                 <Redirect

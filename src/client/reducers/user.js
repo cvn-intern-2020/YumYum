@@ -8,7 +8,7 @@ const initialState = {
   token: localStorage.getItem("token") || "",
 };
 
-export default function (state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case SET_USER: {
       localStorage.setItem("token", action.payload.token);
@@ -17,4 +17,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};

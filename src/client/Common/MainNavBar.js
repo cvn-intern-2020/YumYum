@@ -16,7 +16,6 @@ export default class MainNavBar extends Component {
           <div className="row w-100 m-0">
             <div className="col-4">
               <Navbar.Brand href="/main">
-                {" "}
                 <img
                   src="../../../public/yumyum.png"
                   width="250"
