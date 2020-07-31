@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import Validator from "validator";
+import axios from "axios";
 
 export default class BodyLogin extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       email: "",
@@ -15,20 +16,33 @@ export default class BodyLogin extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleClick = () => {
-    if (this.state.email == "" || this.state.password == ""){
+    if (this.state.email == "" || this.state.password == "") {
       alert("WTF");
       return -1;
     }
-    if (!Validator.isEmail(this.state.email)){
+    if (!Validator.isEmail(this.state.email)) {
       alert("not email");
       return -1;
     }
-    if (this.state.password.length < 6){
+    if (this.state.password.length < 6) {
       alert("not valid pass");
       return -1;
     }
+
+    axios
+      .post("http://localhost:3000/api/auth/signin", {
+        email: this.state.email,
+        password: this.state.password,
+      })
+      .then((res, err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(res);
+        }
+      });
   };
-  render() { 
+  render() {
     return (
       <div
         style={{
