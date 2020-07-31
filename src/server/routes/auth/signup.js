@@ -6,12 +6,17 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   let { name, phone, email, password } = req.body;
-
-  return res
-    .status(200)
-    .json(
-      await userModel.createUser(name, phone, email, passwordHash(password))
-    );
+  let duplicate = await userModel.getUserByEmail(email);
+  if (duplicate != null) {
+    return res.status(400).json({ message: "Duplicate email!" });
+  }
+  let result = await userModel.createUser(
+    name,
+    phone,
+    email,
+    passwordHash(password)
+  );
+  return res.status(200).json(result);
 });
 
 module.exports = router;
