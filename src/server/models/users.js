@@ -5,7 +5,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 export const UsersSchema = new Users({
     name: { type: String, required: true },
-    phone: { type: Number, required: true },
+    phone: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     groups: [{ type: ObjectId, ref: "Groups" }],
