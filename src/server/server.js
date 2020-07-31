@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
-import userModel from "./models/users";
+import passport from "passport";
 
 const data_uri =
   "mongodb+srv://hasagi:hasagi@cluster0.zspjy.gcp.mongodb.net/YumYum?retryWrites=true&w=majority";
@@ -17,6 +17,8 @@ mongoose.connect(data_uri, {
 const app = express();
 app.use(morgan("tiny"));
 app.use(cors());
+app.use(passport.initialize());
+require("./utils/passport")(passport);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
