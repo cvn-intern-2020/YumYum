@@ -16,6 +16,11 @@ UsersSchema.statics.getUserById = async function (userId) {
     return result;
 };
 
+UsersSchema.statics.getUserByEmail = async function (email) {
+    let result = await this.findOne({ email: email });
+    return result;
+};
+
 UsersSchema.statics.createUser = async function (name, phone, email, password, groups) {
   let result = await this.create({
     name: name,
