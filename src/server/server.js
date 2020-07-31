@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
+import userModel from "./models/users";
 
 const data_uri =
   "mongodb+srv://hasagi:hasagi@cluster0.zspjy.gcp.mongodb.net/YumYum?retryWrites=true&w=majority";
@@ -12,7 +13,7 @@ mongoose.connect(data_uri, {
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
-
+userModel.getUserById("5f20d87d93cfc8bbee408e90");
 const app = express();
 app.use(morgan("tiny"));
 app.use(cors());
