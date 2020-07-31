@@ -10,5 +10,19 @@ router.use(
   },
   require("./routes/groups")
 );
+router.use(
+  "/auth/signin",
+  (req, res, next) => {
+    next();
+  },
+  require("./routes/auth/signin")
+);
 
+router.use(
+  "/auth/signup",
+  (req, res, next) => {
+    next();
+  },
+  require("./routes/auth/signup")
+);
 module.exports = router;
