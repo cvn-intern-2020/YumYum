@@ -8,7 +8,7 @@ export const UsersSchema = new Users({
     phone: { type: Number, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    groups: [{ type: ObjectId, required: true, ref: "Groups" }],
+    groups: [{ type: ObjectId, ref: "Groups" }],
 });
 
 UsersSchema.statics.getUserById = async function (userId) {
