@@ -1,20 +1,12 @@
 import { SET_USER } from "../actions/types";
 
-const initialState = localStorage.getItem("token")
-  ? {
-      _id: "",
-      name: "",
-      email: "",
-      phone: "",
-      token: localStorage.getItem("token"),
-    }
-  : {
-      _id: "",
-      name: "",
-      email: "",
-      phone: "",
-      token: "",
-    };
+const initialState = {
+  _id: "",
+  name: "",
+  email: "",
+  phone: "",
+  token: localStorage.getItem("token") || "",
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {
