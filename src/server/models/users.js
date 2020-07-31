@@ -14,7 +14,7 @@ export const UsersSchema = new Users({
 UsersSchema.statics.getUserById = async function (userId) {
     let result = await this.findOne({ _id: mongoose.Types.ObjectId(userId) });
     console.log(result);
-}
+};
 
 const userModel = mongoose.model("Users", UsersSchema);
 export default userModel;
