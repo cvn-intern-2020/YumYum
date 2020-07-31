@@ -44,9 +44,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
-    "jwt-decode": "^2.2.0"
-  },
-  "devDependencies": {
+    "jwt-decode": "^2.2.0",
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
     "@babel/node": "^7.10.1",
@@ -77,7 +75,8 @@
       "@babel/preset-react"
     ],
     "plugins": [
-      "@babel/plugin-proposal-class-properties"
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-transform-runtime"
     ]
   }
 }
