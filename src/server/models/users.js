@@ -13,8 +13,8 @@ export const UsersSchema = new Users({
 
 UsersSchema.statics.getUserById = async function (userId) {
     let result = await this.findOne({ _id: mongoose.Types.ObjectId(userId) });
-    return result
-});
+    return result;
+}
 
 UsersSchema.statics.createUser = async function (name, phone, email, password, groups) {
   let result = await this.create({
