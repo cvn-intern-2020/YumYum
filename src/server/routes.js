@@ -18,11 +18,11 @@ router.use(
   require("./routes/auth/signin")
 );
 
-// router.use(
-//   "/auth/signup",
-//   (req, res, next) => {
-//     next();
-//   },
-//   require("./routes/auth/signup")
-// );
+router.use(
+  "/auth/signup",
+  (req, res, next) => {
+    next();
+  },
+  require("./routes/auth/signup")
+);
 module.exports = router;
