@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import GroupCard from "./GroupCard";
 import axios from "axios";
+
 export default class MainBody extends Component {
   constructor(props) {
     super(props);
@@ -9,13 +10,19 @@ export default class MainBody extends Component {
     };
   }
   componentDidMount() {
-    axios.get("http://localhost:3000/api/groups/").then((res, err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        this.setState({ groups: res.data });
-      }
-    });
+    axios
+      .get("http://localhost:3000/api/groups/", {
+        headers: {
+          Authorization: this.props.token || this.props.location.state.token,
+        },
+      })
+      .then((res, err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          this.setState({ groups: res.data });
+        }
+      });
   }
   render() {
     return (
@@ -28,7 +35,7 @@ export default class MainBody extends Component {
         }}
       >
         {this.state.groups.map((group) => (
-          <GroupCard key={group._id} group = {group} />
+          <GroupCard key={group._id} group={group} />
         ))}
       </div>
     );
