@@ -13,7 +13,7 @@ mongoose.connect(data_uri, {
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
-userModel.getUserById("5f20d87d93cfc8bbee408e90");
+
 const app = express();
 app.use(morgan("tiny"));
 app.use(cors());
