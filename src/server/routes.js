@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
+import passport from "passport";
 
 router.use(
   "/groups",
-  (req, res, next) => {
-    next();
-  },
+  passport.authenticate("jwt", { session: false }),
   require("./routes/groups")
 );
 router.use(

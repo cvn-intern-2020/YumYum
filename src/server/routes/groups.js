@@ -9,10 +9,10 @@ router.get("/:groupId", async (req, res) => {
   return res.status(200).json(result);
 });
 
-router.get("/", async (req, res) => {
-    let result = await groupModel.getGroups();
-    return res.status(200).json(result);
-  });
+  router.get("/", async (req, res) => {
+      let result = await groupModel.getGroups();
+      return res.status(200).json(result);
+    });
 
 router.post("/", async (req, res) => {
   let { name, owner, description } = req.body;
