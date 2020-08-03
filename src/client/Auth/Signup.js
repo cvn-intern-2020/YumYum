@@ -7,7 +7,7 @@ export default class Signup extends Component {
     return (
       <div className="h-100">
         <LandingNavBar {...this.props}/>
-        <SignUpBody></SignUpBody>
+        <SignUpBody {...this.props}/>
       </div>
     );
   }

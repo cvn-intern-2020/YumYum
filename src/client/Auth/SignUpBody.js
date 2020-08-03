@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import Validator from "validator";
+import { withRouter, Redirect } from "react-router-dom";
 import axios from "axios";
 
 export default class SignUpBody extends Component {
@@ -56,6 +57,7 @@ export default class SignUpBody extends Component {
           console.log(err);
         } else {
           console.log(res);
+          this.props.history.push("/login");
         }
       });
   };
@@ -176,5 +178,6 @@ export default class SignUpBody extends Component {
         </Form>
       </div>
     );
+    
   }
 }
