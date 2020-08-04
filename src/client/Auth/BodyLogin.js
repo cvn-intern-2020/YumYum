@@ -22,7 +22,7 @@ class BodyLogin extends Component {
   };
   handleClick = () => {
     if (this.state.email == "" || this.state.password == "") {
-      alert("WTF");
+      alert("empty fields");
       return -1;
     }
     if (!Validator.isEmail(this.state.email)) {
