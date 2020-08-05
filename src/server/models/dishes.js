@@ -6,7 +6,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 export const DishesSchema = new Dishes({
   name: { type: String, required: true },
   price: { type: Number, required: true },
-  deleteAt: { type: Boolean, required: true, default: null },
+  deleteAt: { type: Boolean, default: null },
   userId: { type: ObjectId, required: true, ref: "Users" },
 });
 
