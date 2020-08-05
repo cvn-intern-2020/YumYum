@@ -8,7 +8,13 @@ export const UsersSchema = new Users({
   phone: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  groups: [{ type: ObjectId, ref: "Groups" }],
+  groups: [
+    {
+      groupId: { type: ObjectId, ref: "Groups", required: true },
+      name: { type: String, required: true },
+      isOwner: { type: Boolean, required: true },
+    },
+  ],
 });
 
 UsersSchema.statics.getUserById = async function (userId) {
@@ -21,19 +27,12 @@ UsersSchema.statics.getUserByEmail = async function (email) {
   return result;
 };
 
-UsersSchema.statics.createUser = async function (
-  name,
-  phone,
-  email,
-  password,
-  groups
-) {
+UsersSchema.statics.createUser = async function (name, phone, email, password) {
   let result = await this.create({
     name: name,
     phone: phone,
     email: email,
     password: password,
-    groups: groups,
   });
   return result;
 };
