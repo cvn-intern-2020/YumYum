@@ -5,8 +5,21 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 export const GroupSchema = new Groups({
   name: { type: String, required: true },
-  owner: { type: ObjectId, required: true, ref: "Users" },
   description: { type: String, required: true },
+  ownerId: { type: ObjectId, required: true, ref: "Users" },
+  users:
+    [
+      {
+        userId: { type: ObjectId, required: true, ref: "Users" },
+        name: { type: String, required: true },
+      }
+    ],
+  dishes:
+    [
+      {
+        dishId: { type: ObjectId, required: true, ref: "Dishes" }
+      }
+    ]
 });
 
 GroupSchema.statics.getGroups = async function () {
@@ -15,7 +28,7 @@ GroupSchema.statics.getGroups = async function () {
 };
 
 GroupSchema.statics.getGroupById = async function (groupId) {
-  let result = await this.findOne({ _id: mongoose.Types.ObjectId(groupId)});
+  let result = await this.findOne({ _id: mongoose.Types.ObjectId(groupId) });
   return result;
 };
 
