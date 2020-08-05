@@ -17,7 +17,7 @@ export const GroupSchema = new Groups({
   dishes:
     [
       {
-        dishId: { type: ObjectId, required: true, ref: "Dishes" }
+        type: ObjectId, required: true, ref: "Dishes"
       }
     ]
 });
