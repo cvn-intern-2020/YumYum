@@ -5,7 +5,7 @@ This project intends to be a simulation project while doing internships at Cyboz
 
 ### Setup
 
-- update and upgrade your system first
+- Update and upgrade your system first
 
 ```shell
 $ sudo apt-get update
@@ -43,7 +43,7 @@ $ npm run fe
 $ npm run be
 ```
 
-- Run in development mode of Both Fronten and Backen
+- Run in development mode of Both Frontend and Backend
 ```shell
 $ npm run dev
 ```

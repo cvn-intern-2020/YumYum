@@ -64,7 +64,7 @@ class App extends Component {
             exact
             path="/signup"
             render={(props) =>
-              props.token == "" ? (
+              this.props.token == "" ? (
                 <Signup {...props} />
               ) : (
                 <Redirect

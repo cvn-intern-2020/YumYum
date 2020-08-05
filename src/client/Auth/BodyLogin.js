@@ -4,9 +4,10 @@ import { Button } from "react-bootstrap";
 import Validator from "validator";
 import axios from "axios";
 import { setUser } from "../actions/user";
-import { withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Link } from "react-router-dom";
 
 class BodyLogin extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class BodyLogin extends Component {
   };
   handleClick = () => {
     if (this.state.email == "" || this.state.password == "") {
-      alert("WTF");
+      alert("empty fields");
       return -1;
     }
     if (!Validator.isEmail(this.state.email)) {
@@ -126,12 +127,13 @@ class BodyLogin extends Component {
             >
               <b>Login</b>
             </Button>
-            <Button
-              style={{ backgroundColor: "#48BDFF", color: "#080024" }}
-              type="submit"
-            >
-              <b>SignUp</b>
-            </Button>
+            <Link to="/signup">
+              <Button
+                style={{ backgroundColor: "#48BDFF", color: "#080024" }}
+              >
+                <b>SignUp</b>
+              </Button>
+            </Link>
           </div>
         </Form>
       </div>
