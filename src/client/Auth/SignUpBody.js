@@ -46,7 +46,7 @@ export default class SignUpBody extends Component {
       return -1;
     }
     axios
-      .post("http://localhost:3000/api/auth/signup", {
+      .post("https://yumyum-hasagi.herokuapp.com/api/auth/signup", {
         name: this.state.name,
         phone: this.state.phone,
         email: this.state.email,

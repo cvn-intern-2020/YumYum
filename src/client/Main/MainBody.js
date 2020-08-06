@@ -11,7 +11,7 @@ export default class MainBody extends Component {
   }
   // componentDidMount() {
   //   axios
-  //     .get("http://localhost:3000/api/groups/", {
+  //     .get("https://yumyum-hasagi.herokuapp.com/api/groups/", {
   //       headers: {
   //         Authorization: this.props.token || this.props.location.state.token,
   //       },

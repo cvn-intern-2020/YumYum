@@ -35,7 +35,7 @@ class BodyLogin extends Component {
     }
 
     axios
-      .post("http://localhost:3000/api/auth/signin", {
+      .post("https://yumyum-hasagi.herokuapp.com/api/auth/signin", {
         email: this.state.email,
         password: this.state.password,
       })
