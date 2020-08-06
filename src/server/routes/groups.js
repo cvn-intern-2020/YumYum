@@ -8,11 +8,17 @@ router.get("/:groupId", async (req, res) => {
   let result = await groupModel.getGroupById(groupId);
   return res.status(200).json(result);
 });
+router.post("/:groupId/add/member", async (req, res) => {
+  let userId = req.body.userId;
+  let groupId = req.params.groupId;
+  let result = await groupModel.addMember(userId, groupId);
+  return res.status(200).json(result);
+});
 
-  router.get("/", async (req, res) => {
-      let result = await groupModel.getGroups();
-      return res.status(200).json(result);
-    });
+router.get("/", async (req, res) => {
+  let result = await groupModel.getGroups();
+  return res.status(200).json(result);
+});
 
 router.post("/new", async (req, res) => {
   let { name, ownerId, description } = req.body;
@@ -22,10 +28,9 @@ router.post("/new", async (req, res) => {
 });
 
 router.delete("/", async (req, res) => {
-    let groupId = req.body.groupId;
-    let result = await groupModel.deleteGroupById(groupId);
-    return res.status(200).json(result);
+  let groupId = req.body.groupId;
+  let result = await groupModel.deleteGroupById(groupId);
+  return res.status(200).json(result);
 });
-
 
 module.exports = router;
