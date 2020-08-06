@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
           }
         });
       }
-      return { ...state, token };
+      return { ...state, token: token == "" ? "" : state.token };
     }
   }
 };

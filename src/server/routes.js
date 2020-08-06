@@ -28,6 +28,10 @@ router.use(
 
 router.use(
   "/users",
+  (req, res, next) => {
+    console.log(req.headers)
+    next();
+  },
   passport.authenticate("jwt", { session: false }),
   require("./routes/users")
 );
