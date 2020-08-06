@@ -65,7 +65,7 @@ export default class SignUpBody extends Component {
     return (
       <div
         style={{
-          backgroundImage: "url(../../../public/background.png)",
+          backgroundImage: "url(../../../public/background.jpg)",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           height: "94%",
