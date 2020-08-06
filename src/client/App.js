@@ -6,6 +6,7 @@ import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import Group from "./Group";
 
 class App extends Component {
   render() {
@@ -44,6 +45,23 @@ class App extends Component {
               )
             }
           />
+          <Route path="/group">
+            <Route
+              path="/group/:groupId"
+              render={(props) =>
+                this.props.token == "" ? (
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: props.locations },
+                    }}
+                  />
+                ) : (
+                  <Group {...props} />
+                )
+              }
+            ></Route>
+          </Route>
           <Route
             exact
             path="/login"
