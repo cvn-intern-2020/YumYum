@@ -25,7 +25,7 @@ UsersSchema.statics.getUserById = async function (userId) {
 };
 
 UsersSchema.statics.getUserByEmail = async function (email) {
-  let result = await this.findOne({ email: email }).select("email").lean();
+  let result = await this.findOne({ email: email }).select("email password").lean();
   return result;
 };
 
