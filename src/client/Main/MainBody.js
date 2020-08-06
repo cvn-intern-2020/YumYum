@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Container, ListGroup, Row, Col, Image } from "react-bootstrap";
+import { Container, ListGroup, Row, Col, Image, Button, Modal } from "react-bootstrap";
+import MyOwnGroup from "./MyOwnGroup";
+import MyJoinedGroup from "./MyJoinedGroup";
+import AddNewGroupModal from "./AddNewGroupModal";
 
 export default class MainBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      groups: [],
+      showAddGroupModal: false,
     };
   }
+
+  toggleAddGroupModal = () => {
+    this.setState({ ...this.state, showAddGroupModal: !this.state.showAddGroupModal });
+  };
   // componentDidMount() {
   //   axios
   //     .get("http://localhost:3000/api/groups/", {
@@ -24,6 +31,7 @@ export default class MainBody extends Component {
   //       }
   //     });
   // }
+
   render() {
     return (
       <div
@@ -34,226 +42,15 @@ export default class MainBody extends Component {
           height: "94%",
         }}
       >
-        <Container className="ml-2" style={{ position: "absolute", height: "40%" }} fluid>
-          <p className="mt-5" style={{
-            backgroundColor: "#FF5522",
-            width: "12%",
-            fontSize: "2rem",
-            borderRadius: "1rem",
-            textAlign: "center",
-            marginLeft: "1rem"
-          }}>Joined Group</p>
-          <Container fluid style={{ maxHeight: "60%", overflowY: "auto", overflowX: "hidden" }} className="pr-0">
-            <ListGroup>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-            </ListGroup>
-          </Container>
+        <AddNewGroupModal show={this.state.showAddGroupModal} handleClose={this.toggleAddGroupModal} />
 
-          {/*----------------------------------------------------- My Own Group --------------------------------------------------------*/}
-          <p className="mt-5" style={{
-            backgroundColor: "#48BDFF",
-            width: "12%",
-            fontSize: "2rem",
-            borderRadius: "1rem",
-            textAlign: "center",
-            marginLeft: "1rem"
-          }}>My Own Group</p>
-          <Container fluid style={{ maxHeight: "60%", overflowY: "auto", overflowX: "hidden" }} className="pr-0">
-            <ListGroup>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item style={{ padding: 0 }}>
-                <Row>
-                  <Col xs={6} md={3} lg={1} >
-                    <Image style={{ height: 'auto', width: '125%' }} src="../../../public/monan.png"></Image>
-                  </Col>
-                  <Col xs={6} md={9} lg={11}>
-                    <div
-                      style={{
-                        height: "40%",
-                        backgroundColor: "#FFE500"
-                      }}
-                    > Lunch Group </div>
-                    <div
-                      style={{ height: "60%", backgroundColor: "#48BDFF" }}
-                    > Lunch Menu for everybody
-                  </div>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-            </ListGroup>
-          </Container>
+        <Container
+          className="ml-2" style={{ position: "absolute", height: "55%" }} fluid
+        >
+          <MyJoinedGroup />
+          <MyOwnGroup toggleAddGroupModal={this.toggleAddGroupModal} />
+
         </Container>
-
-
 
         {/* {this.state.groups.map((group) =
  
