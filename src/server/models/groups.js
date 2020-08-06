@@ -39,7 +39,7 @@ GroupSchema.statics.createGroup = async function (name, ownerId, description) {
     ownerId: mongoose.Types.ObjectId(ownerId) ,
     description: description,
   });
-  userModel.addUserGroup(ownerId, result._id, name, true)
+  userModel.addUserGroup(ownerId, result._id, name, true);
   return result;
 };
 

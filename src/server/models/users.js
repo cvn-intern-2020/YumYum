@@ -52,9 +52,9 @@ UsersSchema.statics.addUserGroup = async function (userId, groupId, name, isOwne
           isOwner
         }
       }
-    })
+    });
   console.log(result);
-}
+};
 
 const userModel = mongoose.model("Users", UsersSchema);
 export default userModel;
