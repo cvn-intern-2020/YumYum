@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Container, ListGroup, Row, Col, Image, Button, Modal } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import MyOwnGroup from "./MyOwnGroup";
 import MyJoinedGroup from "./MyJoinedGroup";
 import AddNewGroupModal from "./AddNewGroupModal";
@@ -14,7 +14,10 @@ export default class MainBody extends Component {
   }
 
   toggleAddGroupModal = () => {
-    this.setState({ ...this.state, showAddGroupModal: !this.state.showAddGroupModal });
+    this.setState({
+      ...this.state,
+      showAddGroupModal: !this.state.showAddGroupModal,
+    });
   };
   // componentDidMount() {
   //   axios
@@ -42,21 +45,20 @@ export default class MainBody extends Component {
           height: "94%",
         }}
       >
-        <AddNewGroupModal show={this.state.showAddGroupModal} handleClose={this.toggleAddGroupModal} />
+        <AddNewGroupModal
+          show={this.state.showAddGroupModal}
+          handleClose={this.toggleAddGroupModal}
+        />
 
         <Container
-          className="ml-2" style={{ position: "absolute", height: "55%" }} fluid
+          className="ml-2"
+          style={{ position: "absolute", height: "55%" }}
+          fluid
         >
           <MyJoinedGroup />
           <MyOwnGroup toggleAddGroupModal={this.toggleAddGroupModal} />
-
         </Container>
-
-        {/* {this.state.groups.map((group) =
- 
-        ))} */}
-
-      </div >
+      </div>
     );
   }
 }
