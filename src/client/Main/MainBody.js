@@ -6,6 +6,8 @@ import MyJoinedGroup from "./MyJoinedGroup";
 import AddNewGroupModal from "./AddNewGroupModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { setUser } from "../actions/user";
+import { bindActionCreators } from "redux";
 
 class MainBody extends Component {
   constructor(props) {
@@ -21,21 +23,11 @@ class MainBody extends Component {
       showAddGroupModal: !this.state.showAddGroupModal,
     });
   };
-  // componentDidMount() {
-  //   axios
-  //     .get("http://localhost:3000/api/groups/", {
-  //       headers: {
-  //         Authorization: this.props.token || this.props.location.state.token,
-  //       },
-  //     })
-  //     .then((res, err) => {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         this.setState({ groups: res.data });
-  //       }
-  //     });
-  // }
+  componentDidMount() {
+    if (this.props._id == ""){
+      this.props.setUser(this.props.token);
+    }
+  }
 
   render() {
     return (
@@ -70,7 +62,13 @@ class MainBody extends Component {
 function mapStateToProps(state) {
   return {
     token: state.user.token,
+    _id: state.user._id
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(MainBody));
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setUser }, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainBody));
