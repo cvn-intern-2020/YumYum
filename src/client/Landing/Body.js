@@ -13,7 +13,6 @@ export default class Body extends Component {
         }}
       >
         <div
-          className="text-center"
           style={{
             backgroundColor: "rgba(255, 255, 255, 0.4)",
             position: "absolute",
