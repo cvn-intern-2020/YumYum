@@ -9,10 +9,10 @@ router.post("/", async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
   let user = await usersModel.getUserByEmail(email);
-  if (!user) {
-    return res.status(400).json({ message: "User does not exist" });
+  if (!user.status) {
+    return res.status(400).json({ message: user.message });
   }
-
+  user = user.result;
   bcrypt.compare(password, user.password).then((isMatch) => {
     if (isMatch) {
       const payload = {

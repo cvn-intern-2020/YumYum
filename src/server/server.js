@@ -25,9 +25,6 @@ require("./utils/passport")(passport);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.get("/", (req, res) => {
-//   res.send("YES");
-// });
 app.use(express.static("public"));
 app.use("/api/", require("./routes"));
 

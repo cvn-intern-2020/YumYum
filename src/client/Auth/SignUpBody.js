@@ -166,7 +166,7 @@ export default class SignUpBody extends Component {
           <div style={{ textAlign: "center" }}>
             <Button
               style={{
-                backgroundColor: "#48BDFF",
+                backgroundColor: "#FF5522",
                 color: "#080024",
                 width: "50%",
               }}

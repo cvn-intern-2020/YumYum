@@ -4,8 +4,12 @@ import { Container } from "react-bootstrap";
 import MyOwnGroup from "./MyOwnGroup";
 import MyJoinedGroup from "./MyJoinedGroup";
 import AddNewGroupModal from "./AddNewGroupModal";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUser } from "../actions/user";
+import { bindActionCreators } from "redux";
 
-export default class MainBody extends Component {
+class MainBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,21 +23,11 @@ export default class MainBody extends Component {
       showAddGroupModal: !this.state.showAddGroupModal,
     });
   };
-  // componentDidMount() {
-  //   axios
-  //     .get("https://yumyum-hasagi.herokuapp.com/api/groups/", {
-  //       headers: {
-  //         Authorization: this.props.token || this.props.location.state.token,
-  //       },
-  //     })
-  //     .then((res, err) => {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         this.setState({ groups: res.data });
-  //       }
-  //     });
-  // }
+  componentDidMount() {
+    if (this.props._id == "") {
+      this.props.setUser(this.props.token);
+    }
+  }
 
   render() {
     return (
@@ -48,6 +42,7 @@ export default class MainBody extends Component {
         <AddNewGroupModal
           show={this.state.showAddGroupModal}
           handleClose={this.toggleAddGroupModal}
+          token={this.props.token}
         />
 
         <Container
@@ -62,3 +57,18 @@ export default class MainBody extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    token: state.user.token,
+    _id: state.user._id,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setUser }, dispatch);
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(MainBody)
+);

@@ -1,4 +1,5 @@
 import { SET_USER } from "../actions/types";
+import jwt from "jsonwebtoken";
 
 const initialState = {
   _id: "",
@@ -14,7 +15,18 @@ export default (state = initialState, action) => {
       localStorage.setItem("token", action.payload.token);
       return { ...state, ...action.payload };
     }
-    default:
-      return state;
+    default: {
+      let token = state.token;
+      token = token.replace(/^Bearer\s/, "");
+      if (state.token != "") {
+        jwt.verify(token, "1234567890", (err, decoded) => {
+          if (err) {
+            token = "";
+            localStorage.removeItem("token");
+          }
+        });
+      }
+      return { ...state, token: token == "" ? "" : state.token };
+    }
   }
 };

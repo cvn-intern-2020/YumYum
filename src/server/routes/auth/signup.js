@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   let { name, phone, email, password } = req.body;
   let duplicate = await userModel.getUserByEmail(email);
-  if (duplicate != null) {
+  if (duplicate.status) {
     return res.status(400).json({ message: "Duplicate email!" });
   }
   let result = await userModel.createUser(
