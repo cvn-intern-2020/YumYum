@@ -4,8 +4,10 @@ import { Container } from "react-bootstrap";
 import MyOwnGroup from "./MyOwnGroup";
 import MyJoinedGroup from "./MyJoinedGroup";
 import AddNewGroupModal from "./AddNewGroupModal";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default class MainBody extends Component {
+class MainBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,6 +50,7 @@ export default class MainBody extends Component {
         <AddNewGroupModal
           show={this.state.showAddGroupModal}
           handleClose={this.toggleAddGroupModal}
+          token={this.props.token}
         />
 
         <Container
@@ -62,3 +65,12 @@ export default class MainBody extends Component {
     );
   }
 }
+
+
+function mapStateToProps(state) {
+  return {
+    token: state.user.token,
+  };
+}
+
+export default withRouter(connect(mapStateToProps, null)(MainBody));

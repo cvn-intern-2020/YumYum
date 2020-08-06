@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
+import axios from "axios";
 
 export default class AddNewGroupModal extends Component {
   constructor(props) {
@@ -16,15 +17,34 @@ export default class AddNewGroupModal extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  toggleAlert = (err) => {
+    this.setState({ ...this.state, showAlert: !this.state.showAlert, err });
+  };
+
   handleSaveNewGroup = () => {
     if (this.state.description == "" || this.state.name == "") {
       this.toggleAlert("empty field");
       return -1;
     }
+    axios
+      .post("http://localhost:3000/api/groups/new", {
+        name: this.state.name,
+        description: this.state.description,
+      }, {
+        headers: {
+          Authorization: this.props.token || this.props.location.state.token,
+        }
+      })
+      .then((res, err) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          console.log(res);
+        }
+      });
+
     this.props.handleClose();
-  };
-  toggleAlert = (err) => {
-    this.setState({ ...this.state, showAlert: !this.state.showAlert, err });
   };
   render() {
     return (
@@ -38,8 +58,8 @@ export default class AddNewGroupModal extends Component {
               {this.state.err}
             </Alert>
           ) : (
-            <></>
-          )}
+              <></>
+            )}
 
           <Form>
             <Form.Group>

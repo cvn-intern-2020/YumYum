@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, ListGroup, Row, Col, Image, Button } from "react-bootstrap";
 
+
 export default class MyOwnGroup extends Component {
   render() {
     return (
