@@ -18,12 +18,14 @@ export const UsersSchema = new Users({
 });
 
 UsersSchema.statics.getUserById = async function (userId) {
-  let result = await this.findOne({ _id: mongoose.Types.ObjectId(userId) });
+  let result = await this.findOne({ _id: mongoose.Types.ObjectId(userId) })
+    .select("-password -__v")
+    .lean();
   return result;
 };
 
 UsersSchema.statics.getUserByEmail = async function (email) {
-  let result = await this.findOne({ email: email });
+  let result = await this.findOne({ email: email }).select("email").lean();
   return result;
 };
 
