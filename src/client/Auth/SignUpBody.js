@@ -30,11 +30,11 @@ export default class SignUpBody extends Component {
     }
 
     if (!Validator.isEmail(this.state.email)) {
-      alert("not email");
+      alert("Invalid email");
       return -1;
     }
     if (this.state.password.length < 6) {
-      alert("not valid pass");
+      alert("Password must be 6 character at least");
       return -1;
     }
     if (
@@ -42,7 +42,7 @@ export default class SignUpBody extends Component {
       this.state.phone.length > 11 ||
       !Validator.isNumeric(this.state.phone)
     ) {
-      alert("not valid phone");
+      alert("Phone number must be 10 number");
       return -1;
     }
     axios
