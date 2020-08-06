@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { func } from "prop-types";
 
 const Users = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -37,6 +38,22 @@ UsersSchema.statics.createUser = async function (name, phone, email, password) {
     password: password,
   });
   return result;
+};
+
+UsersSchema.statics.addUserGroup = async function (userId, groupId, name, isOwner) {
+  let result = await this.findOneAndUpdate({
+    _id: mongoose.Types.ObjectId(userId)
+  },
+    {
+      $push: {
+        groups: {
+          groupId,
+          name,
+          isOwner
+        }
+      }
+    });
+  console.log(result);
 };
 
 const userModel = mongoose.model("Users", UsersSchema);

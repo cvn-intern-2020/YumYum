@@ -5,6 +5,8 @@ import cors from "cors";
 import morgan from "morgan";
 import passport from "passport";
 import path from "path";
+import { group } from "console";
+import groupModel from "./models/groups";
 
 const data_uri =
   "mongodb+srv://hasagi:hasagi@cluster0.zspjy.gcp.mongodb.net/YumYum?retryWrites=true&w=majority";
@@ -33,4 +35,5 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 
+groupModel.createGroup("Com chien", "5f2b9f2408c32300174f2764", "f12344");
 app.listen(3000, () => console.info(`Running on 3000`));

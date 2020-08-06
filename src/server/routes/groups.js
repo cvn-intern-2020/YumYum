@@ -14,11 +14,11 @@ router.get("/:groupId", async (req, res) => {
       return res.status(200).json(result);
     });
 
-router.post("/", async (req, res) => {
-  let { name, owner, description } = req.body;
+router.post("/new", async (req, res) => {
+  let { name, ownerId, description } = req.body;
   return res
     .status(200)
-    .json(await groupModel.createGroup(name, owner, description));
+    .json(await groupModel.createGroup(name, ownerId, description));
 });
 
 router.delete("/", async (req, res) => {
