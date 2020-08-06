@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "be": "nodemon --exec babel-node src/server/server.js --ignore 'src/client/*'",
-    "fe": "webpack-dev-server --mode development",
-    "start": "concurrently --kill-others \"npm run be\" \"npm run fe\"",
-    "eslint": "eslint .",
-    "eslint:fix": "eslint . --fix"
+    "start": "NODE_ENV=production node ./dist/server.js",
+    "build": "npm run build-fe && npm run build-be",
+    "build-fe": "NODE_ENV=production webpack --production-mode",
+    "build-be": "babel ./src/server/ -D --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -67,7 +66,9 @@
     "redux-thunk": "^2.3.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.10.3",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0"
   },
   "babel": {
     "presets": [

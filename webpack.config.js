@@ -1,5 +1,5 @@
-
 const path = require("path");
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = () => {
   return {
@@ -27,10 +27,28 @@ module.exports = () => {
           },
           exclude: /node_modules/,
         },
+        {
+          test: /\.(png|svg|jpg|gif|jpe?g)$/,
+          use: [
+            {
+              options: {
+                name: "[name].[ext]",
+                outputPath: "/",
+              },
+              loader: "file-loader",
+            },
+          ],
+        },
       ],
     },
     resolve: {
       extensions: [".js", ".jsx", ".json", ".wasm", ".mjs", "*"],
     },
+    plugins: [
+      new HtmlWebPackPlugin({
+        template: "./src/index.html",
+        filename: "./index.html",
+      }),
+    ],
   };
 };

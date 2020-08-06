@@ -5,6 +5,7 @@ import cors from "cors";
 import morgan from "morgan";
 import passport from "passport";
 import path from "path";
+import compression from "compression";
 
 const data_uri =
   "mongodb+srv://hasagi:hasagi@cluster0.zspjy.gcp.mongodb.net/YumYum?retryWrites=true&w=majority";
@@ -17,20 +18,21 @@ mongoose.connect(data_uri, {
 
 const app = express();
 app.use(morgan("tiny"));
+app.use(compression());
 app.use(cors());
 app.use(passport.initialize());
 require("./utils/passport")(passport);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.send("YES");
-});
-
+// app.get("/", (req, res) => {
+//   res.send("YES");
+// });
+app.use(express.static("public"));
 app.use("/api/", require("./routes"));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/index.html"));
+  res.sendFile(path.join(process.cwd() + "/public/index.html"));
 });
 
 app.listen(3000, () => console.info(`Running on 3000`));
