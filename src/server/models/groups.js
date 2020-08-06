@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import userModel from "./users";
 
 const Groups = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -32,12 +33,13 @@ GroupSchema.statics.getGroupById = async function (groupId) {
   return result;
 };
 
-GroupSchema.statics.createGroup = async function (name, owner, description) {
+GroupSchema.statics.createGroup = async function (name, ownerId, description) {
   let result = await this.create({
     name: name,
-    owner: owner,
-    description: description
+    ownerId: mongoose.Types.ObjectId(ownerId) ,
+    description: description,
   });
+  userModel.addUserGroup(ownerId, result._id, name, true)
   return result;
 };
 
