@@ -122,13 +122,20 @@ class BodyLogin extends Component {
                 marginRight: "10px",
                 backgroundColor: "#48BDFF",
                 color: "#080024",
+                border:"none"
               }}
               onClick={this.handleClick}
             >
               <b>Login</b>
             </Button>
             <Link to="/signup">
-              <Button style={{ backgroundColor: "#48BDFF", color: "#080024" }}>
+              <Button
+                style={{
+                  backgroundColor: "#FF5522",
+                  color: "#080024",
+                  border: "none",
+                }}
+              >
                 <b>SignUp</b>
               </Button>
             </Link>

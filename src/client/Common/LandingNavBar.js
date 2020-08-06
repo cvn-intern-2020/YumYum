@@ -30,7 +30,14 @@ export default class LandingNavBar extends Component {
               {this.props.location.pathname == "/" ? (
                 <>
                   <Link to="/signup">
-                    <Button className="float-right mt-2 mr-3 ml-2 landing-button">
+                    <Button
+                      className="float-right mt-2 mr-3 ml-2"
+                      style={{
+                        backgroundColor: "#FF5522",
+                        color: "#080024",
+                        border: "none",
+                      }}
+                    >
                       Sign Up
                     </Button>
                   </Link>
