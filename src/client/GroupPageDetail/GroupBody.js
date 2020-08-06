@@ -14,7 +14,10 @@ export default class GroupBody extends Component {
   }
   //this is a closeAddMemberModal function
   toggleAddMemberModal = () => {
-    this.setState({ ...this.state, showAddMemberModal: !this.state.showAddMemberModal });
+    this.setState({
+      ...this.state,
+      showAddMemberModal: !this.state.showAddMemberModal,
+    });
     {
       /*
     this.state= {showAddMemberModal : true,
@@ -32,12 +35,16 @@ export default class GroupBody extends Component {
           height: "94%",
         }}
       >
-        <AddMemberModal show={this.state.showAddMemberModal} handleClose={this.toggleAddMemberModal} />
+        <AddMemberModal
+          show={this.state.showAddMemberModal}
+          handleClose={this.toggleAddMemberModal}
+        />
         <div className="row w-100 m-0">
           <div className="col-6">
             <Button
               style={{ backgroundColor: "#FF5522", color: "#080024" }}
-              className="float-left ml-5 mt-4 group-button" onClick={this.toggleAddMemberModal}
+              className="float-left ml-5 mt-4 group-button"
+              onClick={this.toggleAddMemberModal}
             >
               Add Member
             </Button>{" "}

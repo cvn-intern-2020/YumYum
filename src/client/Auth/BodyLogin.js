@@ -128,9 +128,7 @@ class BodyLogin extends Component {
               <b>Login</b>
             </Button>
             <Link to="/signup">
-              <Button
-                style={{ backgroundColor: "#48BDFF", color: "#080024" }}
-              >
+              <Button style={{ backgroundColor: "#48BDFF", color: "#080024" }}>
                 <b>SignUp</b>
               </Button>
             </Link>
