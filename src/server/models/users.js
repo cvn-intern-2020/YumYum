@@ -32,7 +32,10 @@ UsersSchema.statics.getUserByEmail = async function (email) {
   let result = await this.findOne({ email: email })
     .select("email password")
     .lean();
-  return result;
+  if (!result) {
+    return { message: "Email does not exist", status: false };
+  }
+  return { result, status: true };
 };
 
 UsersSchema.statics.createUser = async function (name, phone, email, password) {
