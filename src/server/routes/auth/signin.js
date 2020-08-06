@@ -9,6 +9,9 @@ router.post("/", async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
   let user = await usersModel.getUserByEmail(email);
+  if (!user) {
+    return res.status(400).json({ message: "User does not exist" });
+  }
 
   bcrypt.compare(password, user.password).then((isMatch) => {
     if (isMatch) {
