@@ -12,18 +12,11 @@ export default class GroupBody extends Component {
       dishes: [1, 2, 3, 4, 5],
     };
   }
-  //this is a closeAddMemberModal function
   toggleAddMemberModal = () => {
     this.setState({
       ...this.state,
       showAddMemberModal: !this.state.showAddMemberModal,
     });
-    {
-      /*
-    this.state= {showAddMemberModal : true,
-  dishes: [1,2,3,4,5]}
-   */
-    }
   };
   render() {
     return (

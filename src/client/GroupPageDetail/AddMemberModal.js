@@ -19,7 +19,7 @@ export default class AddMemberModal extends Component {
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
-  handleClick = () => {
+  handleClickAddMember = () => {
     if (this.state.email == "") {
       this.toggleAlert("Empty fields");
       return -1;
@@ -69,9 +69,9 @@ export default class AddMemberModal extends Component {
             Close
           </Button>
           <Button
-            className=" landing-button"
+            className="landing-button"
             variant="primary"
-            onClick={this.handleClick}
+            onClick={this.handleClickAddMember}
           >
             Add Member
           </Button>
