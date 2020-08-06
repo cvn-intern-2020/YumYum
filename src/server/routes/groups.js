@@ -6,13 +6,20 @@ const router = express.Router();
 router.get("/:groupId", async (req, res) => {
   let groupId = req.params.groupId;
   let result = await groupModel.getGroupById(groupId);
-  return res.status(200).json(result);
+  if (!result.status) {
+    return res.status(400).json(result.message);
+  }
+  return res.status(200).json(result.result);
 });
 router.post("/:groupId/add/member", async (req, res) => {
-  let userId = req.body.userId;
+  let userEmail = req.body.userEmail;
+  let ownerId = req._id;
   let groupId = req.params.groupId;
-  let result = await groupModel.addMember(userId, groupId);
-  return res.status(200).json(result);
+  let result = await groupModel.addMember(ownerId, userEmail, groupId);
+  if (!result.status) {
+    return res.status(400).json({ message: result.message });
+  }
+  return res.status(200).json({ message: result.message });
 });
 
 router.get("/", async (req, res) => {
@@ -21,10 +28,13 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/new", async (req, res) => {
-  let { name, ownerId, description } = req.body;
-  return res
-    .status(200)
-    .json(await groupModel.createGroup(name, ownerId, description));
+  let { name, description } = req.body;
+  let ownerId = req._id;
+  let result = await groupModel.createGroup(name, ownerId, description);
+  if (!result.status) {
+    return res.status(400).json({ message: "something went wrong" });
+  }
+  return res.status(200).json(result.message);
 });
 
 router.delete("/", async (req, res) => {

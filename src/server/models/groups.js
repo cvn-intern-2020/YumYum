@@ -32,38 +32,62 @@ GroupSchema.statics.getGroups = async function () {
 };
 
 GroupSchema.statics.getGroupById = async function (groupId) {
+  if (mongoose.Types.ObjectId.isValid(groupId)) {
+    return { message: "invalid groupId", status: false };
+  }
   let result = await this.findOne({ _id: mongoose.Types.ObjectId(groupId) });
-  return result;
+  if (!result){
+    return { message: "groupId does not exist", status: false };
+  }
+  return {result, status: true};
 };
 
-GroupSchema.statics.addMember = async function (userId, groupId) {
-  let user = await userModel.getUserById(userId);
+GroupSchema.statics.addMember = async function (ownerId, userEmail, groupId) {
+  if (mongoose.Types.ObjectId.isValid(ownerId)) {
+    return { message: "invalid ownerId", status: false };
+  }
+  if (mongoose.Types.ObjectId.isValid(groupId)) {
+    return { message: "invalid groupId", status: false };
+  }
+  let user = await userModel.getUserByEmail(userEmail);
+  if (!user) {
+    return { message: "userId does not exist", status: false };
+  }
   let result = await this.findOneAndUpdate(
-    { _id: mongoose.Types.ObjectId(groupId) },
+    {
+      _id: mongoose.Types.ObjectId(groupId),
+      ownerId: mongoose.Types.ObjectId(ownerId),
+    },
     {
       $push: {
         users: {
-          userId: mongoose.Types.ObjectId(userId),
+          userId: mongoose.Types.ObjectId(user._id),
           name: user.name,
         },
       },
     }
   );
   if (!result) {
-    return false;
+    return {
+      message: "Not allowed to add member to this group",
+      status: false,
+    };
   }
-  userModel.addUserGroup(userId, groupId, result.name, false);
-  return result;
+  userModel.addUserGroup(user._id, groupId, result.name, false);
+  return { message: "Successfully added", status: true };
 };
 
 GroupSchema.statics.createGroup = async function (name, ownerId, description) {
+  if (mongoose.Types.ObjectId.isValid(ownerId)) {
+    return { message: "invalid ownerId", status: false };
+  }
   let result = await this.create({
     name: name,
     ownerId: mongoose.Types.ObjectId(ownerId),
     description: description,
   });
   userModel.addUserGroup(ownerId, result._id, name, true);
-  return result;
+  return { message: "Successfully created", status: true };
 };
 
 GroupSchema.statics.deleteGroupById = async function (groupId) {
