@@ -27,7 +27,7 @@ export default class AddNewGroupModal extends Component {
       return -1;
     }
     axios
-      .post("http://localhost:3000/api/groups/new", {
+      .post("https://yumyum-hasagi.herokuapp.com/api/groups/new", {
         name: this.state.name,
         description: this.state.description,
       }, {
