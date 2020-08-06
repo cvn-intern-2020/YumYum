@@ -5,6 +5,9 @@ import passport from "passport";
 router.use(
   "/groups",
   passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    next();
+  },
   require("./routes/groups")
 );
 router.use(

@@ -35,5 +35,4 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 
-groupModel.createGroup("Com chien", "5f2b9f2408c32300174f2764", "f12344");
 app.listen(3000, () => console.info(`Running on 3000`));
