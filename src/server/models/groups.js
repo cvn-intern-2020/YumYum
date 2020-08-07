@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import userModel from "./users";
+import { isObjectID } from "../utils/validator";
 
 const Groups = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
-const objectIdValidator = mongoose.Types.ObjectId.isValid;
 
 const Members = mongoose.Schema(
   {
@@ -33,7 +33,7 @@ GroupSchema.statics.getGroups = async function () {
 };
 
 GroupSchema.statics.getGroupById = async function (groupId) {
-  if (!objectIdValidator(groupId)) {
+  if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
   }
   let result = await this.findOne({ _id: mongoose.Types.ObjectId(groupId) });
@@ -44,10 +44,10 @@ GroupSchema.statics.getGroupById = async function (groupId) {
 };
 
 GroupSchema.statics.addMember = async function (ownerId, userEmail, groupId) {
-  if (!objectIdValidator(ownerId)) {
+  if (!isObjectID(ownerId)) {
     return { message: "invalid ownerId", status: false };
   }
-  if (!objectIdValidator(groupId)) {
+  if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
   }
   let user = await userModel.getUserByEmail(userEmail);
@@ -80,7 +80,7 @@ GroupSchema.statics.addMember = async function (ownerId, userEmail, groupId) {
 };
 
 GroupSchema.statics.createGroup = async function (name, ownerId, description) {
-  if (!objectIdValidator(ownerId)) {
+  if (!isObjectID(ownerId)) {
     return { message: "invalid ownerId", status: false };
   }
   let result = await this.create({
@@ -93,7 +93,7 @@ GroupSchema.statics.createGroup = async function (name, ownerId, description) {
 };
 
 GroupSchema.statics.deleteGroupById = async function (groupId) {
-  if (!objectIdValidator(groupId)) {
+  if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
   }
   let result = await this.deleteOne({

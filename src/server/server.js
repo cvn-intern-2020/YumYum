@@ -5,8 +5,6 @@ import cors from "cors";
 import morgan from "morgan";
 import passport from "passport";
 import path from "path";
-import { group } from "console";
-import groupModel from "./models/groups";
 
 const data_uri =
   "mongodb+srv://hasagi:hasagi@cluster0.zspjy.gcp.mongodb.net/YumYum?retryWrites=true&w=majority";
@@ -24,10 +22,6 @@ app.use(passport.initialize());
 require("./utils/passport")(passport);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-  res.send("YES");
-});
 
 app.use("/api/", require("./routes"));
 
