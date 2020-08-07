@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Button } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 import DishItem from "./DishItem";
 import AddMemberModal from "./AddMemberModal";
-export default class GroupBody extends Component {
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import axios from "axios";
+
+class GroupBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,6 +49,8 @@ export default class GroupBody extends Component {
         <AddMemberModal
           show={this.state.showAddMemberModal}
           handleClose={this.toggleAddMemberModal}
+          token={this.props.token}
+          {...this.props}
         />
         <div className="row w-100 m-0">
           <div className="col-6">
@@ -89,3 +94,11 @@ export default class GroupBody extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    token: state.user.token,
+  };
+}
+
+export default withRouter(connect(mapStateToProps, null)(GroupBody));

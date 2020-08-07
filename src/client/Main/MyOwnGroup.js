@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, ListGroup, Row, Col, Image, Button } from "react-bootstrap";
+import GroupItem from "./GroupItem";
 
 
 export default class MyOwnGroup extends Component {
@@ -50,131 +51,15 @@ export default class MyOwnGroup extends Component {
           className="pr-0"
         >
           <ListGroup style={{ backgroundColor: "#C4C4C4" }}>
-            <ListGroup.Item style={{ padding: 0 }}>
-              <Row>
-                <Col xs={6} md={3} lg={1}>
-                  <Image
-                    style={{ height: "auto", width: "125%" }}
-                    src="../../../public/monan.png"
-                  ></Image>
-                </Col>
-                <Col xs={6} md={9} lg={11}>
-                  <div
-                    style={{
-                      height: "40%",
-                      backgroundColor: "#FFE500",
-                    }}
-                  >
-                    {" "}
-                    Lunch Group{" "}
-                  </div>
-                  <div style={{ height: "60%", backgroundColor: "#48BDFF" }}>
-                    {" "}
-                    Lunch Menu for everybody
-                  </div>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-            <ListGroup.Item style={{ padding: 0 }}>
-              <Row>
-                <Col xs={6} md={3} lg={1}>
-                  <Image
-                    style={{ height: "auto", width: "125%" }}
-                    src="../../../public/monan.png"
-                  ></Image>
-                </Col>
-                <Col xs={6} md={9} lg={11}>
-                  <div
-                    style={{
-                      height: "40%",
-                      backgroundColor: "#FFE500",
-                    }}
-                  >
-                    {" "}
-                    Lunch Group{" "}
-                  </div>
-                  <div style={{ height: "60%", backgroundColor: "#48BDFF" }}>
-                    {" "}
-                    Lunch Menu for everybody
-                  </div>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-            <ListGroup.Item style={{ padding: 0 }}>
-              <Row>
-                <Col xs={6} md={3} lg={1}>
-                  <Image
-                    style={{ height: "auto", width: "125%" }}
-                    src="../../../public/monan.png"
-                  ></Image>
-                </Col>
-                <Col xs={6} md={9} lg={11}>
-                  <div
-                    style={{
-                      height: "40%",
-                      backgroundColor: "#FFE500",
-                    }}
-                  >
-                    {" "}
-                    Lunch Group{" "}
-                  </div>
-                  <div style={{ height: "60%", backgroundColor: "#48BDFF" }}>
-                    {" "}
-                    Lunch Menu for everybody
-                  </div>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-            <ListGroup.Item style={{ padding: 0 }}>
-              <Row>
-                <Col xs={6} md={3} lg={1}>
-                  <Image
-                    style={{ height: "auto", width: "125%" }}
-                    src="../../../public/monan.png"
-                  ></Image>
-                </Col>
-                <Col xs={6} md={9} lg={11}>
-                  <div
-                    style={{
-                      height: "40%",
-                      backgroundColor: "#FFE500",
-                    }}
-                  >
-                    {" "}
-                    Lunch Group{" "}
-                  </div>
-                  <div style={{ height: "60%", backgroundColor: "#48BDFF" }}>
-                    {" "}
-                    Lunch Menu for everybody
-                  </div>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-            <ListGroup.Item style={{ padding: 0 }}>
-              <Row>
-                <Col xs={6} md={3} lg={1}>
-                  <Image
-                    style={{ height: "auto", width: "125%" }}
-                    src="../../../public/monan.png"
-                  ></Image>
-                </Col>
-                <Col xs={6} md={9} lg={11}>
-                  <div
-                    style={{
-                      height: "40%",
-                      backgroundColor: "#FFE500",
-                    }}
-                  >
-                    {" "}
-                    Lunch Group{" "}
-                  </div>
-                  <div style={{ height: "60%", backgroundColor: "#48BDFF" }}>
-                    {" "}
-                    Lunch Menu for everybody
-                  </div>
-                </Col>
-              </Row>
-            </ListGroup.Item>
+          {this.props.ownGroups.map((group) => {
+              return (
+                <GroupItem
+                  name={group.name}
+                  description={group.description}
+                  key={group._id}
+                />
+              );
+            })}
           </ListGroup>
         </Container>
       </>

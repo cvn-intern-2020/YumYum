@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Validator from "validator";
 import GlobalAlert from "../Common/GlobalAlert";
+import axios from "axios";
+
 
 export default class AddMemberModal extends Component {
   constructor(props) {
@@ -35,8 +37,23 @@ export default class AddMemberModal extends Component {
       this.toggleAlert("Invalid email");
       return -1;
     }
-    console.log(this.state.email);
     this.props.handleClose();
+        axios
+      .post(`http://localhost:3000/api/groups/${this.props.match.params.groupId}/add/member`, {
+        userEmail: this.state.email,
+      }, {
+        headers: {
+          Authorization: this.props.token || this.props.location.state.token,
+        }
+      })
+      .then((res, err) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          console.log(res);
+        }
+      });
     this.setState({ ...this.state, email: "", err: "", showAlert: false });
   };
   render() {
