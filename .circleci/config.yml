@@ -9,12 +9,7 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: npm run eslint
 workflows:
     install-and-lint:
       jobs:
-        - lint:
-          filters:
-            branches:
-              ignore:
-                - CD-experimental-branch
+        - lint
