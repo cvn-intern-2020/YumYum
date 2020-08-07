@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
+import GlobalAlert from "../Common/GlobalAlert";
 
 export default class AddNewGroupModal extends Component {
   constructor(props) {
@@ -20,9 +21,15 @@ export default class AddNewGroupModal extends Component {
   toggleAlert = (err) => {
     this.setState({ ...this.state, showAlert: !this.state.showAlert, err });
   };
-
+  handleCloseButton = () => {
+    this.setState({...this.state, err: "", showAlert: false});
+    this.props.handleClose();
+  }
   handleSaveNewGroup = () => {
     if (this.state.description == "" || this.state.name == "") {
+      if (this.state.err != "") {
+        return -1;
+      }
       this.toggleAlert("empty field");
       return -1;
     }
@@ -48,6 +55,7 @@ export default class AddNewGroupModal extends Component {
       });
 
     this.props.handleClose();
+    this.setState({ ...this.state, name: "", description: "", err: "", showAlert: false });
   };
   render() {
     return (
@@ -57,9 +65,7 @@ export default class AddNewGroupModal extends Component {
         </Modal.Header>
         <Modal.Body>
           {this.state.showAlert ? (
-            <Alert variant={"danger"} dismissible onClose={this.toggleAlert}>
-              {this.state.err}
-            </Alert>
+            <GlobalAlert alertType={"danger"} message={this.state.err} toggleAlert={this.toggleAlert} />
           ) : (
             <></>
           )}
@@ -110,7 +116,7 @@ export default class AddNewGroupModal extends Component {
             }}
             variant="secondary"
             onClick={() => {
-              this.props.handleClose();
+              this.handleCloseButton();
             }}
           >
             Close

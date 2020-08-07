@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Validator from "validator";
-import Alert from "react-bootstrap/Alert";
+import GlobalAlert from "../Common/GlobalAlert";
 
 export default class AddMemberModal extends Component {
   constructor(props) {
@@ -19,8 +19,15 @@ export default class AddMemberModal extends Component {
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
+  handleCloseButton = () => {
+    this.setState({...this.state, err: "", showAlert: false});
+    this.props.handleClose();
+  }
   handleClickAddMember = () => {
     if (this.state.email == "") {
+      if (this.state.err != "") {
+        return -1;
+      }
       this.toggleAlert("Empty fields");
       return -1;
     }
@@ -30,6 +37,7 @@ export default class AddMemberModal extends Component {
     }
     console.log(this.state.email);
     this.props.handleClose();
+    this.setState({ ...this.state, email: "", err: "", showAlert: false });
   };
   render() {
     return (
@@ -39,9 +47,7 @@ export default class AddMemberModal extends Component {
         </Modal.Header>
         <Modal.Body>
           {this.state.showAlert ? (
-            <Alert variant={"danger"} onClose={this.toggleAlert} dismissible>
-              {this.state.err}
-            </Alert>
+            <GlobalAlert alertType={"danger"} message={this.state.err} toggleAlert={this.toggleAlert} />
           ) : (
             <></>
           )}
@@ -63,10 +69,10 @@ export default class AddMemberModal extends Component {
               color: "#080024",
               border: "none",
             }}
-            variant="secondary"
-            onClick={this.props.handleClose}
+            variant="primary"
+            onClick={this.handleClickAddMember}
           >
-            Close
+            Add Member
           </Button>
           <Button
             style={{
@@ -74,10 +80,12 @@ export default class AddMemberModal extends Component {
               color: "#080024",
               border: "none",
             }}
-            variant="primary"
-            onClick={this.handleClickAddMember}
+            variant="secondary"
+            onClick={() => {
+              this.handleCloseButton();
+            }}
           >
-            Add Member
+            Close
           </Button>
         </Modal.Footer>
       </Modal>
