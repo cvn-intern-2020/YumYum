@@ -9,28 +9,22 @@ export default class AddNewGroupModal extends Component {
     this.state = {
       name: "",
       description: "",
-      showAlert: false,
-      err: "",
     };
   }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
-  toggleAlert = (err) => {
-    this.setState({ ...this.state, showAlert: !this.state.showAlert, err });
-  };
   handleCloseButton = () => {
-    this.setState({...this.state, err: "", showAlert: false});
+    this.props.hideAlert();
     this.props.handleClose();
-  }
+  };
   handleSaveNewGroup = () => {
     if (this.state.description == "" || this.state.name == "") {
       if (this.state.err != "") {
         return -1;
       }
-      this.toggleAlert("empty field");
+      this.props.setAlert("danger", "empty field");
       return -1;
     }
     axios
@@ -46,16 +40,19 @@ export default class AddNewGroupModal extends Component {
           },
         }
       )
-      .then((res, err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(res);
-        }
-      });
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => this.props.setAlert("danger", err.message));
 
     this.props.handleClose();
-    this.setState({ ...this.state, name: "", description: "", err: "", showAlert: false });
+    this.setState({
+      ...this.state,
+      name: "",
+      description: "",
+      err: "",
+      showAlert: false,
+    });
   };
   render() {
     return (
@@ -65,7 +62,11 @@ export default class AddNewGroupModal extends Component {
         </Modal.Header>
         <Modal.Body>
           {this.state.showAlert ? (
-            <GlobalAlert alertType={"danger"} message={this.state.err} toggleAlert={this.toggleAlert} />
+            <GlobalAlert
+              alertType={"danger"}
+              message={this.state.err}
+              toggleAlert={this.props.hideAlert}
+            />
           ) : (
             <></>
           )}

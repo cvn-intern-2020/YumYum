@@ -8,6 +8,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
+import { setAlert, hideAlert } from "../actions/alert";
+import GlobalAlert from "../Common/GlobalAlert";
 
 class BodyLogin extends Component {
   constructor(props) {
@@ -39,14 +41,11 @@ class BodyLogin extends Component {
         email: this.state.email,
         password: this.state.password,
       })
-      .then((res, err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          this.props.setUser(res.data.token);
-          this.props.history.push("/main", { token: res.data.token });
-        }
-      });
+      .then((res) => {
+        this.props.setUser(res.data.token);
+        this.props.history.push("/main", { token: res.data.token });
+      })
+      .catch((err) => this.props.setAlert("danger", err.message));
   };
   render() {
     return (
@@ -59,6 +58,7 @@ class BodyLogin extends Component {
         }}
       >
         <Form className="login-form">
+        {this.props.showAlert ? <GlobalAlert alertType={this.props.type} toggleAlert={this.props.hideAlert} message={this.props.message}/> : <></>}
           <Form.Group controlId="formBasicEmail">
             <Form.Label className="login-form-label">
               <b>LOGIN</b>
@@ -101,8 +101,16 @@ class BodyLogin extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setUser }, dispatch);
+function mapStateToProps(state) {
+  return {
+    ...state.alert,
+  };
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(BodyLogin));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setUser, setAlert, hideAlert }, dispatch);
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(BodyLogin)
+);

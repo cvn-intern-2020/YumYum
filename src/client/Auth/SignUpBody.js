@@ -2,10 +2,14 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import Validator from "validator";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
+import GlobalAlert from "../Common/GlobalAlert";
+import { setAlert, hideAlert } from "../actions/alert";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-export default class SignUpBody extends Component {
+class SignUpBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,16 +29,16 @@ export default class SignUpBody extends Component {
       this.state.name == "" ||
       this.state.phone == ""
     ) {
-      alert("empty field");
+      this.props.setAlert("danger", "empty field");
       return -1;
     }
 
     if (!Validator.isEmail(this.state.email)) {
-      alert("Invalid email");
+      this.props.setAlert("danger", "Invalid email");
       return -1;
     }
     if (this.state.password.length < 6) {
-      alert("Password must be 6 character at least");
+      this.props.setAlert("danger", "Password must be 6 character at least");
       return -1;
     }
     if (
@@ -42,7 +46,7 @@ export default class SignUpBody extends Component {
       this.state.phone.length > 11 ||
       !Validator.isNumeric(this.state.phone)
     ) {
-      alert("Phone number must be 10 number");
+      this.props.setAlert("danger", "Phone number must be 10 number");
       return -1;
     }
     axios
@@ -52,14 +56,8 @@ export default class SignUpBody extends Component {
         email: this.state.email,
         password: this.state.password,
       })
-      .then((res, err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(res);
-          this.props.history.push("/login");
-        }
-      });
+      .then(() => this.props.history.push("/login"))
+      .catch((err) => this.props.setAlert("danger", err.message));
   };
   render() {
     return (
@@ -72,10 +70,17 @@ export default class SignUpBody extends Component {
         }}
       >
         <Form className="signup-form">
+          {this.props.showAlert ? (
+            <GlobalAlert
+              alertType={this.props.type}
+              toggleAlert={this.props.hideAlert}
+              message={this.props.message}
+            />
+          ) : (
+            <></>
+          )}
           <Form.Group controlId="formBasicEmail">
-            <Form.Label
-              className="signup-form-lable"
-            >
+            <Form.Label className="signup-form-lable">
               <b>SIGN UP</b>
             </Form.Label>
             <Form.Control
@@ -86,7 +91,6 @@ export default class SignUpBody extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-
           <Form.Group controlId="formBasicPassword">
             <Form.Control
               type="password"
@@ -114,7 +118,6 @@ export default class SignUpBody extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-
           <div style={{ textAlign: "center" }}>
             <Button
               className="signuppage-signup-button"
@@ -126,6 +129,19 @@ export default class SignUpBody extends Component {
         </Form>
       </div>
     );
-
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    ...state.alert,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SignUpBody)
+);
