@@ -10,7 +10,13 @@ router.get("/:groupId", async (req, res) => {
   if (!result.status) {
     return res.status(400).json(result.message);
   }
-  return res.status(200).json(result.result);
+  result = result.result;
+  for(const user of result.users ){
+    if(userId == user.userId){
+      return res.status(200).json(result);
+    }
+  }
+  return res.status(400).json({message: "You are not a member of this group"});
 });
 router.post("/:groupId/add/member", async (req, res) => {
   let userEmail = req.body.userEmail;
