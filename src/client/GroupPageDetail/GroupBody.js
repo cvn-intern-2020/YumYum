@@ -5,6 +5,7 @@ import DishItem from "./DishItem";
 import AddMemberModal from "./AddMemberModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import axios from "axios";
 
 class GroupBody extends Component {
   constructor(props) {
