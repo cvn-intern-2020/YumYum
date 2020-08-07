@@ -69,7 +69,11 @@ export default class AddMemberModal extends Component {
             Close
           </Button>
           <Button
-            className="landing-button"
+            style={{
+              backgroundColor: "#48BDFF",
+              color: "#080024",
+              border: "none",
+            }}
             variant="primary"
             onClick={this.handleClickAddMember}
           >
