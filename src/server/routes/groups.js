@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/:groupId", async (req, res) => {
   let groupId = req.params.groupId;
+  let userId = req._id;
   let result = await groupModel.getGroupById(groupId);
   if (!result.status) {
     return res.status(400).json(result.message);
