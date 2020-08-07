@@ -30,7 +30,7 @@ UsersSchema.statics.getUserById = async function (userId) {
 
 UsersSchema.statics.getUserByEmail = async function (email) {
   let result = await this.findOne({ email: email })
-    .select("email password")
+    .select("email password groups")
     .lean();
   if (!result) {
     return { message: "Email does not exist", status: false };
