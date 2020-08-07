@@ -37,10 +37,10 @@ GroupSchema.statics.getGroupById = async function (groupId) {
     return { message: "invalid groupId", status: false };
   }
   let result = await this.findOne({ _id: mongoose.Types.ObjectId(groupId) });
-  if (!result){
+  if (!result) {
     return { message: "groupId does not exist", status: false };
   }
-  return {result, status: true};
+  return { result, status: true };
 };
 
 GroupSchema.statics.addMember = async function (ownerId, userEmail, groupId) {
@@ -51,17 +51,14 @@ GroupSchema.statics.addMember = async function (ownerId, userEmail, groupId) {
     return { message: "invalid groupId", status: false };
   }
   let user = await userModel.getUserByEmail(userEmail);
-  
+
   if (!user.status) {
     return { message: user.message, status: false };
   }
   user = user.result;
 
-  for(let group of user.groups){
-    console.log(group);
-    if (group.groupId == groupId)
-    {
-      
+  for (let group of user.groups) {
+    if (group.groupId == groupId) {
       return { message: "User has already in group", status: false };
     }
   }
@@ -110,7 +107,7 @@ GroupSchema.statics.deleteGroupById = async function (groupId) {
   let result = await this.deleteOne({
     _id: mongoose.Types.ObjectId(groupId),
   });
-  if (!result){
+  if (!result) {
     return { message: "groupId does not exist", status: false };
   }
   return { message: "Successfully created", status: true };
