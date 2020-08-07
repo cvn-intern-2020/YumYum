@@ -9,7 +9,7 @@ export default class GroupBody extends Component {
     super(props);
     this.state = {
       showAddMemberModal: false,
-      dishes: [1, 2, 3, 4, 5],
+      dishes: [],
     };
   }
   toggleAddMemberModal = () => {
@@ -18,6 +18,21 @@ export default class GroupBody extends Component {
       showAddMemberModal: !this.state.showAddMemberModal,
     });
   };
+  componentDidMount(){
+    axios
+    .get(`http://localhost:3000/api/groups/${this.props.match.params.groupId}`, {
+      headers: {
+        Authorization: this.props.token,
+      },
+    })
+    .then((res, err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(res.data);
+      }
+    });
+  }
   render() {
     return (
       <div
