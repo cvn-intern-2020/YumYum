@@ -12,7 +12,7 @@ export default class Impression extends Component {
         <p></p>
         <Link to="/login">
           <Button
-            className="landing-button mx-auto d-block"
+            className="mx-auto d-block"
             style={{
               backgroundColor: "#48BDFF",
               color: "#080024",

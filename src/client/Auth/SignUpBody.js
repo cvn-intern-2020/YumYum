@@ -73,9 +73,7 @@ export default class SignUpBody extends Component {
       >
         <Form className="signup-form">
           <Form.Group controlId="formBasicEmail">
-            <Form.Label
-              className="signup-form-lable"
-            >
+            <Form.Label className="signup-form-lable">
               <b>SIGN UP</b>
             </Form.Label>
             <Form.Control
@@ -117,7 +115,12 @@ export default class SignUpBody extends Component {
 
           <div style={{ textAlign: "center" }}>
             <Button
-              className="signuppage-signup-button"
+              style={{
+                backgroundColor: "#ff5522",
+                color: "#080024",
+                width: "50%",
+                border: "none",
+              }}
               onClick={this.handleClick}
             >
               <b>SignUp</b>
@@ -126,6 +129,5 @@ export default class SignUpBody extends Component {
         </Form>
       </div>
     );
-
   }
 }
