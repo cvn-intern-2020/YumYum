@@ -21,20 +21,23 @@ class GroupBody extends Component {
       showAddMemberModal: !this.state.showAddMemberModal,
     });
   };
-  componentDidMount(){
+  componentDidMount() {
     axios
-    .get(`https://yumyum-hasagi.herokuapp.com/api/groups/${this.props.match.params.groupId}`, {
-      headers: {
-        Authorization: this.props.token,
-      },
-    })
-    .then((res, err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(res.data);
-      }
-    });
+      .get(
+        `https://yumyum-hasagi.herokuapp.com/api/groups/${this.props.match.params.groupId}`,
+        {
+          headers: {
+            Authorization: this.props.token,
+          },
+        }
+      )
+      .then((res, err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(res.data);
+        }
+      });
   }
   render() {
     return (

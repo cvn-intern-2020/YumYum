@@ -8,6 +8,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
+import { setAlert, hideAlert } from "../actions/alert";
+import GlobalAlert from "../Common/GlobalAlert";
 
 class BodyLogin extends Component {
   constructor(props) {
@@ -22,15 +24,15 @@ class BodyLogin extends Component {
   };
   handleClick = () => {
     if (this.state.email == "" || this.state.password == "") {
-      alert("empty fields");
+      this.props.setAlert("danger", "empty fields");
       return -1;
     }
     if (!Validator.isEmail(this.state.email)) {
-      alert("not email");
+      this.props.setAlert("danger", "not email");
       return -1;
     }
     if (this.state.password.length < 6) {
-      alert("not valid pass");
+      this.props.setAlert("danger", "not valid pass");
       return -1;
     }
 
@@ -39,14 +41,11 @@ class BodyLogin extends Component {
         email: this.state.email,
         password: this.state.password,
       })
-      .then((res, err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          this.props.setUser(res.data.token);
-          this.props.history.push("/main", { token: res.data.token });
-        }
-      });
+      .then((res) => {
+        this.props.setUser(res.data.token);
+        this.props.history.push("/main", { token: res.data.token });
+      })
+      .catch((err) => this.props.setAlert("danger", err.message));
   };
   render() {
     return (
@@ -58,60 +57,35 @@ class BodyLogin extends Component {
           height: "94%",
         }}
       >
-        <Form
-          style={{
-            backgroundColor: "#FFE500",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            marginTop: "-8rem",
-            marginLeft: "-10rem",
-            width: "20rem",
-            height: "16rem",
-          }}
-        >
+        <Form className="login-form">
+          {this.props.showAlert ? (
+            <GlobalAlert
+              alertType={this.props.type}
+              toggleAlert={this.props.hideAlert}
+              message={this.props.message}
+            />
+          ) : (
+            <></>
+          )}
           <Form.Group controlId="formBasicEmail">
-            <Form.Label
-              style={{
-                display: "block",
-                textAlign: "center",
-                fontSize: "25px",
-                marginTop: "2rem",
-              }}
-            >
+            <Form.Label className="login-form-label">
               <b>LOGIN</b>
             </Form.Label>
             <Form.Control
+              className="login-form-control"
               type="email"
               placeholder="Enter email"
               name="email"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
               onChange={this.handleChange}
             />
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
             <Form.Control
+              className="login-form-control"
               type="password"
               placeholder="Password"
               name="password"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
               onChange={this.handleChange}
             />
           </Form.Group>
@@ -120,9 +94,9 @@ class BodyLogin extends Component {
             <Button
               style={{
                 marginRight: "10px",
-                backgroundColor: "#48BDFF",
+                backgroundColor: "#48bdff",
                 color: "#080024",
-                border:"none"
+                border: "none",
               }}
               onClick={this.handleClick}
             >
@@ -131,7 +105,7 @@ class BodyLogin extends Component {
             <Link to="/signup">
               <Button
                 style={{
-                  backgroundColor: "#FF5522",
+                  backgroundColor: "#ff5522",
                   color: "#080024",
                   border: "none",
                 }}
@@ -146,8 +120,16 @@ class BodyLogin extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setUser }, dispatch);
+function mapStateToProps(state) {
+  return {
+    ...state.alert,
+  };
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(BodyLogin));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setUser, setAlert, hideAlert }, dispatch);
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(BodyLogin)
+);

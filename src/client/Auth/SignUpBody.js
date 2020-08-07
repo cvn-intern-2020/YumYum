@@ -2,10 +2,14 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import Validator from "validator";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
+import GlobalAlert from "../Common/GlobalAlert";
+import { setAlert, hideAlert } from "../actions/alert";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-export default class SignUpBody extends Component {
+class SignUpBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,16 +29,16 @@ export default class SignUpBody extends Component {
       this.state.name == "" ||
       this.state.phone == ""
     ) {
-      alert("empty field");
+      this.props.setAlert("danger", "empty field");
       return -1;
     }
 
     if (!Validator.isEmail(this.state.email)) {
-      alert("Invalid email");
+      this.props.setAlert("danger", "Invalid email");
       return -1;
     }
     if (this.state.password.length < 6) {
-      alert("Password must be 6 character at least");
+      this.props.setAlert("danger", "Password must be 6 character at least");
       return -1;
     }
     if (
@@ -42,7 +46,7 @@ export default class SignUpBody extends Component {
       this.state.phone.length > 11 ||
       !Validator.isNumeric(this.state.phone)
     ) {
-      alert("Phone number must be 10 number");
+      this.props.setAlert("danger", "Phone number must be 10 number");
       return -1;
     }
     axios
@@ -52,14 +56,8 @@ export default class SignUpBody extends Component {
         email: this.state.email,
         password: this.state.password,
       })
-      .then((res, err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(res);
-          this.props.history.push("/login");
-        }
-      });
+      .then(() => this.props.history.push("/login"))
+      .catch((err) => this.props.setAlert("danger", err.message));
   };
   render() {
     return (
@@ -71,60 +69,34 @@ export default class SignUpBody extends Component {
           height: "94%",
         }}
       >
-        <Form
-          style={{
-            backgroundColor: "#FFE500",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            marginTop: "-8rem",
-            marginLeft: "-8rem",
-            width: "20rem",
-            height: "25rem",
-          }}
-        >
+        <Form className="signup-form">
+          {this.props.showAlert ? (
+            <GlobalAlert
+              alertType={this.props.type}
+              toggleAlert={this.props.hideAlert}
+              message={this.props.message}
+            />
+          ) : (
+            <></>
+          )}
           <Form.Group controlId="formBasicEmail">
-            <Form.Label
-              style={{
-                display: "block",
-                textAlign: "center",
-                fontSize: "25px",
-                marginTop: "2rem",
-              }}
-            >
+            <Form.Label className="signup-form-lable">
               <b>SIGN UP</b>
             </Form.Label>
             <Form.Control
               type="email"
               name="email"
               placeholder="Enter email"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
+              className="signup-form-textbox"
               onChange={this.handleChange}
             />
           </Form.Group>
-
           <Form.Group controlId="formBasicPassword">
             <Form.Control
               type="password"
               placeholder="Password"
               name="password"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
+              className="signup-form-textbox"
               onChange={this.handleChange}
             />
           </Form.Group>
@@ -133,15 +105,7 @@ export default class SignUpBody extends Component {
               type="text"
               placeholder="Name"
               name="name"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
+              className="signup-form-textbox"
               onChange={this.handleChange}
             />
           </Form.Group>
@@ -150,25 +114,17 @@ export default class SignUpBody extends Component {
               type="text"
               placeholder="Phone"
               name="phone"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
+              className="signup-form-textbox"
               onChange={this.handleChange}
             />
           </Form.Group>
-
           <div style={{ textAlign: "center" }}>
             <Button
               style={{
-                backgroundColor: "#FF5522",
+                backgroundColor: "#ff5522",
                 color: "#080024",
                 width: "50%",
+                border: "none",
               }}
               onClick={this.handleClick}
             >
@@ -178,6 +134,19 @@ export default class SignUpBody extends Component {
         </Form>
       </div>
     );
-    
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    ...state.alert,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SignUpBody)
+);
