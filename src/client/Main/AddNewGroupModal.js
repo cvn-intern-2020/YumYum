@@ -27,19 +27,22 @@ export default class AddNewGroupModal extends Component {
       return -1;
     }
     axios
-      .post("http://localhost:3000/api/groups/new", {
-        name: this.state.name,
-        description: this.state.description,
-      }, {
-        headers: {
-          Authorization: this.props.token || this.props.location.state.token,
+      .post(
+        "http://localhost:3000/api/groups/new",
+        {
+          name: this.state.name,
+          description: this.state.description,
+        },
+        {
+          headers: {
+            Authorization: this.props.token || this.props.location.state.token,
+          },
         }
-      })
+      )
       .then((res, err) => {
         if (err) {
           console.log(err);
-        }
-        else {
+        } else {
           console.log(res);
         }
       });
@@ -58,8 +61,8 @@ export default class AddNewGroupModal extends Component {
               {this.state.err}
             </Alert>
           ) : (
-              <></>
-            )}
+            <></>
+          )}
 
           <Form>
             <Form.Group>
@@ -87,6 +90,11 @@ export default class AddNewGroupModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button
+            style={{
+              backgroundColor: "#48BDFF",
+              color: "#080024",
+              border: "none",
+            }}
             variant="primary"
             onClick={() => {
               this.handleSaveNewGroup();
@@ -95,6 +103,11 @@ export default class AddNewGroupModal extends Component {
             Save
           </Button>
           <Button
+            style={{
+              backgroundColor: "#FF5522",
+              color: "#080024",
+              border: "none",
+            }}
             variant="secondary"
             onClick={() => {
               this.props.handleClose();

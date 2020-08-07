@@ -42,7 +42,14 @@ export default class LandingNavBar extends Component {
                     </Button>
                   </Link>
                   <Link to="/login">
-                    <Button className="float-right mt-2 landing-button">
+                    <Button
+                      className="float-right mt-2 landing-button"
+                      style={{
+                        backgroundColor: "#48BDFF",
+                        color: "#080024",
+                        border: "none",
+                      }}
+                    >
                       Login
                     </Button>
                   </Link>
