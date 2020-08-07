@@ -80,15 +80,53 @@
   border: none;
 }
 .loginpage-signupbutton {
-  background-color: #FF5522;
+  background-color: #ff5522;
   color: #080024;
   border: none;
 }
 .loginpage-signupbutton:hover {
-  background-color: #FF5522;
+  background-color: #ff5522;
   color: #080024;
 }
 .loginpage-loginbutton:hover {
   background-color: #48bdff;
+  color: #080024;
+}
+
+.signup-form {
+  background-color: #ffe500;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -8rem;
+  margin-left: -8rem;
+  width: 20rem;
+  height: 25rem;
+}
+
+.signup-form-lable {
+  display: block;
+  text-align: center;
+  font-size: 1.6rem;
+  margin-top: 2rem;
+}
+
+.signup-form-textbox {
+  width: 14rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ffffff;
+  color: #000000;
+  opacity: 0.8;
+  border: 1px solid #000000;
+}
+.signuppage-signup-button {
+  background-color: #ff5522;
+  color: #080024;
+  width: 50%;
+}
+
+.signuppage-signup-button:hover {
+  background-color: #ff5522;
   color: #080024;
 }
