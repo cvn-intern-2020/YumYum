@@ -12,18 +12,7 @@ export default class Body extends Component {
           height: "94%",
         }}
       >
-        <div
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.4)",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            marginTop: "-4rem",
-            marginLeft: "-30rem",
-            width: "60rem",
-            height: "8rem",
-          }}
-        >
+        <div className="landing-div">
           <Impression />
         </div>
       </div>

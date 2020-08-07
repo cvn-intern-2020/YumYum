@@ -73,25 +73,6 @@
   opacity: 0.8;
   border: 1px solid #000000;
 }
-.loginpage-loginbutton {
-  margin-right: 10px;
-  background-color: #48bdff;
-  color: #080024;
-  border: none;
-}
-.loginpage-signupbutton {
-  background-color: #ff5522;
-  color: #080024;
-  border: none;
-}
-.loginpage-signupbutton:hover {
-  background-color: #ff5522;
-  color: #080024;
-}
-.loginpage-loginbutton:hover {
-  background-color: #48bdff;
-  color: #080024;
-}
 
 .signup-form {
   background-color: #ffe500;
@@ -100,8 +81,11 @@
   left: 50%;
   margin-top: -8rem;
   margin-left: -8rem;
-  width: 20rem;
-  height: 25rem;
+  size: auto;
+  padding-top: 0.5rem;
+  padding-bottom: 3rem;
+  padding-right: 3rem;
+  padding-left: 3rem;
 }
 
 .signup-form-lable {
@@ -120,13 +104,13 @@
   opacity: 0.8;
   border: 1px solid #000000;
 }
-.signuppage-signup-button {
-  background-color: #ff5522;
-  color: #080024;
-  width: 50%;
-}
-
-.signuppage-signup-button:hover {
-  background-color: #ff5522;
-  color: #080024;
+.landing-div {
+  background-color: rgba(255, 255, 255, 0.4);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -4rem;
+  margin-left: -30rem;
+  width: 60rem;
+  height: 8rem;
 }
