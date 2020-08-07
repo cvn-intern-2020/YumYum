@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
+import GlobalAlert from "../Common/GlobalAlert";
 
 export default class AddNewGroupModal extends Component {
   constructor(props) {
@@ -20,31 +21,47 @@ export default class AddNewGroupModal extends Component {
   toggleAlert = (err) => {
     this.setState({ ...this.state, showAlert: !this.state.showAlert, err });
   };
-
+  handleCloseButton = () => {
+    this.setState({ ...this.state, err: "", showAlert: false });
+    this.props.handleClose();
+  };
   handleSaveNewGroup = () => {
     if (this.state.description == "" || this.state.name == "") {
+      if (this.state.err != "") {
+        return -1;
+      }
       this.toggleAlert("empty field");
       return -1;
     }
     axios
-      .post("https://yumyum-hasagi.herokuapp.com/api/groups/new", {
-        name: this.state.name,
-        description: this.state.description,
-      }, {
-        headers: {
-          Authorization: this.props.token || this.props.location.state.token,
+      .post(
+        "https://yumyum-hasagi.herokuapp.com/api/groups/new",
+        {
+          name: this.state.name,
+          description: this.state.description,
+        },
+        {
+          headers: {
+            Authorization: this.props.token || this.props.location.state.token,
+          },
         }
-      })
+      )
       .then((res, err) => {
         if (err) {
           console.log(err);
-        }
-        else {
+        } else {
           console.log(res);
         }
       });
 
     this.props.handleClose();
+    this.setState({
+      ...this.state,
+      name: "",
+      description: "",
+      err: "",
+      showAlert: false,
+    });
   };
   render() {
     return (
@@ -54,12 +71,14 @@ export default class AddNewGroupModal extends Component {
         </Modal.Header>
         <Modal.Body>
           {this.state.showAlert ? (
-            <Alert variant={"danger"} dismissible onClose={this.toggleAlert}>
-              {this.state.err}
-            </Alert>
+            <GlobalAlert
+              alertType={"danger"}
+              message={this.state.err}
+              toggleAlert={this.toggleAlert}
+            />
           ) : (
-              <></>
-            )}
+            <></>
+          )}
 
           <Form>
             <Form.Group>
@@ -87,6 +106,11 @@ export default class AddNewGroupModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button
+            style={{
+              backgroundColor: "#48BDFF",
+              color: "#080024",
+              border: "none",
+            }}
             variant="primary"
             onClick={() => {
               this.handleSaveNewGroup();
@@ -95,9 +119,14 @@ export default class AddNewGroupModal extends Component {
             Save
           </Button>
           <Button
+            style={{
+              backgroundColor: "#FF5522",
+              color: "#080024",
+              border: "none",
+            }}
             variant="secondary"
             onClick={() => {
-              this.props.handleClose();
+              this.handleCloseButton();
             }}
           >
             Close

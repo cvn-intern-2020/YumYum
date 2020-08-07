@@ -50,8 +50,23 @@ class MainBody extends Component {
           style={{ position: "absolute", height: "55%" }}
           fluid
         >
-          <MyJoinedGroup />
-          <MyOwnGroup toggleAddGroupModal={this.toggleAddGroupModal} />
+          {this.props.groups ? (
+            <>
+              <MyJoinedGroup
+                joinedGroups={this.props.groups.filter(
+                  (group) => group.isOwner == false
+                )}
+              />
+              <MyOwnGroup
+                ownGroups={this.props.groups.filter(
+                  (group) => group.isOwner == true
+                )}
+                toggleAddGroupModal={this.toggleAddGroupModal}
+              />
+            </>
+          ) : (
+            <></>
+          )}
         </Container>
       </div>
     );
@@ -62,6 +77,7 @@ function mapStateToProps(state) {
   return {
     token: state.user.token,
     _id: state.user._id,
+    groups: state.user.groups,
   };
 }
 

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import userModel from "./users";
+import { isObjectID } from "../utils/validator";
 
 const Groups = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -32,28 +33,36 @@ GroupSchema.statics.getGroups = async function () {
 };
 
 GroupSchema.statics.getGroupById = async function (groupId) {
-  if (mongoose.Types.ObjectId.isValid(groupId)) {
+  if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
   }
   let result = await this.findOne({ _id: mongoose.Types.ObjectId(groupId) });
-  if (!result){
+  if (!result) {
     return { message: "groupId does not exist", status: false };
   }
-  return {result, status: true};
+  return { result, status: true };
 };
 
 GroupSchema.statics.addMember = async function (ownerId, userEmail, groupId) {
-  if (mongoose.Types.ObjectId.isValid(ownerId)) {
+  if (!isObjectID(ownerId)) {
     return { message: "invalid ownerId", status: false };
   }
-  if (mongoose.Types.ObjectId.isValid(groupId)) {
+  if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
   }
   let user = await userModel.getUserByEmail(userEmail);
+
   if (!user.status) {
     return { message: user.message, status: false };
   }
   user = user.result;
+
+  for (let group of user.groups) {
+    if (group.groupId == groupId) {
+      return { message: "User has already in group", status: false };
+    }
+  }
+
   let result = await this.findOneAndUpdate(
     {
       _id: mongoose.Types.ObjectId(groupId),
@@ -79,7 +88,7 @@ GroupSchema.statics.addMember = async function (ownerId, userEmail, groupId) {
 };
 
 GroupSchema.statics.createGroup = async function (name, ownerId, description) {
-  if (mongoose.Types.ObjectId.isValid(ownerId)) {
+  if (!isObjectID(ownerId)) {
     return { message: "invalid ownerId", status: false };
   }
   let result = await this.create({
@@ -92,13 +101,13 @@ GroupSchema.statics.createGroup = async function (name, ownerId, description) {
 };
 
 GroupSchema.statics.deleteGroupById = async function (groupId) {
-  if (mongoose.Types.ObjectId.isValid(groupId)) {
+  if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
   }
   let result = await this.deleteOne({
     _id: mongoose.Types.ObjectId(groupId),
   });
-  if (!result){
+  if (!result) {
     return { message: "groupId does not exist", status: false };
   }
   return { message: "Successfully created", status: true };
