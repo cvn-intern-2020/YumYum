@@ -71,26 +71,10 @@ export default class SignUpBody extends Component {
           height: "94%",
         }}
       >
-        <Form
-          style={{
-            backgroundColor: "#FFE500",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            marginTop: "-8rem",
-            marginLeft: "-8rem",
-            width: "20rem",
-            height: "25rem",
-          }}
-        >
+        <Form className="signup-form">
           <Form.Group controlId="formBasicEmail">
             <Form.Label
-              style={{
-                display: "block",
-                textAlign: "center",
-                fontSize: "25px",
-                marginTop: "2rem",
-              }}
+              className="signup-form-lable"
             >
               <b>SIGN UP</b>
             </Form.Label>
@@ -98,15 +82,7 @@ export default class SignUpBody extends Component {
               type="email"
               name="email"
               placeholder="Enter email"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
+              className="signup-form-textbox"
               onChange={this.handleChange}
             />
           </Form.Group>
@@ -116,15 +92,7 @@ export default class SignUpBody extends Component {
               type="password"
               placeholder="Password"
               name="password"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
+              className="signup-form-textbox"
               onChange={this.handleChange}
             />
           </Form.Group>
@@ -133,15 +101,7 @@ export default class SignUpBody extends Component {
               type="text"
               placeholder="Name"
               name="name"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
+              className="signup-form-textbox"
               onChange={this.handleChange}
             />
           </Form.Group>
@@ -150,26 +110,14 @@ export default class SignUpBody extends Component {
               type="text"
               placeholder="Phone"
               name="phone"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
+              className="signup-form-textbox"
               onChange={this.handleChange}
             />
           </Form.Group>
 
           <div style={{ textAlign: "center" }}>
             <Button
-              style={{
-                backgroundColor: "#FF5522",
-                color: "#080024",
-                width: "50%",
-              }}
+              className="signuppage-signup-button"
               onClick={this.handleClick}
             >
               <b>SignUp</b>
@@ -178,6 +126,6 @@ export default class SignUpBody extends Component {
         </Form>
       </div>
     );
-    
+
   }
 }
