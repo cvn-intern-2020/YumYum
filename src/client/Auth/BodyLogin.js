@@ -58,84 +58,39 @@ class BodyLogin extends Component {
           height: "94%",
         }}
       >
-        <Form
-          style={{
-            backgroundColor: "#FFE500",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            marginTop: "-8rem",
-            marginLeft: "-10rem",
-            width: "20rem",
-            height: "16rem",
-          }}
-        >
+        <Form className="login-form">
           <Form.Group controlId="formBasicEmail">
-            <Form.Label
-              style={{
-                display: "block",
-                textAlign: "center",
-                fontSize: "25px",
-                marginTop: "2rem",
-              }}
-            >
+            <Form.Label className="login-form-label">
               <b>LOGIN</b>
             </Form.Label>
             <Form.Control
+              className="login-form-control"
               type="email"
               placeholder="Enter email"
               name="email"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
               onChange={this.handleChange}
             />
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
             <Form.Control
+              className="login-form-control"
               type="password"
               placeholder="Password"
               name="password"
-              style={{
-                width: "14rem",
-                marginLeft: "auto",
-                marginRight: "auto",
-                backgroundColor: "#FFFFFF",
-                color: "#000000",
-                opacity: "0.8",
-                border: "1px solid #000000",
-              }}
               onChange={this.handleChange}
             />
           </Form.Group>
 
           <div style={{ textAlign: "center" }}>
             <Button
-              style={{
-                marginRight: "10px",
-                backgroundColor: "#48BDFF",
-                color: "#080024",
-                border:"none"
-              }}
+              className="loginpage-loginbutton"
               onClick={this.handleClick}
             >
               <b>Login</b>
             </Button>
             <Link to="/signup">
-              <Button
-                style={{
-                  backgroundColor: "#FF5522",
-                  color: "#080024",
-                  border: "none",
-                }}
-              >
+              <Button className="loginpage-signupbutton">
                 <b>SignUp</b>
               </Button>
             </Link>
