@@ -120,7 +120,12 @@ class SignUpBody extends Component {
           </Form.Group>
           <div style={{ textAlign: "center" }}>
             <Button
-              className="signuppage-signup-button"
+              style={{
+                backgroundColor: "#ff5522",
+                color: "#080024",
+                width: "50%",
+                border: "none",
+              }}
               onClick={this.handleClick}
             >
               <b>SignUp</b>
