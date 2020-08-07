@@ -26,13 +26,14 @@ class AddMemberModal extends Component {
   handleClickAddMember = () => {
     if (this.state.email == "") {
       if (this.state.err != "") {
+        this.props.setAlert("danger", "Empty fields");
         return -1;
       }
-      this.props.setAlert("dander", "Empty fields");
+      this.props.setAlert("danger", "Empty fields");
       return -1;
     }
     if (!Validator.isEmail(this.state.email)) {
-      this.props.setAlert("dander", "Invalid email");
+      this.props.setAlert("danger", "Invalid email");
       return -1;
     }
     this.props.handleClose();
@@ -48,13 +49,10 @@ class AddMemberModal extends Component {
           },
         }
       )
-      .then((res, err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(res);
-        }
-      });
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => this.props.setAlert("danger", err.message));
     this.props.hideAlert();
   };
   render() {

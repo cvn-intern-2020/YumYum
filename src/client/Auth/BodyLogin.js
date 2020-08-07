@@ -24,15 +24,15 @@ class BodyLogin extends Component {
   };
   handleClick = () => {
     if (this.state.email == "" || this.state.password == "") {
-      alert("empty fields");
+      this.props.setAlert("danger", "empty fields");
       return -1;
     }
     if (!Validator.isEmail(this.state.email)) {
-      alert("not email");
+      this.props.setAlert("danger", "not email");
       return -1;
     }
     if (this.state.password.length < 6) {
-      alert("not valid pass");
+      this.props.setAlert("danger", "not valid pass");
       return -1;
     }
 
@@ -58,7 +58,15 @@ class BodyLogin extends Component {
         }}
       >
         <Form className="login-form">
-        {this.props.showAlert ? <GlobalAlert alertType={this.props.type} toggleAlert={this.props.hideAlert} message={this.props.message}/> : <></>}
+          {this.props.showAlert ? (
+            <GlobalAlert
+              alertType={this.props.type}
+              toggleAlert={this.props.hideAlert}
+              message={this.props.message}
+            />
+          ) : (
+            <></>
+          )}
           <Form.Group controlId="formBasicEmail">
             <Form.Label className="login-form-label">
               <b>LOGIN</b>
