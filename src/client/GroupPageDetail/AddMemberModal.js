@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Validator from "validator";
 import Alert from "react-bootstrap/Alert";
+import axios from "axios";
 
 export default class AddMemberModal extends Component {
   constructor(props) {
@@ -30,6 +31,23 @@ export default class AddMemberModal extends Component {
     }
     console.log(this.state.email);
     this.props.handleClose();
+
+    axios
+      .post(`http://localhost:3000/api/groups/${this.props.match.params.groupId}/add/member`, {
+        userEmail: this.state.email,
+      }, {
+        headers: {
+          Authorization: this.props.token || this.props.location.state.token,
+        }
+      })
+      .then((res, err) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          console.log(res);
+        }
+      });
   };
   render() {
     return (

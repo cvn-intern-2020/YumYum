@@ -51,10 +51,21 @@ GroupSchema.statics.addMember = async function (ownerId, userEmail, groupId) {
     return { message: "invalid groupId", status: false };
   }
   let user = await userModel.getUserByEmail(userEmail);
+  
   if (!user.status) {
     return { message: user.message, status: false };
   }
   user = user.result;
+
+  for(let group of user.groups){
+    console.log(group);
+    if (group.groupId == groupId)
+    {
+      
+      return { message: "User has already in group", status: false };
+    }
+  }
+
   let result = await this.findOneAndUpdate(
     {
       _id: mongoose.Types.ObjectId(groupId),
