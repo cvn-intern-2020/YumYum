@@ -13,4 +13,8 @@ jobs:
 workflows:
     install-and-lint:
       jobs:
-        - lint  
+        - lint:
+          filters:
+            branches:
+              ignore:
+                - CD-experimental-branch
