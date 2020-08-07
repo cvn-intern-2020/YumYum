@@ -41,26 +41,6 @@ export default class MainNavBar extends Component {
                 alt="React Bootstrap logo"
                 className="float-right mt-2 mr-2"
               />
-              <img
-                src="../../../public/mygroup.png"
-                width="40"
-                height="40"
-                alt="React Bootstrap logo"
-                className="float-right mt-2 mr-2"
-              />
-              <Form inline className = "float-right mr-2">
-                <FormControl
-                  type="text"
-                  placeholder="Search"
-                  className="mt-2"
-                />
-                <Button
-                  style={{ backgroundColor: "#48BDFF", color: "#080024" }}
-                  className="mt-2"
-                >
-                  Search
-                </Button>
-              </Form>
             </div>
           </div>
         </Navbar>
