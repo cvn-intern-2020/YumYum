@@ -34,7 +34,7 @@ class AddNewGroupModal extends Component {
     }
     axios
       .post(
-        "http://localhost:3000/api/groups/new",
+        `${process.env.API_URL}/api/groups/new`,
         {
           name: this.state.name,
           description: this.state.description,

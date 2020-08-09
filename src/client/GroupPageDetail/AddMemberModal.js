@@ -39,7 +39,7 @@ class AddMemberModal extends Component {
     this.props.handleClose();
     axios
       .post(
-        `http://localhost:3000/api/groups/${this.props.match.params.groupId}/add/member`,
+        `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}/add/member`,
         {
           userEmail: this.state.email,
         },

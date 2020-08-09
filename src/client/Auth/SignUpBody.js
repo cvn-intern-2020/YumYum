@@ -50,7 +50,7 @@ class SignUpBody extends Component {
       return -1;
     }
     axios
-      .post("http://localhost:3000/api/auth/signup", {
+      .post(`${process.env.API_URL}/api/auth/signup`, {
         name: this.state.name,
         phone: this.state.phone,
         email: this.state.email,

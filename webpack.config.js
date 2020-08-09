@@ -1,7 +1,13 @@
-
 const path = require("path");
+const dotenv = require("dotenv");
+const webpack = require("webpack");
 
 module.exports = () => {
+  const env = dotenv.config().parsed;
+  const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+  }, {});
   return {
     entry: "./src/client/Index.js",
     output: {
@@ -32,5 +38,6 @@ module.exports = () => {
     resolve: {
       extensions: [".js", ".jsx", ".json", ".wasm", ".mjs", "*"],
     },
+    plugins: [new webpack.DefinePlugin(envKeys)],
   };
 };

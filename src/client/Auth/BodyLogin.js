@@ -37,7 +37,7 @@ class BodyLogin extends Component {
     }
 
     axios
-      .post("http://localhost:3000/api/auth/signin", {
+      .post(`${process.env.API_URL}/api/auth/signin`, {
         email: this.state.email,
         password: this.state.password,
       })
