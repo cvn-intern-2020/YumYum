@@ -80,7 +80,7 @@ class SignUpBody extends Component {
             <></>
           )}
           <Form.Group controlId="formBasicEmail">
-            <Form.Label className="signup-form-lable">
+            <Form.Label className="signup-form-label">
               <b>SIGN UP</b>
             </Form.Label>
             <Form.Control
