@@ -26,10 +26,10 @@ class AddMemberModal extends Component {
   handleClickAddMember = () => {
     if (this.state.email == "") {
       if (this.state.err != "") {
-        this.props.setAlert("danger", "Empty fields");
+        this.props.setAlert("danger", "Email is empty");
         return -1;
       }
-      this.props.setAlert("danger", "Empty fields");
+      this.props.setAlert("danger", "Email is empty");
       return -1;
     }
     if (!Validator.isEmail(this.state.email)) {

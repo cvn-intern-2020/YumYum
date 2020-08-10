@@ -23,13 +23,20 @@ class SignUpBody extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleClick = () => {
-    if (
-      this.state.email == "" ||
-      this.state.password == "" ||
-      this.state.name == "" ||
-      this.state.phone == ""
-    ) {
-      this.props.setAlert("danger", "empty field");
+    if (this.state.email == "") {
+      this.props.setAlert("danger", "Email is empty");
+      return -1;
+    }
+    if (this.state.password == "") {
+      this.props.setAlert("danger", "Password is empty");
+      return -1;
+    }
+    if (this.state.name == "") {
+      this.props.setAlert("danger", "Name is empty");
+      return -1;
+    }
+    if (this.state.phone == "") {
+      this.props.setAlert("danger", "Phone is empty");
       return -1;
     }
 
