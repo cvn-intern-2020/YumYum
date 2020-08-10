@@ -35,7 +35,6 @@ class BodyLogin extends Component {
       this.props.setAlert("danger", "not valid pass");
       return -1;
     }
-
     axios
       .post(`${process.env.API_URL}/api/auth/signin`, {
         email: this.state.email,
@@ -47,6 +46,9 @@ class BodyLogin extends Component {
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
   };
+  componentWillUnmount() {
+    this.props.hideAlert();
+  }
   render() {
     return (
       <div
