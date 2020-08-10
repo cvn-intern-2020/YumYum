@@ -11,14 +11,7 @@ export default class MyOwnGroup extends Component {
           <Row>
             <Col>
               <p
-                className="mt-4"
-                style={{
-                  backgroundColor: "#48BDFF",
-                  width: "40%",
-                  fontSize: "2rem",
-                  borderRadius: "1rem",
-                  textAlign: "center",
-                }}
+                className="mt-4 my-own-group-text-lable"
               >
                 My Own Group
               </p>
@@ -26,16 +19,10 @@ export default class MyOwnGroup extends Component {
             <Col></Col>
             <Col>
               <Button
+                className="add-new-group-button"
                 style={{
                   backgroundColor: "#FFE500",
                   color: "#080024",
-                  width: "50%",
-                  marginTop: "1.5rem",
-                  marginBottom: "1rem",
-                  float: "right",
-                  fontSize: "1.7rem",
-                  textAlign: "center",
-                  borderRadius: "0.5rem",
                 }}
                 onClick={this.props.toggleAddGroupModal}
               >
@@ -47,8 +34,7 @@ export default class MyOwnGroup extends Component {
 
         <Container
           fluid
-          style={{ maxHeight: "60%", overflowY: "auto", overflowX: "hidden" }}
-          className="pr-0"
+          className="pr-0 my-joined-own-group-container"
         >
           <ListGroup style={{ backgroundColor: "#C4C4C4" }}>
           {this.props.ownGroups.map((group) => {
