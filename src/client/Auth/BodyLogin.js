@@ -23,11 +23,11 @@ class BodyLogin extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleClick = () => {
-    if (this.state.email == "" ) {
+    if (this.state.email == "") {
       this.props.setAlert("danger", "Email is empty");
       return -1;
     }
-    if (this.state.password == "" ) {
+    if (this.state.password == "") {
       this.props.setAlert("danger", "Password is empty");
       return -1;
     }
@@ -64,15 +64,6 @@ class BodyLogin extends Component {
         }}
       >
         <Form className="login-form">
-          {this.props.showAlert ? (
-            <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
-            />
-          ) : (
-            <></>
-          )}
           <Form.Group controlId="formBasicEmail">
             <Form.Label className="login-form-label">
               <b>LOGIN</b>
@@ -103,6 +94,7 @@ class BodyLogin extends Component {
                 backgroundColor: "#48bdff",
                 color: "#080024",
                 border: "none",
+                marginBottom: "1rem",
               }}
               onClick={this.handleClick}
             >
@@ -114,12 +106,22 @@ class BodyLogin extends Component {
                   backgroundColor: "#ff5522",
                   color: "#080024",
                   border: "none",
+                  marginBottom: "1rem",
                 }}
               >
                 <b>SignUp</b>
               </Button>
             </Link>
           </div>
+          {this.props.showAlert ? (
+            <GlobalAlert
+              alertType={this.props.type}
+              toggleAlert={this.props.hideAlert}
+              message={this.props.message}
+            />
+          ) : (
+            <></>
+          )}
         </Form>
       </div>
     );
