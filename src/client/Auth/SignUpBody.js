@@ -82,15 +82,6 @@ class SignUpBody extends Component {
         }}
       >
         <Form className="signup-form">
-          {this.props.showAlert ? (
-            <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
-            />
-          ) : (
-            <></>
-          )}
           <Form.Group controlId="formBasicEmail">
             <Form.Label className="signup-form-label">
               <b>SIGN UP</b>
@@ -137,12 +128,23 @@ class SignUpBody extends Component {
                 color: "#080024",
                 width: "50%",
                 border: "none",
+                marginBottom: "1rem",
               }}
               onClick={this.handleClick}
             >
               <b>SignUp</b>
             </Button>
           </div>
+
+          {this.props.showAlert ? (
+            <GlobalAlert
+              alertType={this.props.type}
+              toggleAlert={this.props.hideAlert}
+              message={this.props.message}
+            />
+          ) : (
+            <></>
+          )}
         </Form>
       </div>
     );

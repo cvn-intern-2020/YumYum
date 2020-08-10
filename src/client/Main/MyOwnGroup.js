@@ -9,7 +9,7 @@ export default class MyOwnGroup extends Component {
         <Container fluid>
           <Row>
             <Col>
-              <p className="mt-4 my-own-group-text-lable">My Own Group</p>
+              <p className="mt-5 my-own-group-text-lable">My Own Group</p>
             </Col>
             <Col></Col>
             <Col>
