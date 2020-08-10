@@ -36,7 +36,6 @@ class AddMemberModal extends Component {
       this.props.setAlert("danger", "Invalid email");
       return -1;
     }
-    this.props.handleClose();
     axios
       .post(
         `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}/add/member`,
@@ -51,6 +50,7 @@ class AddMemberModal extends Component {
       )
       .then((res) => {
         console.log(res);
+        this.props.handleClose();
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
     this.props.hideAlert();
@@ -72,8 +72,8 @@ class AddMemberModal extends Component {
               message={this.props.message}
             />
           ) : (
-            <></>
-          )}
+              <></>
+            )}
           <Form.Group>
             <Form.Label>Member Email: </Form.Label>
             <Form.Control
