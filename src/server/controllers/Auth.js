@@ -29,5 +29,5 @@ export const signInController = async (req, res) => {
       token: result.token,
     });
   }
-  return res.status(400).json(result.message);
+  return res.status(400).json({message: result.message});
 };
