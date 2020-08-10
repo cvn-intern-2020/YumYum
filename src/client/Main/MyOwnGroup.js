@@ -9,11 +9,7 @@ export default class MyOwnGroup extends Component {
         <Container fluid>
           <Row>
             <Col>
-              <p
-                className="mt-4 my-own-group-text-lable"
-              >
-                My Own Group
-              </p>
+              <p className="mt-4 my-own-group-text-lable">My Own Group</p>
             </Col>
             <Col></Col>
             <Col>
@@ -31,10 +27,7 @@ export default class MyOwnGroup extends Component {
           </Row>
         </Container>
 
-        <Container
-          fluid
-          className="pr-0 my-joined-own-group-container"
-        >
+        <Container fluid className="pr-0 my-joined-own-group-container">
           <ListGroup style={{ backgroundColor: "#C4C4C4" }}>
             {this.props.ownGroups.map((group) => {
               return (
@@ -42,6 +35,7 @@ export default class MyOwnGroup extends Component {
                   name={group.name}
                   description={group.description}
                   key={group._id}
+                  groupId={group.groupId}
                 />
               );
             })}
