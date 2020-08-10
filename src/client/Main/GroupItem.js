@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ListGroup, Row, Col, Image } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default class GroupItem extends Component {
   render() {
@@ -19,7 +20,12 @@ export default class GroupItem extends Component {
                 backgroundColor: "#FFE500",
               }}
             >
-              {this.props.name}
+              <Link
+                style={{ textDecoration: "none", color: "#080024" }}
+                to={`/group/${this.props.groupId}`}
+              >
+                {this.props.name}
+              </Link>
             </div>
             <div style={{ height: "60%", backgroundColor: "#48BDFF" }}>
               {this.props.description}
