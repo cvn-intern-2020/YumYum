@@ -14,7 +14,9 @@ export default class MyJoinedGroup extends Component {
                 <GroupItem
                   name={group.name}
                   description={group.description}
-                  groupdId={group._id}
+                  key={group.groupId}
+                  groupId={group.groupId}
+                  groupdId={group.groupId}
                   key={group._id}
                 />
               );
