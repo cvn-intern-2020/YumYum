@@ -35,6 +35,10 @@ class GroupBody extends Component {
         if (err) {
           console.log(err);
         } else {
+          this.setState({
+            ...this.state,
+            ...res.data,
+          });
           console.log(res.data);
         }
       });
@@ -56,7 +60,7 @@ class GroupBody extends Component {
           {...this.props}
         />
         <div className="row w-100 m-0">
-          <div className="col-6">
+          <div className="col-4">
             <Button
               style={{ backgroundColor: "#FF5522", color: "#080024" }}
               className="float-left ml-5 mt-4 group-button"
@@ -65,7 +69,15 @@ class GroupBody extends Component {
               Add Member
             </Button>{" "}
           </div>
-          <div className="col-6">
+
+          <div
+            className="mt-4 col-4"
+            style={{ fontSize: "40px", textAlign: "center", color: "white" }}
+          >
+            {this.state.name}
+          </div>
+
+          <div className="col-4">
             <Button
               style={{ backgroundColor: "#48BDFF", color: "#080024" }}
               className="float-right mt-4 mr-5 group-button"

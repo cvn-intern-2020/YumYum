@@ -3,6 +3,11 @@
     height: 66px;
     font-size: 30px;
   }
+  .group-label {
+    width: 300px;
+    height: 66px;
+    font-size: 30px;
+  }
   .group-cardtext {
     background-color: #48bdff;
     border-bottom-left-radius: 25px;
