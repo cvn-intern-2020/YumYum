@@ -1,0 +1,44 @@
+.main-body-group-container{
+    position: absolute;
+    height: 55%;
+}
+
+.joined-group-text-lable{
+    background-color: #FF5522;
+    width: 12%;
+    font-size: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    margin-left: 1rem;
+}
+
+.my-own-group-text-lable{
+    background-color: #48BDFF;
+    width: 40%;
+    font-size: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.my-joined-own-group-container{
+    max-height: 60%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.add-new-group-button{
+    width: 50%;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    float: right;
+    font-size: 1.7rem;
+    text-align: center;
+    border-radius: 0.5rem;
+}
+
+.main-body-background-div{
+    background-image: url(./background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 94%;
+}

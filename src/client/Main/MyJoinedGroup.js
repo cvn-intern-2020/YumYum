@@ -7,22 +7,13 @@ export default class MyJoinedGroup extends Component {
     return (
       <>
         <p
-          className="mt-5"
-          style={{
-            backgroundColor: "#FF5522",
-            width: "12%",
-            fontSize: "2rem",
-            borderRadius: "1rem",
-            textAlign: "center",
-            marginLeft: "1rem",
-          }}
+          className="mt-5 joined-group-text-lable"
         >
           Joined Group
         </p>
         <Container
           fluid
-          style={{ maxHeight: "60%", overflowY: "auto", overflowX: "hidden" }}
-          className="pr-0"
+          className="pr-0 my-joined-own-group-container"
         >
           <ListGroup style={{ backgroundColor: "#C4C4C4" }}>
             {this.props.joinedGroups.map((group) => {
