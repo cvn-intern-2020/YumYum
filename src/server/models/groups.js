@@ -97,7 +97,7 @@ GroupSchema.statics.createGroup = async function (name, ownerId, description) {
     description: description,
   });
   userModel.addUserGroup(ownerId, result._id, name, true);
-  return { message: "Successfully created", status: true };
+  return { result, status: true };
 };
 
 GroupSchema.statics.deleteGroupById = async function (groupId) {

@@ -11,12 +11,14 @@ router.get("/:groupId", async (req, res) => {
     return res.status(400).json(result.message);
   }
   result = result.result;
-  for(const user of result.users ){
-    if(userId == user.userId){
+  for (const user of result.users) {
+    if (userId == user.userId) {
       return res.status(200).json(result);
     }
   }
-  return res.status(400).json({message: "You are not a member of this group"});
+  return res
+    .status(400)
+    .json({ message: "You are not a member of this group" });
 });
 router.post("/:groupId/add/member", async (req, res) => {
   let userEmail = req.body.userEmail;
@@ -39,9 +41,9 @@ router.post("/new", async (req, res) => {
   let ownerId = req._id;
   let result = await groupModel.createGroup(name, ownerId, description);
   if (!result.status) {
-    return res.status(400).json({ message: "something went wrong" });
+    return res.status(200).json(result.result);
   }
-  return res.status(200).json(result.message);
+  return res.status(400).json({ message: "something went wrong" });
 });
 
 router.delete("/", async (req, res) => {
