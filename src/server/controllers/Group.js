@@ -1,4 +1,8 @@
-import { getGroupById, addMemberToGroup } from "../services/groupService";
+import {
+  getGroupById,
+  addMemberToGroup,
+  createGroup,
+} from "../services/groupService";
 import { getUserByEmail, addGroupToUser } from "../services/userService";
 
 export const getGroupController = async (req, res) => {
@@ -50,4 +54,14 @@ export const addMemberController = async (req, res) => {
     return res.status(400).json({ message: result2.message });
   }
   return res.status(200).json({ message: "Successfully Added" });
+};
+
+export const createNewGroupController = async (req, res) => {
+  let { name, description } = req.body;
+  let ownerId = req._id;
+  let result = await createGroup(name, ownerId, description);
+  if (result.status) {
+    return res.status(200).json(result);
+  }
+  return res.status(400).json({ message: "something went wrong" });
 };

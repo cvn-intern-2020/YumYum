@@ -1,6 +1,10 @@
 import express from "express";
 import groupModel from "../models/groups";
-import { getGroupController, addMemberController } from "../controllers/Group";
+import {
+  getGroupController,
+  addMemberController,
+  createNewGroupController,
+} from "../controllers/Group";
 
 const router = express.Router();
 
@@ -45,15 +49,19 @@ router.post(
 //   return res.status(200).json(result);
 // });
 
-router.post("/new", async (req, res) => {
-  let { name, description } = req.body;
-  let ownerId = req._id;
-  let result = await groupModel.createGroup(name, ownerId, description);
-  if (!result.status) {
-    return res.status(200).json(result.result);
-  }
-  return res.status(400).json({ message: "something went wrong" });
-});
+router.post(
+  "/new",
+  createNewGroupController
+  // async (req, res) => {
+  //   let { name, description } = req.body;
+  //   let ownerId = req._id;
+  //   let result = await groupModel.createGroup(name, ownerId, description);
+  //   if (!result.status) {
+  //     return res.status(200).json(result.result);
+  //   }
+  //   return res.status(400).json({ message: "something went wrong" });
+  // }
+);
 
 router.delete("/", async (req, res) => {
   let groupId = req.body.groupId;
