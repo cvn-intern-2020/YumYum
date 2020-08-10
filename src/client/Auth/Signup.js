@@ -6,8 +6,8 @@ export default class Signup extends Component {
   render() {
     return (
       <div className="h-100">
-        <LandingNavBar {...this.props}/>
-        <SignUpBody {...this.props}/>
+        <LandingNavBar {...this.props} />
+        <SignUpBody {...this.props} />
       </div>
     );
   }

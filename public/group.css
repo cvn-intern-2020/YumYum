@@ -1,37 +1,37 @@
 .group-button {
-    width: 235px;
-    height: 66px;
-    font-size: 30px;
-  }
-  .group-label {
-    width: 300px;
-    height: 66px;
-    font-size: 30px;
-  }
-  .group-cardtext {
-    background-color: #48bdff;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-    padding: 10px;
-  }
-  .group-container {
-    width: 1470px !important;
-    height: 300px !important;
-    position: absolute;
-    left: 50%;
-    margin-left: -735px;
-  }
-  .text-center {
-    width: 1500px !important;
-    height: 350px !important;
-    position: absolute;
-    left: 50%;
-    margin-left: -750px;
-    background-color: #ffe500;
-    margin-top: 15px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-  }
-  .dish-label {
-    font-size: 25px;
-  }
+  width: 235px;
+  height: 66px;
+  font-size: 30px;
+}
+.group-label {
+  width: 300px;
+  height: 66px;
+  font-size: 30px;
+}
+.group-cardtext {
+  background-color: #48bdff;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  padding: 10px;
+}
+.group-container {
+  width: 1470px !important;
+  height: 300px !important;
+  position: absolute;
+  left: 50%;
+  margin-left: -735px;
+}
+.text-center {
+  width: 1500px !important;
+  height: 350px !important;
+  position: absolute;
+  left: 50%;
+  margin-left: -750px;
+  background-color: #ffe500;
+  margin-top: 15px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.dish-label {
+  font-size: 25px;
+}
