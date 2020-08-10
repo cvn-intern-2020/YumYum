@@ -8,7 +8,7 @@ export const setUser = (token) => (dispatch) => {
   // // Decode token to get user data
   const decoded = jwt_decode(token);
   axios
-    .get("https://yumyum-hasagi.herokuapp.com/api/users", {
+    .get(`${process.env.API_URL}/api/users`, {
       headers: {
         Authorization: token,
       },

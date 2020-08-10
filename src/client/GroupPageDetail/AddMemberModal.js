@@ -26,10 +26,10 @@ class AddMemberModal extends Component {
   handleClickAddMember = () => {
     if (this.state.email == "") {
       if (this.state.err != "") {
-        this.props.setAlert("danger", "Empty fields");
+        this.props.setAlert("danger", "Email is empty");
         return -1;
       }
-      this.props.setAlert("danger", "Empty fields");
+      this.props.setAlert("danger", "Email is empty");
       return -1;
     }
     if (!Validator.isEmail(this.state.email)) {
@@ -39,7 +39,7 @@ class AddMemberModal extends Component {
     this.props.handleClose();
     axios
       .post(
-        `https://yumyum-hasagi.herokuapp.com/api/groups/${this.props.match.params.groupId}/add/member`,
+        `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}/add/member`,
         {
           userEmail: this.state.email,
         },
@@ -52,9 +52,12 @@ class AddMemberModal extends Component {
       .then((res) => {
         console.log(res);
       })
-      .catch((err) => this.props.setAlert("danger", err.message));
+      .catch((err) => this.props.setAlert("danger", err.response.data.message));
     this.props.hideAlert();
   };
+  componentWillUnmount() {
+    this.props.hideAlert();
+  }
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>

@@ -20,21 +20,36 @@ class AddNewGroupModal extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   handleCloseButton = () => {
+    this.setState({
+      ...this.state,
+      name: "",
+      description: "",
+      err: "",
+      showAlert: false,
+    });
     this.props.hideAlert();
     this.props.handleClose();
   };
   handleSaveNewGroup = () => {
-    if (this.state.description == "" || this.state.name == "") {
+    if (this.state.name == "") {
       if (this.state.err != "") {
-        this.props.setAlert("danger", "empty field");
+        this.props.setAlert("danger", "Group's name is empty");
         return -1;
       }
-      this.props.setAlert("danger", "empty field");
+      this.props.setAlert("danger", "Group's name is empty");
+      return -1;
+    }
+    if (this.state.description == "") {
+      if (this.state.err != "") {
+        this.props.setAlert("danger", "Group's description is empty");
+        return -1;
+      }
+      this.props.setAlert("danger", "Group's description is empty");
       return -1;
     }
     axios
       .post(
-        "https://yumyum-hasagi.herokuapp.com/api/groups/new",
+        `${process.env.API_URL}/api/groups/new`,
         {
           name: this.state.name,
           description: this.state.description,
@@ -48,17 +63,13 @@ class AddNewGroupModal extends Component {
       .then((res) => {
         console.log(res);
       })
-      .catch((err) => this.props.setAlert("danger", err.message));
+      .catch((err) => this.props.setAlert("danger", err.response.data.message));
 
     this.props.handleClose();
-    this.setState({
-      ...this.state,
-      name: "",
-      description: "",
-      err: "",
-      showAlert: false,
-    });
   };
+  componentWillUnmount() {
+    this.props.hideAlert();
+  }
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>

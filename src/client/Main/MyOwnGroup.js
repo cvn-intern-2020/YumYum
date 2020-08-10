@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Container, ListGroup, Row, Col, Image, Button } from "react-bootstrap";
 import GroupItem from "./GroupItem";
 
-
 export default class MyOwnGroup extends Component {
   render() {
     return (
@@ -10,32 +9,15 @@ export default class MyOwnGroup extends Component {
         <Container fluid>
           <Row>
             <Col>
-              <p
-                className="mt-4"
-                style={{
-                  backgroundColor: "#48BDFF",
-                  width: "40%",
-                  fontSize: "2rem",
-                  borderRadius: "1rem",
-                  textAlign: "center",
-                }}
-              >
-                My Own Group
-              </p>
+              <p className="mt-4 my-own-group-text-lable">My Own Group</p>
             </Col>
             <Col></Col>
             <Col>
               <Button
+                className="add-new-group-button"
                 style={{
                   backgroundColor: "#FFE500",
                   color: "#080024",
-                  width: "50%",
-                  marginTop: "1.5rem",
-                  marginBottom: "1rem",
-                  float: "right",
-                  fontSize: "1.7rem",
-                  textAlign: "center",
-                  borderRadius: "0.5rem",
                 }}
                 onClick={this.props.toggleAddGroupModal}
               >
@@ -45,18 +27,15 @@ export default class MyOwnGroup extends Component {
           </Row>
         </Container>
 
-        <Container
-          fluid
-          style={{ maxHeight: "60%", overflowY: "auto", overflowX: "hidden" }}
-          className="pr-0"
-        >
+        <Container fluid className="pr-0 my-joined-own-group-container">
           <ListGroup style={{ backgroundColor: "#C4C4C4" }}>
-          {this.props.ownGroups.map((group) => {
+            {this.props.ownGroups.map((group) => {
               return (
                 <GroupItem
                   name={group.name}
                   description={group.description}
                   key={group._id}
+                  groupId={group.groupId}
                 />
               );
             })}

@@ -32,12 +32,7 @@ class MainBody extends Component {
   render() {
     return (
       <div
-        style={{
-          backgroundImage: "url(../../../public/background.jpg)",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "94%",
-        }}
+        className="main-body-background-div"
       >
         <AddNewGroupModal
           show={this.state.showAddGroupModal}
@@ -46,8 +41,7 @@ class MainBody extends Component {
         />
 
         <Container
-          className="ml-2"
-          style={{ position: "absolute", height: "55%" }}
+          className="ml-2 main-body-group-container"
           fluid
         >
           {this.props.groups ? (

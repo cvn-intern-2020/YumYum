@@ -23,13 +23,20 @@ class SignUpBody extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleClick = () => {
-    if (
-      this.state.email == "" ||
-      this.state.password == "" ||
-      this.state.name == "" ||
-      this.state.phone == ""
-    ) {
-      this.props.setAlert("danger", "empty field");
+    if (this.state.email == "") {
+      this.props.setAlert("danger", "Email is empty");
+      return -1;
+    }
+    if (this.state.password == "") {
+      this.props.setAlert("danger", "Password is empty");
+      return -1;
+    }
+    if (this.state.name == "") {
+      this.props.setAlert("danger", "Name is empty");
+      return -1;
+    }
+    if (this.state.phone == "") {
+      this.props.setAlert("danger", "Phone is empty");
       return -1;
     }
 
@@ -50,15 +57,20 @@ class SignUpBody extends Component {
       return -1;
     }
     axios
-      .post("https://yumyum-hasagi.herokuapp.com/api/auth/signup", {
+      .post(`${process.env.API_URL}/api/auth/signup`, {
         name: this.state.name,
         phone: this.state.phone,
         email: this.state.email,
         password: this.state.password,
       })
       .then(() => this.props.history.push("/login"))
-      .catch((err) => this.props.setAlert("danger", err.message));
+      .catch((err) => {
+        this.props.setAlert("danger", err.response.data.message);
+      });
   };
+  componentWillUnmount() {
+    this.props.hideAlert();
+  }
   render() {
     return (
       <div
@@ -80,7 +92,7 @@ class SignUpBody extends Component {
             <></>
           )}
           <Form.Group controlId="formBasicEmail">
-            <Form.Label className="signup-form-lable">
+            <Form.Label className="signup-form-label">
               <b>SIGN UP</b>
             </Form.Label>
             <Form.Control

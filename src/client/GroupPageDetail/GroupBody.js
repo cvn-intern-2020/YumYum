@@ -24,7 +24,7 @@ class GroupBody extends Component {
   componentDidMount() {
     axios
       .get(
-        `https://yumyum-hasagi.herokuapp.com/api/groups/${this.props.match.params.groupId}`,
+        `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}`,
         {
           headers: {
             Authorization: this.props.token,

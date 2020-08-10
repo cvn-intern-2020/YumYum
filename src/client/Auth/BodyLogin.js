@@ -23,8 +23,12 @@ class BodyLogin extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleClick = () => {
-    if (this.state.email == "" || this.state.password == "") {
-      this.props.setAlert("danger", "empty fields");
+    if (this.state.email == "" ) {
+      this.props.setAlert("danger", "Email is empty");
+      return -1;
+    }
+    if (this.state.password == "" ) {
+      this.props.setAlert("danger", "Password is empty");
       return -1;
     }
     if (!Validator.isEmail(this.state.email)) {
@@ -35,9 +39,8 @@ class BodyLogin extends Component {
       this.props.setAlert("danger", "not valid pass");
       return -1;
     }
-
     axios
-      .post("https://yumyum-hasagi.herokuapp.com/api/auth/signin", {
+      .post(`${process.env.API_URL}/api/auth/signin`, {
         email: this.state.email,
         password: this.state.password,
       })
@@ -45,8 +48,11 @@ class BodyLogin extends Component {
         this.props.setUser(res.data.token);
         this.props.history.push("/main", { token: res.data.token });
       })
-      .catch((err) => this.props.setAlert("danger", err.message));
+      .catch((err) => this.props.setAlert("danger", err.response.data.message));
   };
+  componentWillUnmount() {
+    this.props.hideAlert();
+  }
   render() {
     return (
       <div
