@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Container, ListGroup, Row, Col, Image, Button } from "react-bootstrap";
 import GroupItem from "./GroupItem";
 
-
 export default class MyOwnGroup extends Component {
   render() {
     return (
@@ -51,7 +50,7 @@ export default class MyOwnGroup extends Component {
           className="pr-0"
         >
           <ListGroup style={{ backgroundColor: "#C4C4C4" }}>
-          {this.props.ownGroups.map((group) => {
+            {this.props.ownGroups.map((group) => {
               return (
                 <GroupItem
                   name={group.name}
