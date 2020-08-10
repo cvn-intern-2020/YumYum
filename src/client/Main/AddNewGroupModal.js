@@ -59,6 +59,9 @@ class AddNewGroupModal extends Component {
       showAlert: false,
     });
   };
+  componentWillUnmount() {
+    this.props.hideAlert();
+  }
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>

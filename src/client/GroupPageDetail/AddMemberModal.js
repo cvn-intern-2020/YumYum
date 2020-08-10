@@ -55,6 +55,9 @@ class AddMemberModal extends Component {
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
     this.props.hideAlert();
   };
+  componentWillUnmount() {
+    this.props.hideAlert();
+  }
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>

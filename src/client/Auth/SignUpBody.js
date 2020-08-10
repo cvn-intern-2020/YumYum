@@ -61,6 +61,9 @@ class SignUpBody extends Component {
         this.props.setAlert("danger", err.response.data.message);
       });
   };
+  componentWillUnmount() {
+    this.props.hideAlert();
+  }
   render() {
     return (
       <div
