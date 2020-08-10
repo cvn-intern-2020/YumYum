@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../actions/alert";
+import { setUser } from "../actions/user";
 
 class AddNewGroupModal extends Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class AddNewGroupModal extends Component {
         }
       )
       .then((res) => {
-        console.log(res);
+        this.props.setUser(this.props.token);
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
 
@@ -146,11 +147,12 @@ class AddNewGroupModal extends Component {
 function mapStateToProps(state) {
   return {
     ...state.alert,
+    token: state.user.token,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  return bindActionCreators({ setAlert, hideAlert, setUser }, dispatch);
 }
 
 export default withRouter(
