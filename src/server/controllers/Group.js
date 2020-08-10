@@ -1,4 +1,5 @@
-import { getGroupById } from "../services/groupService";
+import { getGroupById, addMemberToGroup } from "../services/groupService";
+import { getUserByEmail, addGroupToUser } from "../services/userService";
 
 export const getGroupController = async (req, res) => {
   let groupId = req.params.groupId;
@@ -19,4 +20,34 @@ export const getGroupController = async (req, res) => {
   return res
     .status(400)
     .json({ message: "You are not a member of this group" });
+};
+
+export const addMemberController = async (req, res) => {
+  let userEmail = req.body.userEmail;
+  let ownerId = req._id;
+  let groupId = req.params.groupId;
+  let user = await getUserByEmail(userEmail);
+  if (!user.status) {
+    return res.status(400).json({ message: "Email does not exist" });
+  }
+  user = user.result;
+  for (let group of user.groups) {
+    if (group.groupId == groupId) {
+      return res.status(400).json({ message: "User has already in group" });
+    }
+  }
+  let result1 = await addMemberToGroup(ownerId, user, groupId);
+  if (!result1.status) {
+    return res.status(400).json({ message: result1.message });
+  }
+  let result2 = await addGroupToUser(
+    user._id,
+    groupId,
+    result1.result.name,
+    false
+  );
+  if (!result2.status) {
+    return res.status(400).json({ message: result2.message });
+  }
+  return res.status(200).json({ message: "Successfully Added" });
 };

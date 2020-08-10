@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 export const getUserByEmail = async (email) => {
   let result = await userModel
     .findOne({ email: email })
-    .select("email password groups")
+    .select("email password groups name")
     .lean();
   if (!result) {
     return { message: "Email does not exist", status: false };
@@ -31,4 +31,25 @@ export const getUserById = async (userId) => {
     return { result, status: true };
   }
   return { status: false, message: "User does not exist" };
+};
+
+export const addGroupToUser = async (userId, groupId, name, isOwner) => {
+  let result = await userModel.findOneAndUpdate(
+    {
+      _id: mongoose.Types.ObjectId(userId),
+    },
+    {
+      $push: {
+        groups: {
+          groupId,
+          name,
+          isOwner,
+        },
+      },
+    }
+  );
+  if (result) {
+    return { result, status: true };
+  }
+  return { status: false, message: "UserId does not exist" };
 };
