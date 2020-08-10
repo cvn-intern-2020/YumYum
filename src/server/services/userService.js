@@ -1,4 +1,5 @@
 import userModel from "../models/users";
+import mongoose from "mongoose";
 
 export const getUserByEmail = async (email) => {
   let result = await userModel
@@ -19,4 +20,15 @@ export const createUser = async (email, phone, password, name) => {
     password: password,
   });
   return { result, status: true };
+};
+
+export const getUserById = async (userId) => {
+  let result = await userModel
+    .findOne({ _id: mongoose.Types.ObjectId(userId) })
+    .select("-password -__v")
+    .lean();
+  if (result) {
+    return { result, status: true };
+  }
+  return { status: false, message: "User does not exist" };
 };
