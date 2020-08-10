@@ -58,7 +58,7 @@ export const createGroup = async (name, ownerId, description) => {
   });
   let result2 = await addGroupToUser(ownerId, result1._id, name, true);
   if (result2.status) {
-    return { result1, status: true };
+    return { result: result1, status: true };
   }
   return { message: result2.message, status: false };
 };

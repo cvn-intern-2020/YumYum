@@ -61,7 +61,7 @@ export const createNewGroupController = async (req, res) => {
   let ownerId = req._id;
   let result = await createGroup(name, ownerId, description);
   if (result.status) {
-    return res.status(200).json(result);
+    return res.status(200).json(result.result);
   }
   return res.status(400).json({ message: "something went wrong" });
 };
