@@ -16,8 +16,6 @@ export default class MyJoinedGroup extends Component {
                   description={group.description}
                   key={group.groupId}
                   groupId={group.groupId}
-                  groupdId={group.groupId}
-                  key={group._id}
                 />
               );
             })}

@@ -20,6 +20,12 @@ class AddMemberModal extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleCloseButton = () => {
+    this.setState({
+      ...this.state,
+      email: "",
+      err: "",
+      showAlert: false,
+    });
     this.props.hideAlert();
     this.props.handleClose();
   };
@@ -50,7 +56,8 @@ class AddMemberModal extends Component {
       )
       .then((res) => {
         console.log(res);
-        this.props.handleClose();
+        this.props.setAlert("success", "Add Sucessfully");
+        // this.props.handleClose();
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
     this.props.hideAlert();
@@ -72,8 +79,8 @@ class AddMemberModal extends Component {
               message={this.props.message}
             />
           ) : (
-              <></>
-            )}
+            <></>
+          )}
           <Form.Group>
             <Form.Label>Member Email: </Form.Label>
             <Form.Control

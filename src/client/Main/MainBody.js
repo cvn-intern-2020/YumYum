@@ -31,19 +31,14 @@ class MainBody extends Component {
 
   render() {
     return (
-      <div
-        className="main-body-background-div"
-      >
+      <div className="main-body-background-div">
         <AddNewGroupModal
           show={this.state.showAddGroupModal}
           handleClose={this.toggleAddGroupModal}
           token={this.props.token}
         />
 
-        <Container
-          className="ml-2 main-body-group-container"
-          fluid
-        >
+        <Container className="ml-2 main-body-group-container" fluid>
           {this.props.groups ? (
             <>
               <MyJoinedGroup
