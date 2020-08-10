@@ -52,7 +52,7 @@ class AddMemberModal extends Component {
       .then((res) => {
         console.log(res);
       })
-      .catch((err) => this.props.setAlert("danger", err.message));
+      .catch((err) => this.props.setAlert("danger", err.response.data.message));
     this.props.hideAlert();
   };
   render() {

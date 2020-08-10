@@ -57,7 +57,9 @@ class SignUpBody extends Component {
         password: this.state.password,
       })
       .then(() => this.props.history.push("/login"))
-      .catch((err) => this.props.setAlert("danger", err.message));
+      .catch((err) => {
+        this.props.setAlert("danger", err.response.data.message);
+      });
   };
   render() {
     return (

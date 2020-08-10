@@ -45,7 +45,7 @@ class BodyLogin extends Component {
         this.props.setUser(res.data.token);
         this.props.history.push("/main", { token: res.data.token });
       })
-      .catch((err) => this.props.setAlert("danger", err.message));
+      .catch((err) => this.props.setAlert("danger", err.response.data.message));
   };
   render() {
     return (
