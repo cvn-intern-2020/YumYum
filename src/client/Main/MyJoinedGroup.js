@@ -8,7 +8,7 @@ export default class MyJoinedGroup extends Component {
       <>
         <p className="mt-5 joined-group-text-lable">Joined Group</p>
         <Container fluid className="pr-0 my-joined-own-group-container">
-          <ListGroup style={{ backgroundColor: "#C4C4C4" }}>
+          <ListGroup style={{ backgroundColor: "rgba(0,0,0,0.60)" }}>
             {this.props.joinedGroups.map((group) => {
               return (
                 <GroupItem

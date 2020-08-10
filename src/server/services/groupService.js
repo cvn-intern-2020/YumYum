@@ -52,9 +52,9 @@ export const createGroup = async (name, ownerId, description) => {
     return { message: "invalid ownerId", status: false };
   }
   let result1 = await groupModel.create({
-    name: name,
-    ownerId: mongoose.Types.ObjectId(ownerId),
-    description: description,
+    name,
+    ownerId,
+    description,
   });
   let result2 = await addGroupToUser(ownerId, result1._id, name, true);
   if (result2.status) {

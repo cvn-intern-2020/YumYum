@@ -13,21 +13,21 @@ export default class GroupItem extends Component {
               src="../../../public/monan.png"
             ></Image>
           </Col>
-          <Col xs={6} md={9} lg={11}>
+          <Col xs={6} md={9} lg={11} style={{ paddingLeft: 0 }}>
             <div
               style={{
-                height: "40%",
+                height: "50%",
                 backgroundColor: "#FFE500",
               }}
             >
               <Link
-                style={{ textDecoration: "none", color: "#080024" }}
+                style={{ textDecoration: "none", color: "#080024", paddingLeft: "0.5rem" }}
                 to={`/group/${this.props.groupId}`}
               >
                 {this.props.name}
               </Link>
             </div>
-            <div style={{ height: "60%", backgroundColor: "#48BDFF" }}>
+            <div style={{ height: "50%", backgroundColor: "#48BDFF", paddingLeft: "0.5rem" }}>
               {this.props.description}
             </div>
           </Col>

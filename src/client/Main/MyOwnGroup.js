@@ -28,7 +28,7 @@ export default class MyOwnGroup extends Component {
         </Container>
 
         <Container fluid className="pr-0 my-joined-own-group-container">
-          <ListGroup style={{ backgroundColor: "#C4C4C4" }}>
+          <ListGroup style={{ backgroundColor: "rgba(0,0,0,0.60)" }}>
             {this.props.ownGroups.map((group) => {
               return (
                 <GroupItem
