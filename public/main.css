@@ -5,6 +5,9 @@
 
 .joined-group-text-lable{
     background-color: #FF5522;
+    border-style: solid;
+    border-color: #080024;
+    border-width: 0.2rem;
     width: 12%;
     font-size: 2rem;
     border-radius: 1rem;
@@ -14,6 +17,9 @@
 
 .my-own-group-text-lable{
     background-color: #48BDFF;
+    border-style: solid;
+    border-color: #080024;
+    border-width: 0.2rem;
     width: 40%;
     font-size: 2rem;
     border-radius: 1rem;
@@ -27,6 +33,9 @@
 }
 
 .add-new-group-button{
+    border-style: solid;
+    border-color: #080024;
+    border-width: 0.2rem;
     width: 50%;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
