@@ -29,6 +29,7 @@
   margin-left: -35%;
   background-color: #ffe500;
   margin-top: 15px;
+  border-radius: 1rem;
   overflow-y: scroll;
   overflow-x: hidden;
 }

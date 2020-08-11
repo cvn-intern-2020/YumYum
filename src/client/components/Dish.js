@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import MainNavBar from "./Common/MainNavBar";
 import DishBody from "./Dish/DishBody";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default class Dish extends Component {
+class Dish extends Component {
   render() {
     return (
       <div className="h-100">
@@ -12,3 +14,12 @@ export default class Dish extends Component {
     );
   }
 }
+
+
+function mapStateToProps(state) {
+  return {
+    token: state.user.token,
+  };
+}
+
+export default withRouter(connect(mapStateToProps, null)(Dish));

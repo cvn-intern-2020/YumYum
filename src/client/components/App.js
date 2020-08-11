@@ -53,7 +53,7 @@ class App extends Component {
               this.props.token == "" ? (
                 <Redirect
                   to={{
-                    pathname: "/login",
+                    pathname: "/dish",
                     state: { from: props.locations },
                   }}
                 />
