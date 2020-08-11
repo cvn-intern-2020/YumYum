@@ -3,11 +3,11 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import Validator from "validator";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
 import GlobalAlert from "../Common/GlobalAlert";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { signUpRequest } from "../../request/auth";
 
 class SignUpBody extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class SignUpBody extends Component {
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
-  handleClick = () => {
+  handleClick = async () => {
     if (this.state.email == "") {
       this.props.setAlert("danger", "Email is empty");
       return -1;
@@ -56,17 +56,13 @@ class SignUpBody extends Component {
       this.props.setAlert("danger", "Phone number must be 10 number");
       return -1;
     }
-    axios
-      .post(`${process.env.API_URL}/api/auth/signup`, {
-        name: this.state.name,
-        phone: this.state.phone,
-        email: this.state.email,
-        password: this.state.password,
-      })
-      .then(() => this.props.history.push("/login"))
-      .catch((err) => {
-        this.props.setAlert("danger", err.response.data.message);
-      });
+
+    let signUpResult = await signUpRequest(this.state);
+    if (!signUpResult.status) {
+      this.props.setAlert("danger", signUpResult.message);
+    } else {
+      this.props.history.push("/login");
+    }
   };
   componentWillUnmount() {
     this.props.hideAlert();

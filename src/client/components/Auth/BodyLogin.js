@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import Validator from "validator";
-import axios from "axios";
 import { setUser } from "../../actions/user";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -10,6 +9,7 @@ import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
+import { signInRequest } from "../../request/auth";
 
 class BodyLogin extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class BodyLogin extends Component {
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
-  handleClick = () => {
+  handleClick = async () => {
     if (this.state.email == "") {
       this.props.setAlert("danger", "Email is empty");
       return -1;
@@ -40,22 +40,18 @@ class BodyLogin extends Component {
       this.props.setAlert("danger", "not valid pass");
       return -1;
     }
-    axios
-      .post(`${process.env.API_URL}/api/auth/signin`, {
-        email: this.state.email,
-        password: this.state.password,
-      })
-      .then((res) => {
-        this.setState({ ...this.state, isButtonDisabled: true }, () => {
-          this.props.setUser(res.data.token);
-          this.props.history.push("/main", { token: res.data.token });
-        });
-      })
-      .catch((err) =>
-        this.setState({ ...this.state, isButtonDisabled: false }, () => {
-          this.props.setAlert("danger", err.response.data.message);
-        })
-      );
+
+    let signInResult = await signInRequest(this.state);
+    if (!signInResult.status) {
+      this.setState({ ...this.state, isButtonDisabled: false }, () => {
+        this.props.setAlert("danger", signInResult.message);
+      });
+    } else {
+      this.setState({ ...this.state, isButtonDisabled: true }, () => {
+        this.props.setUser(signInResult.token);
+        this.props.history.push("/main", { token: signInResult.token });
+      });
+    }
   };
   componentWillUnmount() {
     this.props.hideAlert();

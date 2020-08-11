@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { setUser } from "../../actions/user";
+import { createGroupRequest } from "../../request/group";
 
 class AddNewGroupModal extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class AddNewGroupModal extends Component {
     this.props.hideAlert();
     this.props.handleClose();
   };
-  handleSaveNewGroup = () => {
+  handleSaveNewGroup = async () => {
     if (this.state.name == "") {
       if (this.state.err != "") {
         this.props.setAlert("danger", "Group's name is empty");
@@ -48,24 +49,16 @@ class AddNewGroupModal extends Component {
       this.props.setAlert("danger", "Group's description is empty");
       return -1;
     }
-    axios
-      .post(
-        `${process.env.API_URL}/api/groups/new`,
-        {
-          name: this.state.name,
-          description: this.state.description,
-        },
-        {
-          headers: {
-            Authorization: this.props.token || this.props.location.state.token,
-          },
-        }
-      )
-      .then(() => {
-        this.props.setUser(this.props.token);
-        this.props.handleClose();
-      })
-      .catch((err) => this.props.setAlert("danger", err.response.data.message));
+    let createGroupResult = await createGroupRequest(
+      this.state,
+      this.props.token || this.props.location.state.token
+    );
+    if (!createGroupResult.status) {
+      this.props.setAlert("danger", createGroupResult.message);
+    } else {
+      this.props.setUser(this.props.token);
+      this.props.handleClose();
+    }
   };
   componentWillUnmount() {
     this.props.hideAlert();
@@ -86,7 +79,7 @@ class AddNewGroupModal extends Component {
           ) : (
             <></>
           )}
-           <Form>
+          <Form>
             <Form.Group>
               <Form.Label>Name of group</Form.Label>
               <Form.Control
