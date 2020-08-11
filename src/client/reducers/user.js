@@ -1,4 +1,4 @@
-import { SET_USER } from "../actions/types";
+import { SET_USER, CLEAR_USER } from "../actions/types";
 import jwt from "jsonwebtoken";
 
 const initialState = {
@@ -13,8 +13,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case SET_USER: {
       localStorage.setItem("token", action.payload.token);
-      action.payload.groups = action.payload.groups.reverse()
+      action.payload.groups = action.payload.groups.reverse();
       return { ...state, ...action.payload };
+    }
+    case CLEAR_USER: {
+      localStorage.removeItem("token");
+      return { ...initialState, token: "" };
     }
     default: {
       let token = state.token;

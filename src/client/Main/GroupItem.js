@@ -5,30 +5,35 @@ import { Link } from "react-router-dom";
 export default class GroupItem extends Component {
   render() {
     return (
-      <ListGroup.Item style={{ padding: 0 }}>
+      <ListGroup.Item style={{ padding: 0  }}>
         <Row>
           <Col xs={6} md={3} lg={1}>
             <Image
-              style={{ height: "auto", width: "125%" }}
+              style={{ height: "auto", width: "186%" }}
               src="../../../public/monan.png"
             ></Image>
           </Col>
-          <Col xs={6} md={9} lg={11}>
+          <Col xs={6} md={9} lg={11} style={{ paddingLeft: "3.3rem" }}>
             <div
               style={{
-                height: "40%",
+                height: "100%",
                 backgroundColor: "#FFE500",
               }}
             >
               <Link
-                style={{ textDecoration: "none", color: "#080024" }}
+                style={{
+                  textDecoration: "none",
+                  color: "#080024",
+                  paddingLeft: "0.5rem",
+                  fontSize: "2rem",
+                  float: "left",
+                  position: "relative",
+                  marginTop: "1.2rem"
+                }}
                 to={`/group/${this.props.groupId}`}
               >
-                {this.props.name}
+                <b>{this.props.name}</b>
               </Link>
-            </div>
-            <div style={{ height: "60%", backgroundColor: "#48BDFF" }}>
-              {this.props.description}
             </div>
           </Col>
         </Row>

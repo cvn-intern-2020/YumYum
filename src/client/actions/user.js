@@ -1,24 +1,26 @@
-import { SET_USER } from "./types";
-import jwt_decode from "jwt-decode";
+import { SET_USER, CLEAR_USER } from "./types";
 import axios from "axios";
+
 export const setUser = (token) => (dispatch) => {
-  // Set token to Auth header
-  // console.log(token);
-  // setAuthToken(token);
-  // // Decode token to get user data
-  const decoded = jwt_decode(token);
   axios
     .get(`${process.env.API_URL}/api/users`, {
       headers: {
         Authorization: token,
       },
     })
-    .then((res, err) => {
-      if (err) {
-        console.log(err);
+    .then((res) => {
+      let userData = res.data;
+      dispatch({ type: SET_USER, payload: { token, ...userData } });
+    })
+    .catch((err) => {
+      if (err.response.status == 401) {
+        clearUser();
       } else {
-        let userData = res.data;
-        dispatch({ type: SET_USER, payload: { token, ...userData } });
+        console.log(err);
       }
     });
+};
+
+export const clearUser = () => (dispatch) => {
+  dispatch({ type: CLEAR_USER });
 };

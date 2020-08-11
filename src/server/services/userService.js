@@ -27,10 +27,10 @@ export const getUserById = async (userId) => {
     .findOne({ _id: mongoose.Types.ObjectId(userId) })
     .select("-password -__v")
     .lean();
-  if (result) {
-    return { result, status: true };
+  if (!result) {
+    return { status: false, message: "User does not exist" };
   }
-  return { status: false, message: "User does not exist" };
+  return { result, status: true };
 };
 
 export const addGroupToUser = async (userId, groupId, name, isOwner) => {
@@ -48,8 +48,8 @@ export const addGroupToUser = async (userId, groupId, name, isOwner) => {
       },
     }
   );
-  if (result) {
-    return { result, status: true };
+  if (!result) {
+    return { status: false, message: "UserId does not exist" };
   }
-  return { status: false, message: "UserId does not exist" };
+  return { result, status: true };
 };

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Container } from "react-bootstrap";
 import MyOwnGroup from "./MyOwnGroup";
 import MyJoinedGroup from "./MyJoinedGroup";
@@ -31,19 +30,14 @@ class MainBody extends Component {
 
   render() {
     return (
-      <div
-        className="main-body-background-div"
-      >
+      <div className="main-body-background-div">
         <AddNewGroupModal
           show={this.state.showAddGroupModal}
           handleClose={this.toggleAddGroupModal}
           token={this.props.token}
         />
 
-        <Container
-          className="ml-2 main-body-group-container"
-          fluid
-        >
+        <Container className="ml-2 main-body-group-container" fluid>
           {this.props.groups ? (
             <>
               <MyJoinedGroup

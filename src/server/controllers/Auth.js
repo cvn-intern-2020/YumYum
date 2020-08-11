@@ -9,10 +9,10 @@ export const signUpController = async (req, res) => {
     return res.status(400).json({ message: "Duplicate email!" });
   }
   let result = await signUpService(email, phone, password, name);
-  if (result.status) {
-    return res.status(200).json(result);
+  if (!result.status) {
+    return res.status(400).json({ message: "Something went wrong" });
   }
-  return res.status(400).json({ message: "Something went wrong" });
+  return res.status(200).json(result);
 };
 
 export const signInController = async (req, res) => {
@@ -24,10 +24,10 @@ export const signInController = async (req, res) => {
   }
   user = user.result;
   let result = await passwordCompare(password, user);
-  if (result.status) {
-    return res.status(200).json({
-      token: result.token,
-    });
+  if (!result.status) {
+    return res.status(400).json({ message: result.message });
   }
-  return res.status(400).json({message: result.message});
+  return res.status(200).json({
+    token: result.token,
+  });
 };

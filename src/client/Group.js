@@ -9,7 +9,7 @@ class Group extends Component {
     return (
       <div className="h-100">
         <MainNavBar token={this.props.token} />
-        <GroupBody {...this.props}/>
+        <GroupBody {...this.props} />
       </div>
     );
   }

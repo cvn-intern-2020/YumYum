@@ -28,9 +28,6 @@ OrdersSchema.statics.getOrderById = async function (orderId) {
     console.log(result.details[dishId]);
   }
   console.log(result);
-  // result = result[0];
-  // let key = Object.keys(result.details)
-  // dishesModel.getDishById(key[0]);
 };
 
 const OrdersModel = mongoose.model("Orders", OrdersSchema);

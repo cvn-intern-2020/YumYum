@@ -20,6 +20,12 @@ class AddMemberModal extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleCloseButton = () => {
+    this.setState({
+      ...this.state,
+      email: "",
+      err: "",
+      showAlert: false,
+    });
     this.props.hideAlert();
     this.props.handleClose();
   };
@@ -36,7 +42,6 @@ class AddMemberModal extends Component {
       this.props.setAlert("danger", "Invalid email");
       return -1;
     }
-    this.props.handleClose();
     axios
       .post(
         `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}/add/member`,
@@ -51,6 +56,7 @@ class AddMemberModal extends Component {
       )
       .then((res) => {
         console.log(res);
+        this.props.setAlert("success", "Add Sucessfully");
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
     this.props.hideAlert();

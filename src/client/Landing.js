@@ -4,9 +4,11 @@ import Body from "./Landing/Body";
 
 export default class Landing extends Component {
   render() {
-    return <div className="h-100">
-        <LandingNavBar {...this.props}/>
-        <Body/>
-    </div>;
+    return (
+      <div className="h-100">
+        <LandingNavBar {...this.props} />
+        <Body />
+      </div>
+    );
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, ListGroup, Row, Col, Image, Button } from "react-bootstrap";
+import { Container, ListGroup, Row, Col, Button } from "react-bootstrap";
 import GroupItem from "./GroupItem";
 
 export default class MyOwnGroup extends Component {
@@ -28,13 +28,20 @@ export default class MyOwnGroup extends Component {
         </Container>
 
         <Container fluid className="pr-0 my-joined-own-group-container">
-          <ListGroup style={{ backgroundColor: "#C4C4C4" }}>
+          <ListGroup
+            style={{
+              backgroundColor: "rgba(0,0,0,0.60)",
+              width: "80%",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
             {this.props.ownGroups.map((group) => {
               return (
                 <GroupItem
                   name={group.name}
                   description={group.description}
-                  key={group._id}
+                  key={group.groupId}
                   groupId={group.groupId}
                 />
               );

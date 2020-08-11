@@ -8,8 +8,8 @@ class Main extends Component {
   render() {
     return (
       <div className="h-100">
-        <MainNavBar token={this.props.token}/>
-        <MainBody token={this.props.token}/>
+        <MainNavBar token={this.props.token} />
+        <MainBody token={this.props.token} />
       </div>
     );
   }
