@@ -37,11 +37,7 @@ class MainBody extends Component {
           token={this.props.token}
         />
 
-        <Container
-          className="ml-2 main-body-group-container"
-          fluid
-          style={{ width: "80%" }}
-        >
+        <Container className="ml-2 main-body-group-container" fluid>
           {this.props.groups ? (
             <>
               <MyJoinedGroup
