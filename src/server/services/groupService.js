@@ -3,6 +3,20 @@ import mongoose from "mongoose";
 import groupModel from "../models/groups";
 import { addGroupToUser } from "./userService";
 
+export const isAllowedToEditGroup = async (groupId, userId) => {
+  if (!isObjectID(groupId)) {
+    return { message: "invalid groupId", status: false };
+  }
+  let result = await groupModel.findOne({
+    _id: mongoose.Types.ObjectId(groupId),
+    ownerId: mongoose.Types.ObjectId(userId),
+  });
+  if (result) {
+    return true;
+  }
+  return false;
+};
+
 export const getGroupById = async (groupId) => {
   if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
@@ -41,24 +55,26 @@ export const addMemberToGroup = async (ownerId, user, groupId) => {
   if (result) {
     return { status: true, result };
   }
-  return {
-    message: "Not allowed to add member to this group",
-    status: false,
-  };
+  return { status: false, message: "Something went wrong" };
 };
 
 export const createGroup = async (name, ownerId, description) => {
   if (!isObjectID(ownerId)) {
     return { message: "invalid ownerId", status: false };
   }
-  let result1 = await groupModel.create({
+  let createdGroup = await groupModel.create({
     name,
     ownerId,
     description,
   });
-  let result2 = await addGroupToUser(ownerId, result1._id, name, true);
-  if (result2.status) {
-    return { result: result1, status: true };
+  let addGroupResult = await addGroupToUser(
+    ownerId,
+    createdGroup._id,
+    name,
+    true
+  );
+  if (addGroupResult.status) {
+    return { result: createdGroup, status: true };
   }
-  return { message: result2.message, status: false };
+  return { message: addGroupResult.message, status: false };
 };
