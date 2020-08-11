@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 import DishItem from "./DishItem";
-import AddMemberModal from "./AddMemberModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getGroupRequest } from "../../request/group";
+import axios from "axios";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -21,19 +20,25 @@ class GroupBody extends Component {
       showAddMemberModal: !this.state.showAddMemberModal,
     });
   };
-  async componentDidMount() {
-    let getGroupResult = await getGroupRequest(
-      this.props.match.params.groupId,
-      this.props.token
-    );
-    if (!getGroupResult.status) {
-      console.log(getGroupResult.message);
-    } else {
-      this.setState({
-        ...this.state,
-        ...getGroupResult.groupData,
+  componentDidMount() {
+    axios
+      .get(
+        `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}`,
+        {
+          headers: {
+            Authorization: this.props.token,
+          },
+        }
+      )
+      .then((res) => {
+        this.setState({
+          ...this.state,
+          ...res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }
   }
   render() {
     return (
@@ -45,12 +50,12 @@ class GroupBody extends Component {
           height: "94%",
         }}
       >
-        <AddMemberModal
+        {/* <AddMemberModal
           show={this.state.showAddMemberModal}
           handleClose={this.toggleAddMemberModal}
           token={this.props.token}
           {...this.props}
-        />
+        /> */}
         <div className="row w-100 m-0">
           <div className="col-4">
             <Button
@@ -92,7 +97,7 @@ class GroupBody extends Component {
           <div className="group-container mt-4">
             <ListGroup>
               {this.state.dishes.map((dish) => (
-                <DishItem key={dish._id} dish={dish} />
+                <DishItem key={dish} dish={dish} />
               ))}
             </ListGroup>
           </div>

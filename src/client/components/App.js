@@ -7,6 +7,7 @@ import Signup from "./Auth/Signup";
 import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Group from "./Group";
+import Dish from "./Dish";
 
 class App extends Component {
   render() {
@@ -42,6 +43,22 @@ class App extends Component {
                 />
               ) : (
                 <Main {...props} />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/dish"
+            render={(props) =>
+              this.props.token == "" ? (
+                <Redirect
+                  to={{
+                    pathname: "/login",
+                    state: { from: props.locations },
+                  }}
+                />
+              ) : (
+                <Dish {...props} />
               )
             }
           />
