@@ -8,12 +8,15 @@ export const setUser = (token) => (dispatch) => {
         Authorization: token,
       },
     })
-    .then((res, err) => {
-      if (err) {
-        console.log(err);
+    .then((res) => {
+      let userData = res.data;
+      dispatch({ type: SET_USER, payload: { token, ...userData } });
+    })
+    .catch((err) => {
+      if (err.response.status == 401) {
+        clearUser();
       } else {
-        let userData = res.data;
-        dispatch({ type: SET_USER, payload: { token, ...userData } });
+        console.log(err);
       }
     });
 };

@@ -31,16 +31,14 @@ class GroupBody extends Component {
           },
         }
       )
-      .then((res, err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          this.setState({
-            ...this.state,
-            ...res.data,
-          });
-          console.log(res.data);
-        }
+      .then((res) => {
+        this.setState({
+          ...this.state,
+          ...res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
   render() {
