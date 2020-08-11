@@ -61,7 +61,7 @@ class AddNewGroupModal extends Component {
           },
         }
       )
-      .then((res) => {
+      .then(() => {
         this.props.setUser(this.props.token);
         this.props.handleClose();
       })
@@ -86,7 +86,7 @@ class AddNewGroupModal extends Component {
           ) : (
             <></>
           )}
-          <Form>
+           <Form>
             <Form.Group>
               <Form.Label>Name of group</Form.Label>
               <Form.Control
