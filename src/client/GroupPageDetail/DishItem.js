@@ -5,9 +5,9 @@ export default class DishItem extends Component {
     return (
       <ListGroup.Item>
         <div className="row w-100 m-0">
-          <div className=" dish-label col">Bún</div>
+    <div className=" dish-label col">{this.props.dish.name} </div>
           <div className="dish-label col "></div>
-          <div className="dish-label col ">50000</div>
+          <div className="dish-label col ">{this.props.dish.price}</div>
           <div className="dish-label col"></div>
         </div>
       </ListGroup.Item>

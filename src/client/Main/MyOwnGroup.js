@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, ListGroup, Row, Col, Image, Button } from "react-bootstrap";
+import { Container, ListGroup, Row, Col, Button } from "react-bootstrap";
 import GroupItem from "./GroupItem";
 
 export default class MyOwnGroup extends Component {
