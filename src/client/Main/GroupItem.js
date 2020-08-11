@@ -16,19 +16,24 @@ export default class GroupItem extends Component {
           <Col xs={6} md={9} lg={11} style={{ paddingLeft: 0 }}>
             <div
               style={{
-                height: "50%",
+                height: "100%",
                 backgroundColor: "#FFE500",
               }}
             >
               <Link
-                style={{ textDecoration: "none", color: "#080024", paddingLeft: "0.5rem" }}
+                style={{
+                  textDecoration: "none",
+                  color: "#080024",
+                  paddingLeft: "0.5rem",
+                  fontSize: "2rem",
+                  float: "left",
+                  position: "relative",
+                  marginTop: "1.2rem"
+                }}
                 to={`/group/${this.props.groupId}`}
               >
-                {this.props.name}
+                <b>{this.props.name}</b>
               </Link>
-            </div>
-            <div style={{ height: "50%", backgroundColor: "#48BDFF", paddingLeft: "0.5rem" }}>
-              {this.props.description}
             </div>
           </Col>
         </Row>
