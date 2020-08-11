@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import MainNavBar from "./components/Common/MainNavBar";
-import MainBody from "./components/Main/MainBody";
+import MainNavBar from "./Common/MainNavBar";
+import GroupBody from "./GroupPageDetail/GroupBody";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-class Main extends Component {
+class Group extends Component {
   render() {
     return (
       <div className="h-100">
         <MainNavBar token={this.props.token} />
-        <MainBody token={this.props.token} />
+        <GroupBody {...this.props} />
       </div>
     );
   }
@@ -21,4 +21,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(Main));
+export default withRouter(connect(mapStateToProps, null)(Group));
