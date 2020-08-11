@@ -57,7 +57,6 @@ class AddMemberModal extends Component {
       .then((res) => {
         console.log(res);
         this.props.setAlert("success", "Add Sucessfully");
-        // this.props.handleClose();
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
     this.props.hideAlert();
