@@ -5,7 +5,7 @@ import MyJoinedGroup from "./MyJoinedGroup";
 import AddNewGroupModal from "./AddNewGroupModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { setUser } from "../actions/user";
+import { setUser } from "../../actions/user";
 import { bindActionCreators } from "redux";
 
 class MainBody extends Component {

@@ -10,7 +10,7 @@ module.exports = () => {
     return prev;
   }, {});
   return {
-    entry: "./src/client/Index.js",
+    entry: "./src/client/components/Index.js",
     output: {
       path: path.resolve(__dirname, "public"),
       publicPath: "/",

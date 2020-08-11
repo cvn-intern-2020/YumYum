@@ -5,7 +5,7 @@ import DishItem from "./DishItem";
 import AddMemberModal from "./AddMemberModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import axios from "axios";
+import { getGroupRequest } from "../../request/group";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -21,25 +21,19 @@ class GroupBody extends Component {
       showAddMemberModal: !this.state.showAddMemberModal,
     });
   };
-  componentDidMount() {
-    axios
-      .get(
-        `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}`,
-        {
-          headers: {
-            Authorization: this.props.token,
-          },
-        }
-      )
-      .then((res) => {
-        this.setState({
-          ...this.state,
-          ...res.data,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+  async componentDidMount() {
+    let getGroupResult = await getGroupRequest(
+      this.props.match.params.groupId,
+      this.props.token
+    );
+    if (!getGroupResult.status) {
+      console.log(getGroupResult.message);
+    } else {
+      this.setState({
+        ...this.state,
+        ...getGroupResult.groupData,
       });
+    }
   }
   render() {
     return (
@@ -98,7 +92,7 @@ class GroupBody extends Component {
           <div className="group-container mt-4">
             <ListGroup>
               {this.state.dishes.map((dish) => (
-                <DishItem key={dish} dish={dish} />
+                <DishItem key={dish._id} dish={dish} />
               ))}
             </ListGroup>
           </div>

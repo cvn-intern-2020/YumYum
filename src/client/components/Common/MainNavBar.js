@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { clearUser } from "../actions/user";
+import { clearUser } from "../../actions/user";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";

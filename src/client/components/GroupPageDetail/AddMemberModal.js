@@ -6,7 +6,8 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setAlert, hideAlert } from "../actions/alert";
+import { setAlert, hideAlert } from "../../actions/alert";
+import { addMemberRequest } from "../../request/group";
 
 class AddMemberModal extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class AddMemberModal extends Component {
     this.props.hideAlert();
     this.props.handleClose();
   };
-  handleClickAddMember = () => {
+  handleClickAddMember = async () => {
     if (this.state.email == "") {
       if (this.state.err != "") {
         this.props.setAlert("danger", "Email is empty");
@@ -42,24 +43,15 @@ class AddMemberModal extends Component {
       this.props.setAlert("danger", "Invalid email");
       return -1;
     }
-    axios
-      .post(
-        `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}/add/member`,
-        {
-          userEmail: this.state.email,
-        },
-        {
-          headers: {
-            Authorization: this.props.token || this.props.location.state.token,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        this.props.setAlert("success", "Add Sucessfully");
-      })
-      .catch((err) => this.props.setAlert("danger", err.response.data.message));
-    this.props.hideAlert();
+    let addMemberResult = await addMemberRequest(
+      this.props.match.params.groupId,
+      this.state.email,
+      this.props.token || this.props.location.state.token
+    );
+    this.props.setAlert(
+      addMemberResult.status ? "success" : "danger",
+      addMemberResult.message
+    );
   };
   componentWillUnmount() {
     this.props.hideAlert();
