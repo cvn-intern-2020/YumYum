@@ -15,3 +15,11 @@
   width: 60rem;
   height: 8rem;
 }
+.mainnav-dishlabel {
+  font-size: 2rem;
+  text-decoration: none!important;
+  color: #080024;
+  position: relative;
+  margin-right: 4rem;
+  float: right;
+}

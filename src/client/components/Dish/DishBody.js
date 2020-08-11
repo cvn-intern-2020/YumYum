@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
-import DishItem from "./DishItem";
-import AddMemberModal from "./AddMemberModal";
+import DishItem from "./DishItems";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getGroupRequest } from "../../request/group";
+import axios from "axios";
 
-class GroupBody extends Component {
+class DishBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAddMemberModal: false,
-      dishes: [],
+      dishes: [1,2,3,4],
     };
   }
   toggleAddMemberModal = () => {
@@ -21,20 +20,26 @@ class GroupBody extends Component {
       showAddMemberModal: !this.state.showAddMemberModal,
     });
   };
-  async componentDidMount() {
-    let getGroupResult = await getGroupRequest(
-      this.props.match.params.groupId,
-      this.props.token
-    );
-    if (!getGroupResult.status) {
-      console.log(getGroupResult.message);
-    } else {
-      this.setState({
-        ...this.state,
-        ...getGroupResult.groupData,
-      });
-    }
-  }
+  // componentDidMount() {
+  //   axios
+  //     .get(
+  //       `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}`,
+  //       {
+  //         headers: {
+  //           Authorization: this.props.token,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       this.setState({
+  //         ...this.state,
+  //         ...res.data,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
   render() {
     return (
       <div
@@ -45,22 +50,14 @@ class GroupBody extends Component {
           height: "94%",
         }}
       >
-        <AddMemberModal
+        {/* <AddMemberModal
           show={this.state.showAddMemberModal}
           handleClose={this.toggleAddMemberModal}
           token={this.props.token}
           {...this.props}
-        />
+        /> */}
         <div className="row w-100 m-0">
-          <div className="col-4">
-            <Button
-              style={{ backgroundColor: "#FF5522", color: "#080024" }}
-              className="float-left ml-5 mt-4 group-button"
-              onClick={this.toggleAddMemberModal}
-            >
-              Add Member
-            </Button>{" "}
-          </div>
+          <div className="col-4"></div>
 
           <div
             className="mt-4 col-4"
@@ -74,25 +71,26 @@ class GroupBody extends Component {
               style={{ backgroundColor: "#48BDFF", color: "#080024" }}
               className="float-right mt-4 mr-5 group-button"
             >
-              Edit Dishes
+              Add Dishes
             </Button>
           </div>
         </div>
         <div className="text-center">
           <div className="row w-100 m-0">
-            <div className=" dish-label col mt-4">
-              <b>Food Name</b>
+            <div
+              style={{ textAlign: "left" }}
+              className=" dish-label col mt-4 "
+            >
+              <b>Dishes</b>
             </div>
             <div className="dish-label col mt-4"></div>
-            <div className="dish-label col mt-4">
-              <b>Price</b>
-            </div>
+            <div className="dish-label col mt-4"></div>
             <div className="dish-label col mt-4"></div>
           </div>
-          <div className="group-container mt-4">
+          <div className="dish-container mt-4">
             <ListGroup>
               {this.state.dishes.map((dish) => (
-                <DishItem key={dish._id} dish={dish} />
+                <DishItem key={dish} dish={dish} />
               ))}
             </ListGroup>
           </div>
@@ -108,4 +106,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(GroupBody));
+export default withRouter(connect(mapStateToProps, null)(DishBody));
