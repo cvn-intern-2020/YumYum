@@ -16,7 +16,7 @@ export default class MyJoinedGroup extends Component {
                   description={group.description}
                   key={group.groupId}
                   groupId={group.groupId}
-                />s
+                />
               );
             })}
           </ListGroup>
