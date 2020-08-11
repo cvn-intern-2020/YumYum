@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
     }
     case CLEAR_USER: {
       localStorage.removeItem("token");
-      return { ...initialState };
+      return { ...initialState, token: "" };
     }
     default: {
       let token = state.token;
