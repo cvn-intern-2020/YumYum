@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { clearUser } from "../actions/user";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-export default class MainNavBar extends Component {
+class MainNavBar extends Component {
+  handleLogout = () => {
+    this.props.clearUser();
+    this.props.history.push("/");
+  };
   render() {
     return (
       <div>
@@ -13,16 +22,15 @@ export default class MainNavBar extends Component {
         >
           <div className="row w-100 m-0">
             <div className="col-4">
-              
               <Navbar.Brand>
                 <Link to="/main">
-                <img
-                  src="../../../public/yumyum.png"
-                  width="250"
-                  height="44"
-                  className="d-inline-block align-top"
-                  alt="React Bootstrap logo"
-                />
+                  <img
+                    src="../../../public/yumyum.png"
+                    width="250"
+                    height="44"
+                    className="d-inline-block align-top"
+                    alt="React Bootstrap logo"
+                  />
                 </Link>
               </Navbar.Brand>
             </div>
@@ -34,6 +42,7 @@ export default class MainNavBar extends Component {
                   backgroundColor: "#ff5522",
                   color: "#080024",
                 }}
+                onClick={this.handleLogout}
               >
                 <b>Log out</b>
               </Button>
@@ -58,3 +67,9 @@ export default class MainNavBar extends Component {
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ clearUser }, dispatch);
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(MainNavBar));
