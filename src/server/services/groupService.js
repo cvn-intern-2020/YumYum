@@ -2,6 +2,8 @@ import { isObjectID } from "../utils/validator";
 import mongoose from "mongoose";
 import groupModel from "../models/groups";
 import { addGroupToUser } from "./userService";
+// eslint-disable-next-line no-unused-vars
+import dishesModel from "../models/dishes";
 
 export const isAllowedToEditGroup = async (groupId, userId) => {
   if (!isObjectID(groupId)) {
@@ -21,9 +23,11 @@ export const getGroupById = async (groupId) => {
   if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
   }
-  let result = await groupModel.findOne({
-    _id: mongoose.Types.ObjectId(groupId),
-  }).populate("dishes");
+  let result = await groupModel
+    .findOne({
+      _id: mongoose.Types.ObjectId(groupId),
+    })
+    .populate("dishes");
   if (!result) {
     return { message: "groupId does not exist", status: false };
   }
