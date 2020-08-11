@@ -28,6 +28,15 @@ export default class MainNavBar extends Component {
             </div>
             <div className="col-4"></div>
             <div className="col p-0">
+              <Button
+                className="float-right mt-2 mr-2"
+                style={{
+                  backgroundColor: "#ff5522",
+                  color: "#080024",
+                }}
+              >
+                <b>Log out</b>
+              </Button>
               <img
                 src="../../../public/userava.png"
                 width="40"
