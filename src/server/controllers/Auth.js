@@ -8,8 +8,8 @@ export const signUpController = async (req, res) => {
   if (duplicate.status) {
     return res.status(400).json({ message: "Duplicate email!" });
   }
-  let result = await signUpService(email, phone, password, name);
-  if (!result.status) {
+  let {result, status} = await signUpService(email, phone, password, name);
+  if (!status) {
     return res.status(400).json({ message: "Something went wrong" });
   }
   return res.status(200).json(result);
