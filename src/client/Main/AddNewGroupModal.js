@@ -62,12 +62,18 @@ class AddNewGroupModal extends Component {
         }
       )
       .then((res) => {
-        this.props.setAlert("success", "Add Sucessfully");
         this.props.setUser(this.props.token);
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
 
-    // this.props.handleClose();
+    this.props.handleClose();
+    this.setState({
+      ...this.state,
+      name: "",
+      description: "",
+      err: "",
+      showAlert: false,
+    });
   };
   componentWillUnmount() {
     this.props.hideAlert();
@@ -86,8 +92,8 @@ class AddNewGroupModal extends Component {
               message={this.props.message}
             />
           ) : (
-            <></>
-          )}
+              <></>
+            )}
           <Form>
             <Form.Group>
               <Form.Label>Name of group</Form.Label>
