@@ -17,6 +17,7 @@ class BodyLogin extends Component {
     this.state = {
       email: "",
       password: "",
+      isButtonDisabled: false,
     };
   }
   handleChange = (e) => {
@@ -45,10 +46,16 @@ class BodyLogin extends Component {
         password: this.state.password,
       })
       .then((res) => {
-        this.props.setUser(res.data.token);
-        this.props.history.push("/main", { token: res.data.token });
+        this.setState({ ...this.state, isButtonDisabled: true }, () => {
+          this.props.setUser(res.data.token);
+          this.props.history.push("/main", { token: res.data.token });
+        });
       })
-      .catch((err) => this.props.setAlert("danger", err.response.data.message));
+      .catch((err) =>
+        this.setState({ ...this.state, isButtonDisabled: false }, () => {
+          this.props.setAlert("danger", err.response.data.message);
+        })
+      );
   };
   componentWillUnmount() {
     this.props.hideAlert();
@@ -96,6 +103,7 @@ class BodyLogin extends Component {
                 border: "none",
                 marginBottom: "1rem",
               }}
+              disabled={this.state.isButtonDisabled}
               onClick={this.handleClick}
             >
               <b>Login</b>
