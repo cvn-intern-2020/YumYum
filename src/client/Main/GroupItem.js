@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 export default class GroupItem extends Component {
   render() {
     return (
-      <ListGroup.Item style={{ padding: 0 }}>
+      <ListGroup.Item style={{ padding: 0  }}>
         <Row>
           <Col xs={6} md={3} lg={1}>
             <Image
-              style={{ height: "auto", width: "125%" }}
+              style={{ height: "auto", width: "186%" }}
               src="../../../public/monan.png"
             ></Image>
           </Col>
-          <Col xs={6} md={9} lg={11} style={{ paddingLeft: 0 }}>
+          <Col xs={6} md={9} lg={11} style={{ paddingLeft: "3.3rem" }}>
             <div
               style={{
                 height: "100%",
