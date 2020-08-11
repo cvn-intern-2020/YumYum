@@ -23,7 +23,7 @@ export const getGroupById = async (groupId) => {
   }
   let result = await groupModel.findOne({
     _id: mongoose.Types.ObjectId(groupId),
-  });
+  }).populate("dishes");
   if (!result) {
     return { message: "groupId does not exist", status: false };
   }
