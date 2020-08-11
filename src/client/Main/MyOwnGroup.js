@@ -31,7 +31,7 @@ export default class MyOwnGroup extends Component {
           <ListGroup
             style={{
               backgroundColor: "rgba(0,0,0,0.60)",
-              width: "80%",
+              width: "100%",
               marginLeft: "auto",
               marginRight: "auto",
             }}
