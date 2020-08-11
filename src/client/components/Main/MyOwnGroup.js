@@ -29,12 +29,7 @@ export default class MyOwnGroup extends Component {
 
         <Container fluid className="pr-0 my-joined-own-group-container">
           <ListGroup
-            style={{
-              backgroundColor: "rgba(0,0,0,0.60)",
-              width: "100%",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
+            className="list-group-container"
           >
             {this.props.ownGroups.map((group) => {
               return (

@@ -28,7 +28,7 @@ export default class GroupItem extends Component {
                   fontSize: "2rem",
                   float: "left",
                   position: "relative",
-                  marginTop: "1.2rem"
+                  marginTop: "1.7rem"
                 }}
                 to={`/group/${this.props.groupId}`}
               >

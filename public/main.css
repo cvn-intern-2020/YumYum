@@ -30,6 +30,7 @@
   max-height: 60%;
   overflow-y: auto;
   overflow-x: hidden;
+  width: 80%;
 }
 
 .add-new-group-button {
@@ -50,4 +51,11 @@
   background-repeat: no-repeat;
   background-size: cover;
   height: 94%;
+}
+
+.list-group-container{
+  background-color: rgba(0,0,0,0.60);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
