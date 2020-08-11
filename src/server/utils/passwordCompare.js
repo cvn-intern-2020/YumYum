@@ -8,7 +8,7 @@ const passwordCompare = async (password, user) => {
       _id: user._id,
       email: user.email,
     };
-    let token = jwt.sign(payload, "1234567890", {
+    let token = jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: 3600,
     });
     return { status: true, token: "Bearer " + token };

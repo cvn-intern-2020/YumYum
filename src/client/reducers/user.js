@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
       let token = state.token;
       token = token.replace(/^Bearer\s/, "");
       if (state.token != "") {
-        jwt.verify(token, "1234567890", (err, decoded) => {
+        jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
           if (err) {
             token = "";
             localStorage.removeItem("token");
