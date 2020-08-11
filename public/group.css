@@ -15,18 +15,18 @@
   padding: 10px;
 }
 .group-container {
-  width: 1470px !important;
-  height: 300px !important;
+  width: 68%;
+  height: 58%;
   position: absolute;
   left: 50%;
-  margin-left: -735px;
+  margin-left: -34%;
 }
 .text-center {
-  width: 1500px !important;
-  height: 350px !important;
+  width: 70%;
+  height: 60%;
   position: absolute;
   left: 50%;
-  margin-left: -750px;
+  margin-left: -35%;
   background-color: #ffe500;
   margin-top: 15px;
   overflow-y: scroll;
