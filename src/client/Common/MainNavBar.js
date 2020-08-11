@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
+import { Link } from "react-router-dom";
 
 export default class MainNavBar extends Component {
   render() {
@@ -15,7 +13,9 @@ export default class MainNavBar extends Component {
         >
           <div className="row w-100 m-0">
             <div className="col-4">
-              <Navbar.Brand href="/main">
+              
+              <Navbar.Brand>
+                <Link to="/main">
                 <img
                   src="../../../public/yumyum.png"
                   width="250"
@@ -23,6 +23,7 @@ export default class MainNavBar extends Component {
                   className="d-inline-block align-top"
                   alt="React Bootstrap logo"
                 />
+                </Link>
               </Navbar.Brand>
             </div>
             <div className="col-4"></div>
