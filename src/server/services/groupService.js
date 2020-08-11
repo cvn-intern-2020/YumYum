@@ -11,10 +11,10 @@ export const isAllowedToEditGroup = async (groupId, userId) => {
     _id: mongoose.Types.ObjectId(groupId),
     ownerId: mongoose.Types.ObjectId(userId),
   });
-  if (result) {
-    return true;
+  if (!result) {
+    return false;
   }
-  return false;
+  return true;
 };
 
 export const getGroupById = async (groupId) => {
@@ -24,10 +24,10 @@ export const getGroupById = async (groupId) => {
   let result = await groupModel.findOne({
     _id: mongoose.Types.ObjectId(groupId),
   });
-  if (result) {
-    return { result, status: true };
+  if (!result) {
+    return { message: "groupId does not exist", status: false };
   }
-  return { message: "groupId does not exist", status: false };
+  return { result, status: true };
 };
 
 export const addMemberToGroup = async (ownerId, user, groupId) => {
@@ -52,10 +52,10 @@ export const addMemberToGroup = async (ownerId, user, groupId) => {
       },
     }
   );
-  if (result) {
-    return { status: true, result };
+  if (!result) {
+    return { status: false, message: "Something went wrong" };
   }
-  return { status: false, message: "Something went wrong" };
+  return { status: true, result };
 };
 
 export const createGroup = async (name, ownerId, description) => {
@@ -73,8 +73,8 @@ export const createGroup = async (name, ownerId, description) => {
     name,
     true
   );
-  if (addGroupResult.status) {
-    return { result: createdGroup, status: true };
+  if (!addGroupResult.status) {
+    return { message: addGroupResult.message, status: false };
   }
-  return { message: addGroupResult.message, status: false };
+  return { result: createdGroup, status: true };
 };
