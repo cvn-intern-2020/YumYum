@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { func } from "prop-types";
 
 const Users = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
