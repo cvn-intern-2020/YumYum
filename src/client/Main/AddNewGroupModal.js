@@ -66,14 +66,6 @@ class AddNewGroupModal extends Component {
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
 
-    this.props.handleClose();
-    this.setState({
-      ...this.state,
-      name: "",
-      description: "",
-      err: "",
-      showAlert: false,
-    });
   };
   componentWillUnmount() {
     this.props.hideAlert();
