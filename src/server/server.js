@@ -8,7 +8,7 @@ import path from "path";
 
 const data_uri =
   "mongodb+srv://hasagi:hasagi@cluster0.zspjy.gcp.mongodb.net/YumYum?retryWrites=true&w=majority";
-
+require("dotenv").config();
 mongoose.connect(data_uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
