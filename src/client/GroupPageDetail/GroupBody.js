@@ -100,7 +100,7 @@ class GroupBody extends Component {
           <div className="group-container mt-4">
             <ListGroup>
               {this.state.dishes.map((dish) => (
-                <DishItem key={dish} />
+                <DishItem key={dish} dish={dish} />
               ))}
             </ListGroup>
           </div>
