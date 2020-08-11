@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import MainNavBar from "./Common/MainNavBar";
-import MainBody from "./Main/MainBody";
+import MainNavBar from "./components/Common/MainNavBar";
+import MainBody from "./components/Main/MainBody";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 

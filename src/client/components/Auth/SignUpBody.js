@@ -5,7 +5,7 @@ import Validator from "validator";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import GlobalAlert from "../Common/GlobalAlert";
-import { setAlert, hideAlert } from "../actions/alert";
+import { setAlert, hideAlert } from "../../actions/alert";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import MainNavBar from "./Common/MainNavBar";
-import GroupBody from "./GroupPageDetail/GroupBody";
+import MainNavBar from "./components/Common/MainNavBar";
+import GroupBody from "./components/GroupPageDetail/GroupBody";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 

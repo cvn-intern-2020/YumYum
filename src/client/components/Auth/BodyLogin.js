@@ -3,12 +3,12 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import Validator from "validator";
 import axios from "axios";
-import { setUser } from "../actions/user";
+import { setUser } from "../../actions/user";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
-import { setAlert, hideAlert } from "../actions/alert";
+import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 
 class BodyLogin extends Component {

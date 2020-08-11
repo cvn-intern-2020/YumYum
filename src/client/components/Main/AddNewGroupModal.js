@@ -1,52 +1,59 @@
 import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import Validator from "validator";
-import GlobalAlert from "../Common/GlobalAlert";
 import axios from "axios";
+import GlobalAlert from "../Common/GlobalAlert";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setAlert, hideAlert } from "../actions/alert";
+import { setAlert, hideAlert } from "../../actions/alert";
+import { setUser } from "../../actions/user";
 
-class AddMemberModal extends Component {
+class AddNewGroupModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      name: "",
+      description: "",
     };
   }
 
   handleChange = (e) => {
-    this.setState({ ...this.state, [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   };
   handleCloseButton = () => {
     this.setState({
       ...this.state,
-      email: "",
+      name: "",
+      description: "",
       err: "",
       showAlert: false,
     });
     this.props.hideAlert();
     this.props.handleClose();
   };
-  handleClickAddMember = () => {
-    if (this.state.email == "") {
+  handleSaveNewGroup = () => {
+    if (this.state.name == "") {
       if (this.state.err != "") {
-        this.props.setAlert("danger", "Email is empty");
+        this.props.setAlert("danger", "Group's name is empty");
         return -1;
       }
-      this.props.setAlert("danger", "Email is empty");
+      this.props.setAlert("danger", "Group's name is empty");
       return -1;
     }
-    if (!Validator.isEmail(this.state.email)) {
-      this.props.setAlert("danger", "Invalid email");
+    if (this.state.description == "") {
+      if (this.state.err != "") {
+        this.props.setAlert("danger", "Group's description is empty");
+        return -1;
+      }
+      this.props.setAlert("danger", "Group's description is empty");
       return -1;
     }
     axios
       .post(
-        `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}/add/member`,
+        `${process.env.API_URL}/api/groups/new`,
         {
-          userEmail: this.state.email,
+          name: this.state.name,
+          description: this.state.description,
         },
         {
           headers: {
@@ -54,12 +61,11 @@ class AddMemberModal extends Component {
           },
         }
       )
-      .then((res) => {
-        console.log(res);
-        this.props.setAlert("success", "Add Sucessfully");
+      .then(() => {
+        this.props.setUser(this.props.token);
+        this.props.handleClose();
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
-    this.props.hideAlert();
   };
   componentWillUnmount() {
     this.props.hideAlert();
@@ -68,7 +74,7 @@ class AddMemberModal extends Component {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Member</Modal.Title>
+          <Modal.Title>Add A New Group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {this.props.showAlert ? (
@@ -80,32 +86,47 @@ class AddMemberModal extends Component {
           ) : (
             <></>
           )}
-          <Form.Group>
-            <Form.Label>Member Email: </Form.Label>
-            <Form.Control
-              size="lg"
-              type="email"
-              name="email"
-              placeholder="abcdxy@example.com"
-              onChange={this.handleChange}
-            />
-          </Form.Group>
+           <Form>
+            <Form.Group>
+              <Form.Label>Name of group</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                placeholder="Enter group name"
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows="4"
+                type="text"
+                placeholder="Enter description"
+                name="description"
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button
             style={{
-              backgroundColor: "#FF5522",
+              backgroundColor: "#48BDFF",
               color: "#080024",
               border: "none",
             }}
             variant="primary"
-            onClick={this.handleClickAddMember}
+            onClick={() => {
+              this.handleSaveNewGroup();
+            }}
           >
-            Add Member
+            Save
           </Button>
           <Button
             style={{
-              backgroundColor: "#48BDFF",
+              backgroundColor: "#FF5522",
               color: "#080024",
               border: "none",
             }}
@@ -125,13 +146,14 @@ class AddMemberModal extends Component {
 function mapStateToProps(state) {
   return {
     ...state.alert,
+    token: state.user.token,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  return bindActionCreators({ setAlert, hideAlert, setUser }, dispatch);
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AddMemberModal)
+  connect(mapStateToProps, mapDispatchToProps)(AddNewGroupModal)
 );
