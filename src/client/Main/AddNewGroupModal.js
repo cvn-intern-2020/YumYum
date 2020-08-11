@@ -63,9 +63,9 @@ class AddNewGroupModal extends Component {
       )
       .then((res) => {
         this.props.setUser(this.props.token);
+        this.props.handleClose();
       })
       .catch((err) => this.props.setAlert("danger", err.response.data.message));
-
   };
   componentWillUnmount() {
     this.props.hideAlert();
@@ -84,8 +84,8 @@ class AddNewGroupModal extends Component {
               message={this.props.message}
             />
           ) : (
-              <></>
-            )}
+            <></>
+          )}
           <Form>
             <Form.Group>
               <Form.Label>Name of group</Form.Label>
