@@ -13,8 +13,8 @@ export default class DishItem extends Component {
           <div className="dish-label col "></div>
           <div className="dish-label col">
             <Button
-              style={{  }}
               className="float-right"
+              onClick={this.props.toggleConfirmDeleteModal}
             >
               DELETE
             </Button>

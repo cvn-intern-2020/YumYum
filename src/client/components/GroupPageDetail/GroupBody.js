@@ -6,6 +6,8 @@ import AddMemberModal from "./AddMemberModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getGroupRequest } from "../../request/group";
+import DishList from "./DishListUser";
+import DishListUser from "./DishListUser";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -78,25 +80,10 @@ class GroupBody extends Component {
             </Button>
           </div>
         </div>
-        <div className="text-center">
-          <div className="row w-100 m-0">
-            <div className=" dish-label col mt-4">
-              <b>Food Name</b>
-            </div>
-            <div className="dish-label col mt-4"></div>
-            <div className="dish-label col mt-4">
-              <b>Price</b>
-            </div>
-            <div className="dish-label col mt-4"></div>
-          </div>
-          <div className="group-container mt-4">
-            <ListGroup>
-              {this.state.dishes.map((dish) => (
-                <DishItem key={dish._id} dish={dish} />
-              ))}
-            </ListGroup>
-          </div>
-        </div>
+
+        <DishListUser
+          dishlist={this.state.dishes}
+        ></DishListUser>
       </div>
     );
   }
@@ -105,6 +92,7 @@ class GroupBody extends Component {
 function mapStateToProps(state) {
   return {
     token: state.user.token,
+    _id: state.user._id,
   };
 }
 

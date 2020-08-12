@@ -106,6 +106,7 @@ export const pullDishFromGroup = async (dishId) => {
   return pullResult.nModified;
 };
 
+
 export const areDishesInGroup = async (groupId, dishDetails) => {
   let dishArray = dishDetails.map((detail) => detail.dishId);
   let groupFound = await groupModel
@@ -120,3 +121,21 @@ export const areDishesInGroup = async (groupId, dishDetails) => {
   }
   return true;
 };
+
+export const editDishes = async (groupId, dishes) => {
+  let editDishes = await groupModel.findOneAndUpdate(
+    {
+      _id: groupId,
+      dishes: dishes,
+    },
+    {}
+  );
+  if (!editDishes) {
+    return {
+      message: "dishId or groupId does not exist",
+      status: false,
+    };
+  }
+  return { status: true };
+};
+
