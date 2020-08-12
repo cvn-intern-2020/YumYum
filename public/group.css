@@ -32,5 +32,12 @@
   overflow-x: hidden;
 }
 .dish-label {
+  font-size: 25px ;
+}
+
+.tab4{
+  tab-size: 4;
+}
+.pre{
   font-size: 25px;
 }
