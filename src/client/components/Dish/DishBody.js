@@ -97,7 +97,7 @@ class DishBody extends Component {
           </div>
           <div className="dish-container mt-4">
             <ListGroup>
-              {this.state.dishes.map((dish) => (
+              {this.state.dishes.reverse().map((dish) => (
                 <DishItem
                   key={dish}
                   dish={dish}

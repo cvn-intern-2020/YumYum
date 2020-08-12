@@ -48,10 +48,11 @@ class AddDishModal extends Component {
       this.state,
       this.props.token || this.props.location.state.token
     );
-    this.props.setAlert(
-      createDishResult.status ? "success" : "danger",
-      createDishResult.message
-    );
+    if (!createDishResult.status) {
+      this.props.setAlert("danger", createDishResult.message);
+    } else {
+      this.props.handleClose();
+    }
   };
   render() {
     return (
