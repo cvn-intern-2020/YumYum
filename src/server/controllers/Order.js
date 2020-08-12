@@ -28,7 +28,13 @@ export const getOrderByGroupIdController = async (req, res) => {
 export const createNewOrderController = async (req, res) => {
   let userId = req._id;
   let { details, totalPrice, groupId } = req.body;
-  if (!isUserInGroup(userId, groupId)) {
+  if (totalPrice <= 0 || details.filter(detail => detail.quantity > 0 && detail.price > 0).length < details.length){
+    return res.status(400).json({
+      message: "total price, quantity or price is invalid",
+    });
+  }
+
+  if (! await isUserInGroup(userId, groupId)) {
     return res.status(400).json({
       message: "groupId does not exist or not allowed to order in this group",
     });
@@ -39,25 +45,25 @@ export const createNewOrderController = async (req, res) => {
     });
   }
   details = convertToObjectId(details);
-  if (!doDishesExist) {
+  if (! await doDishesExist(details)) {
     return res.status(400).json({
       message: "dishId sent does not exist or deleted",
     });
   }
-  if (!areDishesInGroup(details)) {
+  if (! await areDishesInGroup(groupId, details)) {
     return res.status(400).json({
       message: "dishId sent is not in group",
     });
   }
 
-  let { result, status } = await createOrder(
+  let createOrderResult = await createOrder(
     groupId,
     userId,
     details,
     totalPrice
   );
-  if (!status) {
+  if (!createOrderResult.status) {
     return res.status(400).json({ message: "something went wrong" });
   }
-  return res.status(200).json(result);
+  return res.status(200).json({ message: createOrderResult.message });
 };

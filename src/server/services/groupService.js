@@ -24,7 +24,7 @@ export const isAllowedToEditGroup = async (groupId, userId) => {
 export const isUserInGroup = async (userId, groupId) => {
   return await groupModel.exists({
     "users.userId": mongoose.Types.ObjectId(userId),
-    _id: groupId,
+    _id: mongoose.Types.ObjectId(groupId),
   });
 };
 
