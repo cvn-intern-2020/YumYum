@@ -11,7 +11,7 @@ export const getDishByUserId = async (userId) => {
     return { message: "UserId does not exist", status: false };
   }
   return { result, status: true };
-
+};
 export const createDish = async (name, price, userId) => {
   if (!isObjectID(userId)) {
     return { message: "invalid ownerId", status: false };

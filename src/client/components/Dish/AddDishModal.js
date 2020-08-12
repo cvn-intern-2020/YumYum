@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import GlobalAlert from "../Common/GlobalAlert";
+import { createDishRequest } from "../../request/dish";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setAlert, hideAlert } from "../../actions/alert";
 
-export default class AddDishModal extends Component {
+class AddDishModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +24,34 @@ export default class AddDishModal extends Component {
       name: "",
       description: "",
     });
+    this.props.hideAlert();
     this.props.handleClose();
+  };
+  handleClickAddDish = async () => {
+    if (this.state.name == "") {
+      if (this.state.err != "") {
+        this.props.setAlert("danger", "Name is empty");
+        return -1;
+      }
+      this.props.setAlert("danger", "Name is empty");
+      return -1;
+    }
+    if (this.state.price == "") {
+      if (this.state.err != "") {
+        this.props.setAlert("danger", "Price is empty");
+        return -1;
+      }
+      this.props.setAlert("danger", "Price is empty");
+      return -1;
+    }
+    let createDishResult = await createDishRequest(
+      this.state,
+      this.props.token || this.props.location.state.token
+    );
+    this.props.setAlert(
+      createDishResult.status ? "success" : "danger",
+      createDishResult.message
+    );
   };
   render() {
     return (
@@ -28,6 +60,15 @@ export default class AddDishModal extends Component {
           <Modal.Title>Add A New Dish</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {this.props.showAlert ? (
+            <GlobalAlert
+              alertType={this.props.type}
+              toggleAlert={this.props.hideAlert}
+              message={this.props.message}
+            />
+          ) : (
+            <></>
+          )}
           <Form>
             <Form.Group>
               <Form.Label>Name of dish</Form.Label>
@@ -61,7 +102,7 @@ export default class AddDishModal extends Component {
             }}
             variant="primary"
             onClick={() => {
-              this.handleCloseButton();
+              this.handleClickAddDish();
             }}
           >
             Save
@@ -84,3 +125,18 @@ export default class AddDishModal extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    ...state.alert,
+    token: state.user.token,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setAlert, hideAlert}, dispatch);
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AddDishModal)
+);
