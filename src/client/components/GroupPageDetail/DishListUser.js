@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ListGroup, Button } from "react-bootstrap";
+import { ListGroup, Button, ListGroupItem } from "react-bootstrap";
 import DishItem from "./DishItem";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -34,21 +34,30 @@ class DishListUser extends Component {
               );
             })}
           </ListGroup>
+          <ListGroupItem
+            style={{ width: "35%", height: "16%" }}
+            className="float-right dish-label"
+          >
+            <pre className="dish-label tab4">Total:   300000</pre>
+          </ListGroupItem>
+          <ListGroupItem style={{ marginTop: "5rem", height: "30%" }}>
+            <Button
+              style={{
+                position: "absolute",
+                bottom: "0",
+                right: "0",
+                backgroundColor: "#ffe500",
+                fontSize: "1.4rem",
+                color: "#080024",
+                width: "15%",
+                borderRadius: "2rem"
+              }}
+              onClick={this.props.toggleConfirmOrderModal}
+            >
+              <b>ORDER</b>
+            </Button>
+          </ListGroupItem>
         </div>
-        <Button
-          style={{
-            position: "absolute",
-            right: "0",
-            bottom: "0",
-            marginLeft: "1rem",
-            backgroundColor: "#48BDFF",
-            fontSize: "1.4rem",
-            color: "#080024",
-          }}
-          onClick={this.props.toggleConfirmOrderModal}
-        >
-          <b>ORDER</b>
-        </Button>
       </div>
     );
   }
