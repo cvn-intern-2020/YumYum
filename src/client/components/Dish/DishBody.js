@@ -5,19 +5,20 @@ import DishItem from "./DishItems";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
+import AddDishModal from "./AddDishModal";
 
 class DishBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAddMemberModal: false,
-      dishes: [1,2,3,4],
+      showAddDishModal: false,
+      dishes: [1, 2, 3, 4],
     };
   }
-  toggleAddMemberModal = () => {
+  toggleAddDishModal = () => {
     this.setState({
       ...this.state,
-      showAddMemberModal: !this.state.showAddMemberModal,
+      showAddDishModal: !this.state.showAddDishModal,
     });
   };
   // componentDidMount() {
@@ -50,12 +51,13 @@ class DishBody extends Component {
           height: "94%",
         }}
       >
-        {/* <AddMemberModal
-          show={this.state.showAddMemberModal}
-          handleClose={this.toggleAddMemberModal}
-          token={this.props.token}
-          {...this.props}
-        /> */}
+        {
+          <AddDishModal
+            show={this.state.showAddDishModal}
+            handleClose={this.toggleAddDishModal}
+            {...this.props}
+          />
+        }
         <div className="row w-100 m-0">
           <div className="col-4"></div>
 
@@ -70,9 +72,10 @@ class DishBody extends Component {
             <Button
               style={{ backgroundColor: "#48BDFF", color: "#080024" }}
               className="float-right mt-4 mr-5 group-button"
+              onClick={this.toggleAddDishModal}
             >
               Add Dishes
-            </Button>
+            </Button>{" "}
           </div>
         </div>
         <div className="text-center">
