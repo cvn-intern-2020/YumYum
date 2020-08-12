@@ -3,6 +3,7 @@ import {
   addMemberToGroup,
   createGroup,
   isAllowedToEditGroup,
+  editDishes
 } from "../services/groupService";
 import { getUserByEmail, addGroupToUser } from "../services/userService";
 
@@ -53,7 +54,7 @@ export const addMemberController = async (req, res) => {
   if (!addMemberResult.status) {
     return res.status(400).json({ message: addMemberResult.message });
   }
-  
+
   let addGroupResult = await addGroupToUser(
     user._id,
     groupId,
@@ -74,4 +75,16 @@ export const createNewGroupController = async (req, res) => {
     return res.status(400).json({ message: "something went wrong" });
   }
   return res.status(200).json(result);
+};
+
+export const editDishesController = async (req, res) => {
+  let dishes = req.body.dishes;
+  let groupId = req.params.groupId;
+  let status = await editDishes(groupId, dishes);
+  if (!status) {
+    return res.status(400).json({ message: "something went wrong" });
+  }
+  return res.status(200).json({
+    message: `Edited`,
+  });
 };
