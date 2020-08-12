@@ -1,6 +1,13 @@
-import { isAllowedToEditGroup, isUserInGroup } from "../services/groupService";
+import {
+  isAllowedToEditGroup,
+  isUserInGroup,
+  areDishesInGroup,
+} from "../services/groupService";
 import { isObjectID } from "../utils/validator";
 import { getOrderByGroupId, createOrder } from "../services/orderService";
+import isTotalPriceCorrect from "../utils/checkTotalPrice";
+import convertToObjectId from "../utils/convertToObjecId";
+import { doDishesExist } from "../services/dishService";
 
 export const getOrderByGroupIdController = async (req, res) => {
   let groupId = req.params.groupId;
@@ -21,9 +28,28 @@ export const getOrderByGroupIdController = async (req, res) => {
 export const createNewOrderController = async (req, res) => {
   let userId = req._id;
   let { details, totalPrice, groupId } = req.body;
-  if (!isUserInGroup(userId, groupId)){
-    return res.status(400).json({message: "groupId does not exist or not allowed to order in this group"});
+  if (!isUserInGroup(userId, groupId)) {
+    return res.status(400).json({
+      message: "groupId does not exist or not allowed to order in this group",
+    });
   }
+  if (!isTotalPriceCorrect({ details, totalPrice })) {
+    return res.status(400).json({
+      message: "price and quantity of dish does not match total price",
+    });
+  }
+  details = convertToObjectId(details);
+  if (!doDishesExist) {
+    return res.status(400).json({
+      message: "dishId sent does not exist or deleted",
+    });
+  }
+  if (!areDishesInGroup(details)) {
+    return res.status(400).json({
+      message: "dishId sent is not in group",
+    });
+  }
+
   let { result, status } = await createOrder(
     groupId,
     userId,

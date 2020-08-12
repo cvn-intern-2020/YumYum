@@ -7,10 +7,9 @@ export default class DishItem extends Component {
       <ListGroup.Item>
         <div className="row w-100 m-0">
           <div className=" dish-label col">
-            Name: Pho <br></br> 30000
+            Name: {this.props.dish.name} <br></br> Price: {this.props.dish.price}
           </div>
-          <div className="dish-label col "></div>
-          <div className="dish-label col "></div>
+
           <div className="dish-label col">
             <Button
               className="float-right"

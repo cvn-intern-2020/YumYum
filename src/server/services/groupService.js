@@ -106,6 +106,22 @@ export const pullDishFromGroup = async (dishId) => {
   return pullResult.nModified;
 };
 
+
+export const areDishesInGroup = async (groupId, dishDetails) => {
+  let dishArray = dishDetails.map((detail) => detail.dishId);
+  let groupFound = await groupModel
+    .findOne({
+      _id: mongoose.Types.ObjectId(groupId),
+      dishes: { $all: dishArray },
+    })
+    .select("dishes")
+    .lean();
+  if (!groupFound) {
+    return false;
+  }
+  return true;
+};
+
 export const editDishes = async (groupId, dishes) => {
   let editDishes = await groupModel.findOneAndUpdate(
     {
@@ -122,3 +138,4 @@ export const editDishes = async (groupId, dishes) => {
   }
   return { status: true };
 };
+

@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.get("/user/:userId", getDishByUserIdController);
+router.get("/user/", getDishByUserIdController);
 
 router.post("/new", createDishController);
 
