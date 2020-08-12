@@ -31,4 +31,10 @@ router.use(
   passport.authenticate("jwt", { session: false }),
   require("./routes/users")
 );
+
+router.use(
+  "/dishes",
+  passport.authenticate("jwt", { session: false }),
+  require("./routes/dishes")
+);
 module.exports = router;
