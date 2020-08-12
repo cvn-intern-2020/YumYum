@@ -28,29 +28,33 @@ export const getOrderByGroupIdController = async (req, res) => {
 export const createNewOrderController = async (req, res) => {
   let userId = req._id;
   let { details, totalPrice, groupId } = req.body;
-  if (totalPrice <= 0 || details.filter(detail => detail.quantity > 0 && detail.price > 0).length < details.length){
+  if (!(await isUserInGroup(userId, groupId))) {
+    return res.status(400).json({
+      message: "groupId does not exist or not allowed to order in this group",
+    });
+  }
+  if (
+    totalPrice <= 0 ||
+    details.filter((detail) => detail.quantity > 0 && detail.dishPrice > 0)
+      .length < details.length
+  ) {
     return res.status(400).json({
       message: "total price, quantity or price is invalid",
     });
   }
 
-  if (! await isUserInGroup(userId, groupId)) {
-    return res.status(400).json({
-      message: "groupId does not exist or not allowed to order in this group",
-    });
-  }
   if (!isTotalPriceCorrect({ details, totalPrice })) {
     return res.status(400).json({
       message: "price and quantity of dish does not match total price",
     });
   }
   details = convertToObjectId(details);
-  if (! await doDishesExist(details)) {
+  if (!(await doDishesExist(details))) {
     return res.status(400).json({
       message: "dishId sent does not exist or deleted",
     });
   }
-  if (! await areDishesInGroup(groupId, details)) {
+  if (!(await areDishesInGroup(groupId, details))) {
     return res.status(400).json({
       message: "dishId sent is not in group",
     });

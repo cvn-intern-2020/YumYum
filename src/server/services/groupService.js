@@ -23,8 +23,10 @@ export const isAllowedToEditGroup = async (groupId, userId) => {
 
 export const isUserInGroup = async (userId, groupId) => {
   return await groupModel.exists({
-    "users.userId": mongoose.Types.ObjectId(userId),
-    _id: mongoose.Types.ObjectId(groupId),
+    $and: [
+      { "users.userId": mongoose.Types.ObjectId(userId) },
+      { _id: mongoose.Types.ObjectId(groupId) },
+    ],
   });
 };
 
@@ -106,7 +108,6 @@ export const pullDishFromGroup = async (dishId) => {
   return pullResult.nModified;
 };
 
-
 export const areDishesInGroup = async (groupId, dishDetails) => {
   let dishArray = dishDetails.map((detail) => detail.dishId);
   let groupFound = await groupModel
@@ -138,4 +139,3 @@ export const editDishes = async (groupId, dishes) => {
   }
   return { status: true };
 };
-
