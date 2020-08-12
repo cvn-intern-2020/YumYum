@@ -9,14 +9,20 @@ export const isAllowedToEditGroup = async (groupId, userId) => {
   if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
   }
-  let result = await groupModel.findOne({
-    _id: mongoose.Types.ObjectId(groupId),
-    ownerId: mongoose.Types.ObjectId(userId),
-  });
+  let result = await groupModel
+    .findOne({
+      _id: mongoose.Types.ObjectId(groupId),
+      ownerId: mongoose.Types.ObjectId(userId),
+    })
+    .lean();
   if (!result) {
     return false;
   }
   return true;
+};
+
+export const doesGroupExist = async (groupId) => {
+  return await groupModel.exists({ _id: mongoose.Types.ObjectId(groupId) });
 };
 
 export const getGroupById = async (groupId) => {
