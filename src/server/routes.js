@@ -18,17 +18,23 @@ router.use(
   require("./routes/auth/signin")
 );
 
-router.use(
-  "/auth/signup",
-  (req, res, next) => {
-    next();
-  },
-  require("./routes/auth/signup")
-);
+router.use("/auth/signup", require("./routes/auth/signup"));
 
 router.use(
   "/users",
   passport.authenticate("jwt", { session: false }),
   require("./routes/users")
+);
+
+router.use(
+  "/dishes",
+  passport.authenticate("jwt", { session: false }),
+  require("./routes/dishes")
+);
+
+router.use(
+  "/orders",
+  passport.authenticate("jwt", { session: false }),
+  require("./routes/orders")
 );
 module.exports = router;

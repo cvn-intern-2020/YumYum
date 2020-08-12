@@ -33,6 +33,9 @@ class MainNavBar extends Component {
                   />
                 </Link>
               </Navbar.Brand>
+              <Link className="mainnav-dishlabel" to="/dish">
+                Dish Management
+              </Link>
             </div>
             <div className="col-4"></div>
             <div className="col p-0">

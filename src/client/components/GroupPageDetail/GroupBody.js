@@ -6,13 +6,17 @@ import AddMemberModal from "./AddMemberModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getGroupRequest } from "../../request/group";
+import DishList from "./DishListUser";
+import DishListUser from "./DishListUser";
+import OrderConfirmModal from "./OrderConfirmModal";
 
 class GroupBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAddMemberModal: false,
-      dishes: [],
+      showConfirmOrderModal: false,
+      dishes: [], // id price quantity sum
     };
   }
   toggleAddMemberModal = () => {
@@ -21,6 +25,30 @@ class GroupBody extends Component {
       showAddMemberModal: !this.state.showAddMemberModal,
     });
   };
+
+  changeDishAmount = (isIncrementing, dishId) => {
+    let newDishState = this.state.dishes.map((dish) => {
+      if (dish._id == dishId) {
+        if (dish.quantity == 0 && !isIncrementing) {
+          return dish;
+        }
+        dish.quantity = isIncrementing ? dish.quantity + 1 : dish.quantity - 1;
+      }
+      return dish;
+    });
+    this.setState({
+      ...this.state,
+      dishes: [...newDishState],
+    });
+  };
+
+  toggleConfirmOrderModal = () => {
+    this.setState({
+      ...this.state,
+      showConfirmOrderModal: !this.state.showConfirmOrderModal,
+    });
+  };
+
   async componentDidMount() {
     let getGroupResult = await getGroupRequest(
       this.props.match.params.groupId,
@@ -29,9 +57,13 @@ class GroupBody extends Component {
     if (!getGroupResult.status) {
       console.log(getGroupResult.message);
     } else {
+      let groupData = getGroupResult.groupData;
+      groupData.dishes = groupData.dishes.map((dish) => {
+        return { ...dish, quantity: 0 };
+      });
       this.setState({
         ...this.state,
-        ...getGroupResult.groupData,
+        ...groupData,
       });
     }
   }
@@ -49,6 +81,12 @@ class GroupBody extends Component {
           show={this.state.showAddMemberModal}
           handleClose={this.toggleAddMemberModal}
           token={this.props.token}
+          {...this.props}
+        />
+
+        <OrderConfirmModal
+          show={this.state.showConfirmOrderModal}
+          handleClose={this.toggleConfirmOrderModal}
           {...this.props}
         />
         <div className="row w-100 m-0">
@@ -74,29 +112,16 @@ class GroupBody extends Component {
               style={{ backgroundColor: "#48BDFF", color: "#080024" }}
               className="float-right mt-4 mr-5 group-button"
             >
-              Add Dishes
+              Edit Dishes
             </Button>
           </div>
         </div>
-        <div className="text-center">
-          <div className="row w-100 m-0">
-            <div className=" dish-label col mt-4">
-              <b>Food Name</b>
-            </div>
-            <div className="dish-label col mt-4"></div>
-            <div className="dish-label col mt-4">
-              <b>Price</b>
-            </div>
-            <div className="dish-label col mt-4"></div>
-          </div>
-          <div className="group-container mt-4">
-            <ListGroup>
-              {this.state.dishes.map((dish) => (
-                <DishItem key={dish._id} dish={dish} />
-              ))}
-            </ListGroup>
-          </div>
-        </div>
+
+        <DishListUser
+          changeDishAmount={this.changeDishAmount}
+          dishlist={this.state.dishes}
+          toggleConfirmOrderModal={this.toggleConfirmOrderModal}
+        ></DishListUser>
       </div>
     );
   }
@@ -105,6 +130,7 @@ class GroupBody extends Component {
 function mapStateToProps(state) {
   return {
     token: state.user.token,
+    _id: state.user._id,
   };
 }
 

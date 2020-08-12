@@ -9,14 +9,25 @@ export const isAllowedToEditGroup = async (groupId, userId) => {
   if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
   }
-  let result = await groupModel.findOne({
-    _id: mongoose.Types.ObjectId(groupId),
-    ownerId: mongoose.Types.ObjectId(userId),
-  });
+  let result = await groupModel
+    .findOne({
+      _id: mongoose.Types.ObjectId(groupId),
+      ownerId: mongoose.Types.ObjectId(userId),
+    })
+    .lean();
   if (!result) {
     return false;
   }
   return true;
+};
+
+export const isUserInGroup = async (userId, groupId) => {
+  return await groupModel.exists({
+    $and: [
+      { "users.userId": mongoose.Types.ObjectId(userId) },
+      { _id: mongoose.Types.ObjectId(groupId) },
+    ],
+  });
 };
 
 export const getGroupById = async (groupId) => {
@@ -81,4 +92,50 @@ export const createGroup = async (name, ownerId, description) => {
     return { message: addGroupResult.message, status: false };
   }
   return { result: createdGroup, status: true };
+};
+
+export const pullDishFromGroup = async (dishId) => {
+  let pullResult = await groupModel.updateMany(
+    {
+      dishes: mongoose.Types.ObjectId(dishId),
+    },
+    {
+      $pull: {
+        dishes: mongoose.Types.ObjectId(dishId),
+      },
+    }
+  );
+  return pullResult.nModified;
+};
+
+export const areDishesInGroup = async (groupId, dishDetails) => {
+  let dishArray = dishDetails.map((detail) => detail.dishId);
+  let groupFound = await groupModel
+    .findOne({
+      _id: mongoose.Types.ObjectId(groupId),
+      dishes: { $all: dishArray },
+    })
+    .select("dishes")
+    .lean();
+  if (!groupFound) {
+    return false;
+  }
+  return true;
+};
+
+export const editDishes = async (groupId, dishes) => {
+  let editDishes = await groupModel.findOneAndUpdate(
+    {
+      _id: groupId,
+      dishes: dishes,
+    },
+    {}
+  );
+  if (!editDishes) {
+    return {
+      message: "dishId or groupId does not exist",
+      status: false,
+    };
+  }
+  return { status: true };
 };
