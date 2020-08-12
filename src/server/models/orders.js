@@ -16,7 +16,6 @@ export const OrdersSchema = new Orders({
   ],
   orderDate: { type: Date, required: true, default: Date.now },
   totalPrice: { type: Number, required: true },
-  note: { type: String, required: true },
 });
 
 OrdersSchema.statics.getOrderById = async function (orderId) {
