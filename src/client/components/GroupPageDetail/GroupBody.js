@@ -16,13 +16,29 @@ class GroupBody extends Component {
     this.state = {
       showAddMemberModal: false,
       showConfirmOrderModal: false,
-      dishes: [],
+      dishes: [], // id price quantity sum
     };
   }
   toggleAddMemberModal = () => {
     this.setState({
       ...this.state,
       showAddMemberModal: !this.state.showAddMemberModal,
+    });
+  };
+
+  changeDishAmount = (isIncrementing, dishId) => {
+    let newDishState = this.state.dishes.map((dish) => {
+      if (dish._id == dishId) {
+        if (dish.quantity == 0 && !isIncrementing) {
+          return dish;
+        }
+        dish.quantity = isIncrementing ? dish.quantity + 1 : dish.quantity - 1;
+      }
+      return dish;
+    });
+    this.setState({
+      ...this.state,
+      dishes: [...newDishState],
     });
   };
 
@@ -41,9 +57,13 @@ class GroupBody extends Component {
     if (!getGroupResult.status) {
       console.log(getGroupResult.message);
     } else {
+      let groupData = getGroupResult.groupData;
+      groupData.dishes = groupData.dishes.map((dish) => {
+        return { ...dish, quantity: 0 };
+      });
       this.setState({
         ...this.state,
-        ...getGroupResult.groupData,
+        ...groupData,
       });
     }
   }
@@ -98,6 +118,7 @@ class GroupBody extends Component {
         </div>
 
         <DishListUser
+          changeDishAmount={this.changeDishAmount}
           dishlist={this.state.dishes}
           toggleConfirmOrderModal={this.toggleConfirmOrderModal}
         ></DishListUser>

@@ -25,7 +25,13 @@ class DishListUser extends Component {
         <div className="group-container mt-4">
           <ListGroup>
             {this.props.dishlist.map((dish) => {
-              return <DishItem key={dish._id} dish={dish} />;
+              return (
+                <DishItem
+                  key={dish._id}
+                  dish={dish}
+                  changeDishAmount={this.props.changeDishAmount}
+                />
+              );
             })}
           </ListGroup>
         </div>
@@ -37,7 +43,7 @@ class DishListUser extends Component {
             marginLeft: "1rem",
             backgroundColor: "#48BDFF",
             fontSize: "1.4rem",
-            color: "#080024"
+            color: "#080024",
           }}
           onClick={this.props.toggleConfirmOrderModal}
         >
@@ -47,8 +53,6 @@ class DishListUser extends Component {
     );
   }
 }
-
-
 
 function mapStateToProps(state) {
   return {

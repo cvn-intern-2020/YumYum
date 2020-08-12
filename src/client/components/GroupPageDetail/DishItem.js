@@ -7,7 +7,10 @@ export default class DishItem extends Component {
       <ListGroup.Item>
         <div className="row w-100 m-0">
           <div className=" dish-label col">{this.props.dish.name} </div>
-          <div style = {{fontSize: "1.6rem"}}className="dish-label-quantity col ">
+          <div
+            style={{ fontSize: "1.6rem" }}
+            className="dish-label-quantity col "
+          >
             <Button
               style={{
                 backgroundColor: "transparent",
@@ -15,12 +18,15 @@ export default class DishItem extends Component {
                 color: "#080024",
                 fontSize: "1.6rem",
                 paddingTop: 0,
-                boxShadow: "none"
+                boxShadow: "none",
               }}
+              onClick={() =>
+                this.props.changeDishAmount(false, this.props.dish._id)
+              }
             >
               [-]
             </Button>
-            1
+            {this.props.dish.quantity}
             <Button
               style={{
                 backgroundColor: "transparent",
@@ -28,14 +34,19 @@ export default class DishItem extends Component {
                 color: "#080024",
                 fontSize: "1.6rem",
                 paddingTop: 0,
-                boxShadow: "none"
+                boxShadow: "none",
               }}
+              onClick={() =>
+                this.props.changeDishAmount(true, this.props.dish._id)
+              }
             >
               [+]
             </Button>
           </div>
           <div className="dish-label col ">{this.props.dish.price}</div>
-          <div className="dish-label col"></div>
+          <div className="dish-label col">
+            {this.props.dish.quantity * this.props.dish.price}
+          </div>
         </div>
       </ListGroup.Item>
     );
