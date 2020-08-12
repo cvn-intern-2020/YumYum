@@ -8,12 +8,14 @@ import { connect } from "react-redux";
 import { getGroupRequest } from "../../request/group";
 import DishList from "./DishListUser";
 import DishListUser from "./DishListUser";
+import OrderConfirmModal from "./OrderConfirmModal";
 
 class GroupBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAddMemberModal: false,
+      showConfirmOrderModal: false,
       dishes: [],
     };
   }
@@ -23,6 +25,14 @@ class GroupBody extends Component {
       showAddMemberModal: !this.state.showAddMemberModal,
     });
   };
+
+  toggleConfirmOrderModal = () => {
+    this.setState({
+      ...this.state,
+      showConfirmOrderModal: !this.state.showConfirmOrderModal,
+    });
+  };
+
   async componentDidMount() {
     let getGroupResult = await getGroupRequest(
       this.props.match.params.groupId,
@@ -51,6 +61,12 @@ class GroupBody extends Component {
           show={this.state.showAddMemberModal}
           handleClose={this.toggleAddMemberModal}
           token={this.props.token}
+          {...this.props}
+        />
+
+        <OrderConfirmModal
+          show={this.state.showConfirmOrderModal}
+          handleClose={this.toggleConfirmOrderModal}
           {...this.props}
         />
         <div className="row w-100 m-0">
@@ -83,6 +99,7 @@ class GroupBody extends Component {
 
         <DishListUser
           dishlist={this.state.dishes}
+          toggleConfirmOrderModal={this.toggleConfirmOrderModal}
         ></DishListUser>
       </div>
     );

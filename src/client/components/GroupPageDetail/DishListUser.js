@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Button } from "react-bootstrap";
 import DishItem from "./DishItem";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
- class DishListUser extends Component {
-    render() {
+class DishListUser extends Component {
+  render() {
     return (
       <div className="text-center">
         <div className="row w-100 m-0">
@@ -29,6 +29,20 @@ import { connect } from "react-redux";
             })}
           </ListGroup>
         </div>
+        <Button
+          style={{
+            position: "absolute",
+            right: "0",
+            bottom: "0",
+            marginLeft: "1rem",
+            backgroundColor: "#48BDFF",
+            fontSize: "1.4rem",
+            color: "#080024"
+          }}
+          onClick={this.props.toggleConfirmOrderModal}
+        >
+          <b>ORDER</b>
+        </Button>
       </div>
     );
   }
@@ -37,9 +51,9 @@ import { connect } from "react-redux";
 
 
 function mapStateToProps(state) {
-    return {
-      token: state.user.token,
-    };
-  }
-  
-  export default withRouter(connect(mapStateToProps, null)(DishListUser));
+  return {
+    token: state.user.token,
+  };
+}
+
+export default withRouter(connect(mapStateToProps, null)(DishListUser));
