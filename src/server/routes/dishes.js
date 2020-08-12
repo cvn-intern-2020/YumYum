@@ -1,7 +1,9 @@
 import express from "express";
-import { createDishController } from "../controllers/Dishes";
+import {getDishByUserIdController, createDishController} from "../controllers/Dishes";
 
 const router = express.Router();
+
+router.get("/user/:userId", getDishByUserIdController);
 
 router.post("/new", createDishController);
 
