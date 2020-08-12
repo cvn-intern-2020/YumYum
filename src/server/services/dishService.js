@@ -27,3 +27,20 @@ export const createDish = async (name, price, userId) => {
   }
   return { result: createdDish, status: true };
 };
+
+export const deleteDish = async (userId, dishId) => {
+  let deletedDish = await dishesModel.findOneAndUpdate(
+    {
+      _id: mongoose.Types.ObjectId(dishId),
+      userId: mongoose.Types.ObjectId(userId),
+    },
+    { deleteAt: new Date() }
+  );
+  if (!deletedDish) {
+    return {
+      message: "dishId does not exist or not allowed to delete dish",
+      status: false,
+    };
+  }
+  return { status: true };
+};
