@@ -6,11 +6,13 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 import AddDishModal from "./AddDishModal";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 class DishBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showConfirmDeleteModal: false,
       showAddDishModal: false,
       dishes: [1, 2, 3, 4],
     };
@@ -21,6 +23,32 @@ class DishBody extends Component {
       showAddDishModal: !this.state.showAddDishModal,
     });
   };
+  toggleConfirmDeleteModal = () => {
+    this.setState({
+      ...this.state,
+      showConfirmDeleteModal: !this.state.showConfirmDeleteModal,
+    });
+  };
+  // componentDidMount() {
+  //   axios
+  //     .get(
+  //       `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}`,
+  //       {
+  //         headers: {
+  //           Authorization: this.props.token,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       this.setState({
+  //         ...this.state,
+  //         ...res.data,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
   render() {
     return (
       <div
@@ -31,6 +59,13 @@ class DishBody extends Component {
           height: "94%",
         }}
       >
+        {
+          <ConfirmDeleteModal
+            show={this.state.showConfirmDeleteModal}
+            handleClose={this.toggleConfirmDeleteModal}
+            {...this.props}
+          />
+        }
         {
           <AddDishModal
             show={this.state.showAddDishModal}
@@ -73,7 +108,7 @@ class DishBody extends Component {
           <div className="dish-container mt-4">
             <ListGroup>
               {this.state.dishes.map((dish) => (
-                <DishItem key={dish} dish={dish} />
+                <DishItem key={dish} dish={dish} toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}/>
               ))}
             </ListGroup>
           </div>
