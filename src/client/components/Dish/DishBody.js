@@ -21,26 +21,6 @@ class DishBody extends Component {
       showAddDishModal: !this.state.showAddDishModal,
     });
   };
-  // componentDidMount() {
-  //   axios
-  //     .get(
-  //       `${process.env.API_URL}/api/groups/${this.props.match.params.groupId}`,
-  //       {
-  //         headers: {
-  //           Authorization: this.props.token,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       this.setState({
-  //         ...this.state,
-  //         ...res.data,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
   render() {
     return (
       <div
