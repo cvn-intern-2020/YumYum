@@ -41,7 +41,7 @@ class DishListUser extends Component {
           }}
           onClick={this.props.toggleConfirmOrderModal}
         >
-         <b>ORDER</b> 
+          <b>ORDER</b>
         </Button>
       </div>
     );
