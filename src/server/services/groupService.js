@@ -88,3 +88,17 @@ export const createGroup = async (name, ownerId, description) => {
   }
   return { result: createdGroup, status: true };
 };
+
+export const pullDishFromGroup = async (dishId) => {
+  let pullResult = await groupModel.updateMany(
+    {
+      dishes: mongoose.Types.ObjectId(dishId),
+    },
+    {
+      $pull: {
+        dishes: mongoose.Types.ObjectId(dishId),
+      },
+    }
+  );
+  return pullResult.nModified;
+};
