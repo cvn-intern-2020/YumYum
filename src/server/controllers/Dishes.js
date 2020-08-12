@@ -6,7 +6,7 @@ import {
 import { pullDishFromGroup } from "../services/groupService";
 
 export const getDishByUserIdController = async (req, res) => {
-  let userId = req.params.userId;
+  let userId = req._id;
   let result = await getDishByUserId(userId);
   if (!result.status) {
     return res.status(400).json(result.message);
