@@ -44,3 +44,15 @@ export const deleteDish = async (userId, dishId) => {
   }
   return { status: true };
 };
+
+export const doDishesExist = async (dishDetails) => {
+  let dishArray = dishDetails.map((detail) => detail.dishId);
+  let dishResults = await dishesModel.find({
+    _id: { $in: [...dishArray] },
+    deleteAt: null,
+  });
+  if (dishResults.length != dishArray.length) {
+    return false;
+  }
+  return true;
+};
