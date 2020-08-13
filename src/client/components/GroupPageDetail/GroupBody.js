@@ -17,6 +17,7 @@ class GroupBody extends Component {
       showAddMemberModal: false,
       showConfirmOrderModal: false,
       dishes: [], // id price quantity sum
+      totalPrice: 0
     };
   }
   toggleAddMemberModal = () => {
@@ -39,8 +40,16 @@ class GroupBody extends Component {
     this.setState({
       ...this.state,
       dishes: [...newDishState],
-    });
+    }, () => this.calculateTotalPrice());
   };
+
+  calculateTotalPrice = () => {
+    let totalDishesCalculate = 0;
+    this.state.dishes.map((dish) => {
+      totalDishesCalculate += dish.quantity * dish.price;
+    });
+    this.setState({ ...this.state, totalPrice: totalDishesCalculate });
+  }
 
   toggleConfirmOrderModal = () => {
     this.setState({
@@ -121,6 +130,7 @@ class GroupBody extends Component {
           changeDishAmount={this.changeDishAmount}
           dishlist={this.state.dishes}
           toggleConfirmOrderModal={this.toggleConfirmOrderModal}
+          totalPrice={this.state.totalPrice}
         ></DishListUser>
       </div>
     );
