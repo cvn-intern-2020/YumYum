@@ -57,3 +57,24 @@ export const addMemberRequest = (groupId, email, token) => {
       return { status: false, message: err.response.data.message };
     });
 };
+
+export const editDishesInGroupRequest = (groupId, dishArray, token) => {
+  return axios
+    .post(
+      `${process.env.API_URL}/api/groups/${groupId}/dishes`,
+      {
+        dishes: dishArray,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
+    .then((res) => {
+      return { status: true, newDishes: res.data.newDishes };
+    })
+    .catch((err) => {
+      return { status: false, message: err.response.data.message };
+    });
+};
