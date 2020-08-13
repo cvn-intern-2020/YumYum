@@ -11,6 +11,9 @@ import ButtonBar from "./ButtonBar";
 import { createOrderRequest } from "../../request/order";
 import convertOderFormat from "../../utils/convertOrderFormat";
 import DishListAdmin from "./AdminComponent/DishListAdmin";
+import GlobalAlert from "../Common/GlobalAlert";
+import { bindActionCreators } from "redux";
+import { setAlert, hideAlert } from "../../actions/alert";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -76,15 +79,15 @@ class GroupBody extends Component {
     if (!this.state.showEditDishesModal) {
       let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
       if (!getDishOfUserResult.status) {
-        console.log(getDishOfUserResult.message);
-      } else {
-        getDishOfUserResult.dishData = convertOderFormat(
-          getDishOfUserResult.dishData
-        );
-        this.setState({
-          userDishes: [...getDishOfUserResult.dishData].reverse(),
-        });
+        this.props.setAlert("danger", getDishOfUserResult.message);
+        return -1;
       }
+      getDishOfUserResult.dishData = convertOderFormat(
+        getDishOfUserResult.dishData
+      );
+      this.setState({
+        userDishes: [...getDishOfUserResult.dishData].reverse(),
+      });
     }
     this.setState({
       ...this.state,
@@ -155,7 +158,7 @@ class GroupBody extends Component {
       this.props.token
     );
     if (!getGroupResult.status) {
-      console.log(getGroupResult.message);
+      this.props.setAlert("danger", getGroupResult.message);
     } else {
       let groupData = getGroupResult.groupData;
       groupData.dishes = groupData.dishes.map((dish) => {
@@ -168,20 +171,32 @@ class GroupBody extends Component {
       });
     }
   }
+  componentWillUnmount() {
+    this.props.hideAlert();
+  }
   render() {
     return (
-      <>
+      <div
+        style={{
+          backgroundImage: "url(../../../public/background2.png)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          height: "94%",
+        }}
+      >
+        {this.props.showAlert ? (
+          <GlobalAlert
+            alertType={this.props.type}
+            message={this.props.message}
+            toggleAlert={this.props.hideAlert}
+          />
+        ) : (
+          <></>
+        )}
         {this.state.ownerId == "" ? (
           <></>
         ) : (
-          <div
-            style={{
-              backgroundImage: "url(../../../public/background2.png)",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              height: "94%",
-            }}
-          >
+          <>
             <AddMemberModal
               show={this.state.showAddMemberModal}
               handleClose={this.toggleAddMemberModal}
@@ -222,14 +237,14 @@ class GroupBody extends Component {
             ) : (
               <DishListUser
                 changeDishAmount={this.changeDishAmount}
-                dishlist={this.state.dishes}
+                dishes={this.state.dishes}
                 toggleConfirmOrderModal={this.toggleConfirmOrderModal}
                 totalPrice={this.state.totalPrice}
               ></DishListUser>
             )}
-          </div>
+          </>
         )}
-      </>
+      </div>
     );
   }
 }
@@ -238,7 +253,14 @@ function mapStateToProps(state) {
   return {
     token: state.user.token,
     userId: state.user._id,
+    ...state.alert,
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(GroupBody));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(GroupBody)
+);

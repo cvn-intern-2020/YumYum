@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 class DishListUser extends Component {
   render() {
     return (
-      <div className="text-center">
+      <div className="text-center-group">
         <div className="row w-100 m-0">
           <div className=" dish-label col mt-4">
             <b>Food Name</b>
@@ -24,7 +24,7 @@ class DishListUser extends Component {
         </div>
         <div className="group-container mt-4">
           <ListGroup>
-            {this.props.dishlist.map((dish) => {
+            {this.props.dishes.map((dish) => {
               return (
                 <DishItemUser
                   key={dish._id}
@@ -34,31 +34,37 @@ class DishListUser extends Component {
               );
             })}
           </ListGroup>
-          <ListGroupItem
-            style={{ width: "35%", height: "16%" }}
-            className="float-right dish-label"
-          >
-            <pre className="dish-label tab4">
-              Total: {this.props.totalPrice}
-            </pre>
-          </ListGroupItem>
-          <ListGroupItem style={{ marginTop: "5rem", height: "30%" }}>
-            <Button
-              style={{
-                position: "absolute",
-                bottom: "0",
-                right: "0",
-                backgroundColor: "#ffe500",
-                fontSize: "1.4rem",
-                color: "#080024",
-                width: "15%",
-                borderRadius: "2rem",
-              }}
-              onClick={this.props.toggleConfirmOrderModal}
-            >
-              <b>ORDER</b>
-            </Button>
-          </ListGroupItem>
+          {this.props.dishes.length > 0 ? (
+            <>
+              <ListGroup.Item
+                style={{ width: "35%", height: "16%" }}
+                className="float-right dish-label"
+              >
+                <pre className="dish-label tab4">
+                  Total: {this.props.totalPrice}
+                </pre>
+              </ListGroup.Item>
+              <ListGroup.Item style={{ marginTop: "5rem", height: "30%" }}>
+                <Button
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    right: "0",
+                    backgroundColor: "#ffe500",
+                    fontSize: "1.4rem",
+                    color: "#080024",
+                    width: "15%",
+                    borderRadius: "2rem",
+                  }}
+                  onClick={this.props.toggleConfirmOrderModal}
+                >
+                  <b>ORDER</b>
+                </Button>
+              </ListGroup.Item>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     );

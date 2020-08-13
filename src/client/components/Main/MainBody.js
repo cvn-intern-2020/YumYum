@@ -36,7 +36,6 @@ class MainBody extends Component {
           handleClose={this.toggleAddGroupModal}
           token={this.props.token}
         />
-
         <Container className="ml-2 main-body-group-container" fluid>
           {this.props.groups ? (
             <>
