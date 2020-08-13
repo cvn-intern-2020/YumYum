@@ -24,16 +24,13 @@ export const createDishRequest = ({ name, price }, token) => {
 
 export const deleteDishRequest = (dishId, token) => {
   return axios
-    .delete(
-      `${process.env.API_URL}/api/dishes/${dishId}`,
-      {
-        headers: {
-          Authorization: token,
-        },
+    .delete(`${process.env.API_URL}/api/dishes/${dishId}`, {
+      headers: {
+        Authorization: token,
       },
-    )
-    .then((res) => {
-      return { status: true, message: "Successfully deleted", newDish: res.data };
+    })
+    .then(() => {
+      return { status: true, message: "Successfully deleted" };
     })
     .catch((err) => {
       return { status: false, message: err.response.data.message };
