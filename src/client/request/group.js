@@ -61,18 +61,13 @@ export const addMemberRequest = (groupId, email, token) => {
 export const editDishesInGroupRequest = (groupId, dishArray, token) => {
   return axios
     .post(
-      `${process.env.API_URL}/api/groups/5f31fe6731cf9b13ab7c6756/dishes`,
+      `${process.env.API_URL}/api/groups/${groupId}/dishes`,
       {
-        dishes: [
-          "5f34a9eed493e64640455682",
-          "5f34aa20d43e7a3410e530a6",
-          "5f31ff43e217a3ecc2c9b56e",
-          "5f320adce217a3ecc2c9b56f"
-      ],
+        dishes: dishArray,
       },
       {
         headers: {
-          Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjMxZjhhNjRlYTQzNDAyNzA2Yzc4ZjciLCJlbWFpbCI6ImNsb25lNEBnbWFpbC5jb20iLCJpYXQiOjE1OTcyOTc5MDEsImV4cCI6MTU5NzMwMTUwMX0.zxnbGcQuhdZAvC2C1O3eQwNcgbZhLZDqrBf6wKX_O4Q",
+          Authorization: token,
         },
       }
     )
