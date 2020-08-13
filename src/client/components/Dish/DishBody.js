@@ -49,7 +49,11 @@ class DishBody extends Component {
       () => this.toggleConfirmDeleteModal("")
     );
   };
-
+  addDishToState = (dish) => {
+    this.setState({ ...this.state, dishes: [dish, ...this.state.dishes] }, () =>
+      this.toggleAddDishModal()
+    );
+  };
   toggleConfirmDeleteModal = (dishId) => {
     this.setState({
       ...this.state,
@@ -87,6 +91,7 @@ class DishBody extends Component {
           <AddDishModal
             show={this.state.showAddDishModal}
             handleClose={this.toggleAddDishModal}
+            addDishToState={this.addDishToState}
             {...this.props}
           />
         }
@@ -146,7 +151,9 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert}, dispatch);
+  return bindActionCreators({ setAlert, hideAlert }, dispatch);
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DishBody));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DishBody)
+);
