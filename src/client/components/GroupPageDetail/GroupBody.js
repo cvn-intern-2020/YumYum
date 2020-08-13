@@ -192,7 +192,7 @@ class GroupBody extends Component {
       <div
         style={{
           backgroundImage: "url(../../../public/background2.png)",
-          backgroundRepeat: "no-repeat",
+          backgroundRepeat: "repeat-y",
           backgroundSize: "cover",
           height: "94%",
         }}

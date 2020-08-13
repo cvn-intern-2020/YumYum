@@ -31,10 +31,24 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+.text-center-order {
+  width: 70%;
+  height: 60%;
+  position: absolute;
+  left: 15%;
+  top: 100%;
+  background-color: #ffe500;
+  margin-top: 15px;
+  border-radius: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 .dish-label {
   font-size: 25px ;
 }
-
+.order-label{
+  font-size: 22px;
+}
 .tab4{
   tab-size: 4;
 }
