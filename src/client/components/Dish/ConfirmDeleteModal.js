@@ -1,13 +1,27 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import GlobalAlert from "../Common/GlobalAlert";
 
-export default class ConfirmDeleteModal extends Component {
+class ConfirmDeleteModal extends Component {
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Delete Dish</Modal.Title>
         </Modal.Header>
+        <Modal.Body>
+          {this.props.showAlert ? (
+            <GlobalAlert
+              alertType={this.props.type}
+              toggleAlert={this.props.hideAlert}
+              message={this.props.message}
+            />
+          ) : (
+            <></>
+          )}
+        </Modal.Body>
         <Modal.Footer>
           <Button
             style={{
@@ -17,7 +31,7 @@ export default class ConfirmDeleteModal extends Component {
             }}
             variant="primary"
             onClick={() => {
-              this.props.handleClose();
+              this.props.deleteDish();
             }}
           >
             Yes
@@ -40,3 +54,10 @@ export default class ConfirmDeleteModal extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    ...state.alert,
+  };
+}
+
+export default withRouter(connect(mapStateToProps, null)(ConfirmDeleteModal));

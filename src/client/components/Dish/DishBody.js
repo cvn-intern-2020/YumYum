@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 import AddDishModal from "./AddDishModal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import { getDishOfUserRequest } from "../../request/dish";
+import { getDishOfUserRequest, deleteDishRequest } from "../../request/dish";
+import { bindActionCreators } from "redux";
+import { setAlert, hideAlert } from "../../actions/alert";
 
 class DishBody extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class DishBody extends Component {
       showConfirmDeleteModal: false,
       showAddDishModal: false,
       dishes: [],
+      selected: "",
     };
   }
   toggleAddDishModal = () => {
@@ -24,19 +27,42 @@ class DishBody extends Component {
       showAddDishModal: !this.state.showAddDishModal,
     });
   };
-  toggleConfirmDeleteModal = () => {
+
+  deleteDish = async () => {
+    let deleteDishResult = await deleteDishRequest(
+      this.state.selected,
+      this.props.token
+    );
+    if (!deleteDishResult.status) {
+      this.props.setAlert("danger", deleteDishResult.message);
+      return -1;
+    }
+    this.setState(
+      {
+        ...this.state,
+        dishes: [
+          ...this.state.dishes.filter(
+            (dish) => dish._id != this.state.selected
+          ),
+        ],
+      },
+      () => this.toggleConfirmDeleteModal("")
+    );
+  };
+
+  toggleConfirmDeleteModal = (dishId) => {
     this.setState({
       ...this.state,
       showConfirmDeleteModal: !this.state.showConfirmDeleteModal,
+      selected: dishId,
     });
   };
   async componentDidMount() {
     let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
     if (!getDishOfUserResult.status) {
-      // global alert
       console.log(getDishOfUserResult.message);
     } else {
-      this.setState({ dishes: [...getDishOfUserResult.dishData] });
+      this.setState({ dishes: [...getDishOfUserResult.dishData].reverse() });
     }
   }
   render() {
@@ -53,6 +79,7 @@ class DishBody extends Component {
           <ConfirmDeleteModal
             show={this.state.showConfirmDeleteModal}
             handleClose={this.toggleConfirmDeleteModal}
+            deleteDish={this.deleteDish}
             {...this.props}
           />
         }
@@ -97,9 +124,9 @@ class DishBody extends Component {
           </div>
           <div className="dish-container mt-4">
             <ListGroup>
-              {this.state.dishes.reverse().map((dish) => (
+              {this.state.dishes.map((dish) => (
                 <DishItem
-                  key={dish}
+                  key={dish._id}
                   dish={dish}
                   toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
                 />
@@ -114,8 +141,12 @@ class DishBody extends Component {
 
 function mapStateToProps(state) {
   return {
+    ...state.alert,
     token: state.user.token,
   };
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setAlert, hideAlert}, dispatch);
+}
 
-export default withRouter(connect(mapStateToProps, null)(DishBody));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DishBody));
