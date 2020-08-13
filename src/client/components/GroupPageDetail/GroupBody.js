@@ -9,6 +9,8 @@ import { getGroupRequest, editDishesInGroupRequest } from "../../request/group";
 import DishList from "./DishListUser";
 import DishListUser from "./DishListUser";
 import OrderConfirmModal from "./OrderConfirmModal";
+import EditDishesModal from "./EditDishesModal";
+import { getDishOfUserRequest } from "../../request/dish";
 import ButtonBar from "./ButtonBar";
 
 class GroupBody extends Component {
@@ -17,7 +19,9 @@ class GroupBody extends Component {
     this.state = {
       showAddMemberModal: false,
       showConfirmOrderModal: false,
+      showEditDishesModal: false,
       dishes: [], // id price quantity sum
+      userDishes: [],
       totalPrice: 0,
     };
   }
@@ -25,6 +29,13 @@ class GroupBody extends Component {
     this.setState({
       ...this.state,
       showAddMemberModal: !this.state.showAddMemberModal,
+    });
+  };
+
+  toggleEditDishesModal = () => {
+    this.setState({
+      ...this.state,
+      showEditDishesModal: !this.state.showEditDishesModal,
     });
   };
 
@@ -79,6 +90,12 @@ class GroupBody extends Component {
         ...groupData,
       });
     }
+    let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
+    if (!getDishOfUserResult.status) {
+      console.log(getDishOfUserResult.message);
+    } else {
+      this.setState({ userDishes: [...getDishOfUserResult.dishData].reverse() });
+    }
   }
   render() {
     return (
@@ -103,8 +120,16 @@ class GroupBody extends Component {
           {...this.props}
         />
 
-        <ButtonBar toggleAddMemberModal={this.toggleAddMemberModal} name={this.state.name}/>
+        <EditDishesModal
+          userdish = {this.state.userDishes}
+          show={this.state.showEditDishesModal}
+          dishlist={this.state.dishes}
+          handleClose={this.toggleEditDishesModal}
+          token={this.props.token}
+          {...this.props}
+        />
 
+        <ButtonBar toggleAddMemberModal={this.toggleAddMemberModal} name={this.state.name}/>
         <DishListUser
           changeDishAmount={this.changeDishAmount}
           dishlist={this.state.dishes}
