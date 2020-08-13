@@ -37,7 +37,7 @@ class GroupBody extends Component {
       this.props.token
     );
     if (!editDishesResult.status) {
-      this.props.setAlert("danger", err.response.data.message)
+      this.props.setAlert("danger", editDishesResult.message);
       return -1;
     }
     editDishesResult.newDishes = editDishesResult.newDishes.map((dish) => {
