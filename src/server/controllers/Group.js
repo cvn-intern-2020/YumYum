@@ -82,9 +82,12 @@ export const createNewGroupController = async (req, res) => {
 export const editDishesController = async (req, res) => {
   let dishes = req.body.dishes;
   let groupId = req.params.groupId;
+  let isAllowedToEdit = await isAllowedToEditGroup(groupId, req._id);
+  if (!isAllowedToEdit) {
+    return res.status(400).json({ message: "Not allowed to edit dishes" });
+  }
   dishes = dishes.map((dish) => mongoose.Types.ObjectId(dish));
   let newDishes = await getManyDishes(dishes);
-  console.log(newDishes);
   if (!newDishes.status || newDishes.result.length < dishes.length) {
     return res.status(400).json({ message: "dishId does not exist" });
   }
