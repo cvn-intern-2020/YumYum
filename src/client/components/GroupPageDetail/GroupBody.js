@@ -5,7 +5,7 @@ import DishItem from "./DishItem";
 import AddMemberModal from "./AddMemberModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getGroupRequest } from "../../request/group";
+import { getGroupRequest, editDishesInGroupRequest } from "../../request/group";
 import DishList from "./DishListUser";
 import DishListUser from "./DishListUser";
 import OrderConfirmModal from "./OrderConfirmModal";
@@ -120,6 +120,7 @@ class GroupBody extends Component {
             <Button
               style={{ backgroundColor: "#48BDFF", color: "#080024" }}
               className="float-right mt-4 mr-5 group-button"
+              onClick={editDishesInGroupRequest}
             >
               Edit Dishes
             </Button>
