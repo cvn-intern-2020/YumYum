@@ -5,7 +5,6 @@ const convertToObjectId = (source) => {
     detail.dishId = mongoose.Types.ObjectId(detail._id);
     delete detail._id;
   }
-  console.log(source);
   return source;
 };
 

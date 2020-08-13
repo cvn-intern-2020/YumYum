@@ -115,7 +115,7 @@ class DishBody extends Component {
             </Button>{" "}
           </div>
         </div>
-        <div className="text-center">
+        <div className="text-center-group">
           <div className="row w-100 m-0">
             <div
               style={{ textAlign: "left" }}
