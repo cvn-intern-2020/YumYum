@@ -48,7 +48,7 @@ class GroupBody extends Component {
     this.state.dishes.map((dish) => {
       totalDishesCalculate += dish.quantity * dish.price;
     });
-    this.setState({ ...this.state, totalPrice: totalDishesCalculate })
+    this.setState({ ...this.state, totalPrice: totalDishesCalculate });
   }
 
   toggleConfirmOrderModal = () => {
