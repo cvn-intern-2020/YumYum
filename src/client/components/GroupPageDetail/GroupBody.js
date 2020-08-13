@@ -14,8 +14,6 @@ import DishListAdmin from "./AdminComponent/DishListAdmin";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
-import { bindActionCreators } from "redux";
-import { setAlert, hideAlert } from "../../actions/alert";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -195,7 +193,9 @@ class GroupBody extends Component {
           height: "94%",
         }}
       >
-        {this.props.showAlert ? (
+        {this.props.showAlert &&
+        this.state.showEditDishesModal &&
+        this.state.showAddMemberModal ? (
           <GlobalAlert
             alertType={this.props.type}
             message={this.props.message}
