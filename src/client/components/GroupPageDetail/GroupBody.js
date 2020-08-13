@@ -141,6 +141,10 @@ class GroupBody extends Component {
 
   handleCreateOrder = async () => {
     let dishArray = this.state.dishes.filter((dish) => dish.quantity > 0);
+    if (dishArray.length == 0) {
+      //setAlert
+      return -1;
+    }
     let createOrderResult = await createOrderRequest(
       this.state._id,
       this.props.token,
