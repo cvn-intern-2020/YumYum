@@ -142,7 +142,7 @@ class GroupBody extends Component {
   handleCreateOrder = async () => {
     let dishArray = this.state.dishes.filter((dish) => dish.quantity > 0);
     if (dishArray.length == 0) {
-      //setAlert
+      this.props.setAlert("danger", "No dish is ordered");
       return -1;
     }
     let createOrderResult = await createOrderRequest(
@@ -155,14 +155,17 @@ class GroupBody extends Component {
       this.props.setAlert("danger", createOrderResult.message);
       return -1;
     }
-    this.setState({
-      ...this.state,
-      totalPrice: 0,
-      dishes: this.state.dishes.map((dish) => {
-        dish.quantity = 0;
-        return dish;
-      }),
-    });
+    this.setState(
+      {
+        ...this.state,
+        totalPrice: 0,
+        dishes: this.state.dishes.map((dish) => {
+          dish.quantity = 0;
+          return dish;
+        }),
+      },
+      () => this.props.setAlert("success", "Order Successfully")
+    );
   };
 
   async componentDidMount() {
