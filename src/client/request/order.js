@@ -1,4 +1,5 @@
 import axios from "axios";
+import convertOderFormat from "../utils/convertOrderFormat";
 
 export const createOrderRequest = (
   { groupId },
@@ -10,7 +11,7 @@ export const createOrderRequest = (
       `${process.env.API_URL}/api/orders/new`,
       {
         groupId: groupId,
-        details: details,
+        details: convertOderFormat(details),
         totalPrice: totalPrice,
       },
       {
