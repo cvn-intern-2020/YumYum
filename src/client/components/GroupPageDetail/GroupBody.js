@@ -198,8 +198,8 @@ class GroupBody extends Component {
         }}
       >
         {this.props.showAlert &&
-        this.state.showEditDishesModal &&
-        this.state.showAddMemberModal ? (
+        !this.state.showEditDishesModal &&
+        !this.state.showAddMemberModal ? (
           <GlobalAlert
             alertType={this.props.type}
             message={this.props.message}

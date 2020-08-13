@@ -21,7 +21,7 @@ class MainNavBar extends Component {
           expand="lg"
         >
           <div className="row w-100 m-0">
-            <div className="col-5">
+            <div className="col-8">
               <Navbar.Brand>
                 <Link to="/main">
                   <img
@@ -41,7 +41,6 @@ class MainNavBar extends Component {
               </Link>
               
             </div>
-            <div className="col"></div>
             <div className="col p-0">
               <Button
                 className="float-right mt-2 mr-2"
