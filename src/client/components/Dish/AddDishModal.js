@@ -36,7 +36,7 @@ class AddDishModal extends Component {
       this.props.setAlert("danger", "Name is empty");
       return -1;
     }
-    if (this.state.price == "") {
+    if (this.state.dishPrice == "") {
       if (this.state.err != "") {
         this.props.setAlert("danger", "Price is empty");
         return -1;
@@ -51,7 +51,7 @@ class AddDishModal extends Component {
     if (!createDishResult.status) {
       this.props.setAlert("danger", createDishResult.message);
     } else {
-      this.props.handleClose();
+      this.props.addDishToState(createDishResult.newDish);
     }
   };
   render() {
@@ -135,7 +135,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert}, dispatch);
+  return bindActionCreators({ setAlert, hideAlert }, dispatch);
 }
 
 export default withRouter(

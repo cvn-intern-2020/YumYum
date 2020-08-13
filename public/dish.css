@@ -18,3 +18,12 @@
   margin-top: 0.5rem;
   font-size: 1.6rem;
 }
+
+.edit-dish-label button {
+  background-color: rgb(255, 85, 34);
+  color: #080024;
+  padding: 0 0.8rem;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  font-size: 1.3rem;
+}

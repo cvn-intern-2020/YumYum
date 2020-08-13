@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import dishesModel from "../models/dishes";
 import { isObjectID } from "../utils/validator";
+import e from "express";
 
 export const getDishByUserId = async (userId) => {
   let result = await dishesModel
@@ -9,6 +10,18 @@ export const getDishByUserId = async (userId) => {
     .lean();
   if (!result) {
     return { message: "UserId does not exist", status: false };
+  }
+  return { result, status: true };
+};
+
+export const getManyDishes = async (dishArray) => {
+  let result = await dishesModel
+    .find({ $and: [{ _id: { $in: [...dishArray] } }, { deleteAt: null }] })
+    .sort("")
+    .select("-deleteAt -userId")
+    .lean(0);
+  if (!result) {
+    return { message: "No dish found", status: false };
   }
   return { result, status: true };
 };

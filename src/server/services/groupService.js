@@ -127,9 +127,11 @@ export const editDishes = async (groupId, dishes) => {
   let editDishes = await groupModel.findOneAndUpdate(
     {
       _id: groupId,
-      dishes: dishes,
     },
-    {}
+    {
+      dishes: dishes
+    },
+    {new: true}
   );
   if (!editDishes) {
     return {
@@ -137,5 +139,5 @@ export const editDishes = async (groupId, dishes) => {
       status: false,
     };
   }
-  return { status: true };
+  return { status: true, dishes: editDishes };
 };

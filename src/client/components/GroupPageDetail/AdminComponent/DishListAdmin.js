@@ -1,31 +1,25 @@
 import React, { Component } from "react";
 import { ListGroup } from "react-bootstrap";
-import DishItem from "../Dish/DishItems";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import DishItemAdmin from "./DishItemAdmin";
 
 class DishListAdmin extends Component {
   render() {
     return (
-      <div className="text-center">
+      <div className="text-center-group">
         <div className="row w-100 m-0">
           <div className=" dish-label col mt-4">
             <b>Food Name</b>
           </div>
           <div className="dish-label col mt-4">
-            <b>Amount</b>
-          </div>
-          <div className="dish-label col mt-4">
             <b>Price</b>
-          </div>
-          <div className="dish-label col mt-4">
-            <b>Sum</b>
           </div>
         </div>
         <div className="group-container mt-4">
           <ListGroup>
-            {this.props.dishlist.map((dish) => {
-              return <DishItem key={dish._id} dish={dish} />;
+            {this.props.dishes.map((dish) => {
+              return <DishItemAdmin key={dish._id} dish={dish} />;
             })}
           </ListGroup>
         </div>

@@ -1,20 +1,18 @@
 import React, { Component } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Button } from "react-bootstrap";
-export default class DishItem extends Component {
+export default class EditDishItem extends Component {
   handleClickDelete = () => {
-    this.props.toggleConfirmDeleteModal(this.props.dish._id);
+    this.props.updateEditedDish(false, this.props.dish);
   };
   render() {
     return (
       <ListGroup.Item>
         <div className="row w-100 m-0">
-          <div className=" dish-label col">
-            Name: {this.props.dish.name} <br></br> Price:{" "}
-            {this.props.dish.price}
-          </div>
+          <div className=" dish-label col-4">{this.props.dish.dishName} </div>
 
-          <div className="dish-label col">
+          <div className="dish-label col-3 ">{this.props.dish.dishPrice}</div>
+          <div className="edit-dish-label col-5">
             <Button className="float-right" onClick={this.handleClickDelete}>
               DELETE
             </Button>

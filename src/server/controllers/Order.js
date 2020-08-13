@@ -49,12 +49,14 @@ export const createNewOrderController = async (req, res) => {
     });
   }
   details = convertToObjectId(details);
-  if (!(await doDishesExist(details))) {
+  let dishExistResult = await doDishesExist(details);
+  if (!dishExistResult) {
     return res.status(400).json({
       message: "dishId sent does not exist or deleted",
     });
   }
-  if (!(await areDishesInGroup(groupId, details))) {
+  let dishesInGroupResult = await areDishesInGroup(groupId, details);
+  if (!dishesInGroupResult) {
     return res.status(400).json({
       message: "dishId sent is not in group",
     });
