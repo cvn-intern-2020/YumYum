@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Button } from "react-bootstrap";
-export default class DishItem extends Component {
+export default class DishItemUser extends Component {
   render() {
     return (
       <ListGroup.Item>

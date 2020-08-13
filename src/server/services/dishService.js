@@ -17,6 +17,7 @@ export const getDishByUserId = async (userId) => {
 export const getManyDishes = async (dishArray) => {
   let result = await dishesModel
     .find({ $and: [{ _id: { $in: [...dishArray] } }, { deleteAt: null }] })
+    .sort("")
     .select("-deleteAt -userId")
     .lean(0);
   if (!result) {

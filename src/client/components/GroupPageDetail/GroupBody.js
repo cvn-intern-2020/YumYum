@@ -1,44 +1,95 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
-import ListGroup from "react-bootstrap/ListGroup";
-import DishItem from "./DishItem";
-import AddMemberModal from "./AddMemberModal";
+import AddMemberModal from "./AdminComponent/AddMemberModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getGroupRequest, editDishesInGroupRequest } from "../../request/group";
-import DishList from "./DishListUser";
-import DishListUser from "./DishListUser";
+import DishListUser from "./MemberComponent/DishListUser";
 import OrderConfirmModal from "./OrderConfirmModal";
 import EditDishesModal from "./EditDishesModal";
 import { getDishOfUserRequest } from "../../request/dish";
 import ButtonBar from "./ButtonBar";
 import { createOrderRequest } from "../../request/order";
 import convertOderFormat from "../../utils/convertOrderFormat";
+import DishListAdmin from "./AdminComponent/DishListAdmin";
 
 class GroupBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      ownerId: "",
       showAddMemberModal: false,
       showConfirmOrderModal: false,
       showEditDishesModal: false,
       dishes: [], // id price quantity sum
       userDishes: [],
-      editedDish: [],
+      editedDishes: [],
       totalPrice: 0,
     };
   }
+  handleSaveNewDishes = async () => {
+    let dishArray = this.state.editedDishes.map((dish) => dish._id);
+    let editDishesResult = await editDishesInGroupRequest(
+      this.state._id,
+      dishArray,
+      this.props.token
+    );
+    if (!editDishesResult.status) {
+      //setAlert
+      return -1;
+    }
+    editDishesResult.newDishes = editDishesResult.newDishes.map((dish) => {
+      return { ...dish, quantity: 0 };
+    });
+    editDishesResult.newDishes = convertOderFormat(editDishesResult.newDishes);
+    this.setState(
+      {
+        ...this.state,
+        dishes: editDishesResult.newDishes,
+      },
+      () => {
+        this.toggleEditDishesModal();
+      }
+    );
+  };
   toggleAddMemberModal = () => {
     this.setState({
       ...this.state,
       showAddMemberModal: !this.state.showAddMemberModal,
     });
   };
-
-  toggleEditDishesModal = () => {
+  updateEditedDish = (isAdding, changeDish) => {
+    if (isAdding) {
+      this.setState({
+        ...this.state,
+        editedDishes: [changeDish, ...this.state.editedDishes],
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        editedDishes: this.state.editedDishes.filter(
+          (dish) => dish._id != changeDish._id
+        ),
+      });
+    }
+  };
+  toggleEditDishesModal = async () => {
+    if (!this.state.showEditDishesModal) {
+      let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
+      if (!getDishOfUserResult.status) {
+        console.log(getDishOfUserResult.message);
+      } else {
+        getDishOfUserResult.dishData = convertOderFormat(
+          getDishOfUserResult.dishData
+        );
+        this.setState({
+          userDishes: [...getDishOfUserResult.dishData].reverse(),
+        });
+      }
+    }
     this.setState({
       ...this.state,
       showEditDishesModal: !this.state.showEditDishesModal,
+      editedDishes: this.state.dishes,
     });
   };
 
@@ -116,63 +167,69 @@ class GroupBody extends Component {
         ...groupData,
       });
     }
-    let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
-    if (!getDishOfUserResult.status) {
-      console.log(getDishOfUserResult.message);
-    } else {
-      getDishOfUserResult.dishData = convertOderFormat(
-        getDishOfUserResult.dishData
-      );
-      this.setState({
-        userDishes: [...getDishOfUserResult.dishData].reverse(),
-      });
-    }
   }
   render() {
     return (
-      <div
-        style={{
-          backgroundImage: "url(../../../public/background2.png)",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "94%",
-        }}
-      >
-        <AddMemberModal
-          show={this.state.showAddMemberModal}
-          handleClose={this.toggleAddMemberModal}
-          token={this.props.token}
-          {...this.props}
-        />
+      <>
+        {this.state.ownerId == "" ? (
+          <></>
+        ) : (
+          <div
+            style={{
+              backgroundImage: "url(../../../public/background2.png)",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              height: "94%",
+            }}
+          >
+            <AddMemberModal
+              show={this.state.showAddMemberModal}
+              handleClose={this.toggleAddMemberModal}
+              token={this.props.token}
+              {...this.props}
+            />
 
-        <OrderConfirmModal
-          show={this.state.showConfirmOrderModal}
-          handleClose={this.toggleConfirmOrderModal}
-          handleCreateOrder={this.handleCreateOrder}
-          {...this.props}
-        />
+            <OrderConfirmModal
+              show={this.state.showConfirmOrderModal}
+              handleClose={this.toggleConfirmOrderModal}
+              handleCreateOrder={this.handleCreateOrder}
+              {...this.props}
+            />
+            {this.state.userDishes.length > 0 ? (
+              <EditDishesModal
+                userDishes={this.state.userDishes}
+                show={this.state.showEditDishesModal}
+                handleClose={this.toggleEditDishesModal}
+                token={this.props.token}
+                editedDishes={this.state.editedDishes}
+                updateEditedDish={this.updateEditedDish}
+                handleSaveNewDishes={this.handleSaveNewDishes}
+                {...this.props}
+              />
+            ) : (
+              <></>
+            )}
 
-        <EditDishesModal
-          userdish={this.state.userDishes}
-          show={this.state.showEditDishesModal}
-          dishlist={this.state.dishes}
-          handleClose={this.toggleEditDishesModal}
-          token={this.props.token}
-          {...this.props}
-        />
-
-        <ButtonBar
-          toggleAddMemberModal={this.toggleAddMemberModal}
-          toggleEditDishesModal={this.toggleEditDishesModal}
-          name={this.state.name}
-        />
-        <DishListUser
-          changeDishAmount={this.changeDishAmount}
-          dishlist={this.state.dishes}
-          toggleConfirmOrderModal={this.toggleConfirmOrderModal}
-          totalPrice={this.state.totalPrice}
-        ></DishListUser>
-      </div>
+            <ButtonBar
+              toggleAddMemberModal={this.toggleAddMemberModal}
+              name={this.state.name}
+              userId={this.props.userId}
+              ownerId={this.state.ownerId}
+              toggleEditDishesModal={this.toggleEditDishesModal}
+            />
+            {this.props.userId == this.state.ownerId ? (
+              <DishListAdmin dishes={this.state.dishes} />
+            ) : (
+              <DishListUser
+                changeDishAmount={this.changeDishAmount}
+                dishlist={this.state.dishes}
+                toggleConfirmOrderModal={this.toggleConfirmOrderModal}
+                totalPrice={this.state.totalPrice}
+              ></DishListUser>
+            )}
+          </div>
+        )}
+      </>
     );
   }
 }
@@ -180,7 +237,7 @@ class GroupBody extends Component {
 function mapStateToProps(state) {
   return {
     token: state.user.token,
-    _id: state.user._id,
+    userId: state.user._id,
   };
 }
 

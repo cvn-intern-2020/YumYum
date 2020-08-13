@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ListGroup, Button, ListGroupItem } from "react-bootstrap";
-import DishItem from "./DishItem";
+import DishItemUser from "./DishItemUser";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -26,7 +26,7 @@ class DishListUser extends Component {
           <ListGroup>
             {this.props.dishlist.map((dish) => {
               return (
-                <DishItem
+                <DishItemUser
                   key={dish._id}
                   dish={dish}
                   changeDishAmount={this.props.changeDishAmount}
@@ -38,7 +38,9 @@ class DishListUser extends Component {
             style={{ width: "35%", height: "16%" }}
             className="float-right dish-label"
           >
-            <pre className="dish-label tab4">Total:   {this.props.totalPrice}</pre>
+            <pre className="dish-label tab4">
+              Total: {this.props.totalPrice}
+            </pre>
           </ListGroupItem>
           <ListGroupItem style={{ marginTop: "5rem", height: "30%" }}>
             <Button
@@ -50,7 +52,7 @@ class DishListUser extends Component {
                 fontSize: "1.4rem",
                 color: "#080024",
                 width: "15%",
-                borderRadius: "2rem"
+                borderRadius: "2rem",
               }}
               onClick={this.props.toggleConfirmOrderModal}
             >

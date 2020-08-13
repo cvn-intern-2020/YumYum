@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Validator from "validator";
-import GlobalAlert from "../Common/GlobalAlert";
+import GlobalAlert from "../../Common/GlobalAlert";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setAlert, hideAlert } from "../../actions/alert";
-import { addMemberRequest } from "../../request/group";
+import { setAlert, hideAlert } from "../../../actions/alert";
+import { addMemberRequest } from "../../../request/group";
 
 class AddMemberModal extends Component {
   constructor(props) {

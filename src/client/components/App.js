@@ -8,8 +8,15 @@ import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Group from "./Group";
 import Dish from "./Dish";
+import { bindActionCreators } from "redux";
+import { setUser } from "../actions/user";
 
 class App extends Component {
+  componentDidMount() {
+    if (this.props.userId == "" && this.props.token != "") {
+      this.props.setUser(this.props.token);
+    }
+  }
   render() {
     return (
       <>
@@ -120,7 +127,12 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     token: state.user.token,
+    userId: state.user._id,
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(App));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setUser }, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
