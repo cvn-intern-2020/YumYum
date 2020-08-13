@@ -11,6 +11,9 @@ import ButtonBar from "./ButtonBar";
 import { createOrderRequest } from "../../request/order";
 import convertOderFormat from "../../utils/convertOrderFormat";
 import DishListAdmin from "./AdminComponent/DishListAdmin";
+import { bindActionCreators } from "redux";
+import { setAlert, hideAlert } from "../../actions/alert";
+
 
 class GroupBody extends Component {
   constructor(props) {
@@ -34,7 +37,7 @@ class GroupBody extends Component {
       this.props.token
     );
     if (!editDishesResult.status) {
-      //setAlert
+      this.props.setAlert("danger", err.response.data.message)
       return -1;
     }
     editDishesResult.newDishes = editDishesResult.newDishes.map((dish) => {
@@ -50,6 +53,12 @@ class GroupBody extends Component {
         this.toggleEditDishesModal();
       }
     );
+    this.setState({
+      ...this.state,
+      err: "",
+      showAlert: false,
+    });
+    this.props.hideAlert();
   };
   toggleAddMemberModal = () => {
     this.setState({
@@ -90,7 +99,10 @@ class GroupBody extends Component {
       ...this.state,
       showEditDishesModal: !this.state.showEditDishesModal,
       editedDishes: this.state.dishes,
+      err: "",
+      showAlert: false,
     });
+    this.props.hideAlert();
   };
 
   changeDishAmount = (isIncrementing, dishId) => {
@@ -241,4 +253,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(GroupBody));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GroupBody));

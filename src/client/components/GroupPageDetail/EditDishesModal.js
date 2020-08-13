@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import { Modal, Button, Dropdown, ListGroup } from "react-bootstrap";
+import { Modal, Button, Dropdown, ListGroup, ModalBody } from "react-bootstrap";
 import EditDishItem from "./EditDishItem";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setAlert, hideAlert } from "../../actions/alert";
+import GlobalAlert from "../Common/GlobalAlert";
 
-export default class EditDishesModal extends Component {
+class EditDishesModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,8 +22,8 @@ export default class EditDishesModal extends Component {
   handleAddDish = () => {
     for (let dish of this.props.editedDishes) {
       if (dish._id == this.state.selected._id) {
+          this.props.setAlert("danger", "Dish has already in Menu")
         return;
-        // setAlert
       }
     }
     this.props.updateEditedDish(true, this.state.selected);
@@ -32,6 +37,17 @@ export default class EditDishesModal extends Component {
         >
           <Modal.Title>Dishes list of your group</Modal.Title>
         </Modal.Header>
+        <ModalBody className="p-0">
+        {this.props.showAlert ? (
+            <GlobalAlert
+              alertType={this.props.type}
+              toggleAlert={this.props.hideAlert}
+              message={this.props.message}
+            />
+          ) : (
+            <></>
+          )}
+        </ModalBody>
         <div className="edit-dish-list mt-0">
           <div className="row w-100 m-0">
             <div
@@ -129,3 +145,17 @@ export default class EditDishesModal extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+    return {
+      ...state.alert,
+    };
+  }
+  
+  function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  }
+  
+  export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(EditDishesModal)
+  );
