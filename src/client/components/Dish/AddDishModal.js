@@ -36,7 +36,7 @@ class AddDishModal extends Component {
       this.props.setAlert("danger", "Name is empty");
       return -1;
     }
-    if (this.state.price == "") {
+    if (this.state.dishPrice == "") {
       if (this.state.err != "") {
         this.props.setAlert("danger", "Price is empty");
         return -1;

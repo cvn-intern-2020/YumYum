@@ -12,6 +12,8 @@ import OrderConfirmModal from "./OrderConfirmModal";
 import EditDishesModal from "./EditDishesModal";
 import { getDishOfUserRequest } from "../../request/dish";
 import ButtonBar from "./ButtonBar";
+import { createOrderRequest } from "../../request/order";
+import convertOderFormat from "../../utils/convertOrderFormat";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class GroupBody extends Component {
       showEditDishesModal: false,
       dishes: [], // id price quantity sum
       userDishes: [],
+      editedDish: [],
       totalPrice: 0,
     };
   }
@@ -61,7 +64,7 @@ class GroupBody extends Component {
   calculateTotalPrice = () => {
     let totalDishesCalculate = 0;
     this.state.dishes.map((dish) => {
-      totalDishesCalculate += dish.quantity * dish.price;
+      totalDishesCalculate += dish.quantity * dish.dishPrice;
     });
     this.setState({ ...this.state, totalPrice: totalDishesCalculate });
   };
@@ -70,6 +73,28 @@ class GroupBody extends Component {
     this.setState({
       ...this.state,
       showConfirmOrderModal: !this.state.showConfirmOrderModal,
+    });
+  };
+
+  handleCreateOrder = async () => {
+    let dishArray = this.state.dishes.filter((dish) => dish.quantity > 0);
+    let createOrderResult = await createOrderRequest(
+      this.state._id,
+      this.props.token,
+      dishArray,
+      this.state.totalPrice
+    );
+    if (!createOrderResult.status) {
+      this.props.setAlert("danger", createOrderResult.message);
+      return -1;
+    }
+    this.setState({
+      ...this.state,
+      totalPrice: 0,
+      dishes: this.state.dishes.map((dish) => {
+        dish.quantity = 0;
+        return dish;
+      }),
     });
   };
 
@@ -85,6 +110,7 @@ class GroupBody extends Component {
       groupData.dishes = groupData.dishes.map((dish) => {
         return { ...dish, quantity: 0 };
       });
+      groupData.dishes = convertOderFormat(groupData.dishes);
       this.setState({
         ...this.state,
         ...groupData,
@@ -94,7 +120,12 @@ class GroupBody extends Component {
     if (!getDishOfUserResult.status) {
       console.log(getDishOfUserResult.message);
     } else {
-      this.setState({ userDishes: [...getDishOfUserResult.dishData].reverse() });
+      getDishOfUserResult.dishData = convertOderFormat(
+        getDishOfUserResult.dishData
+      );
+      this.setState({
+        userDishes: [...getDishOfUserResult.dishData].reverse(),
+      });
     }
   }
   render() {
@@ -117,11 +148,12 @@ class GroupBody extends Component {
         <OrderConfirmModal
           show={this.state.showConfirmOrderModal}
           handleClose={this.toggleConfirmOrderModal}
+          handleCreateOrder={this.handleCreateOrder}
           {...this.props}
         />
 
         <EditDishesModal
-          userdish = {this.state.userDishes}
+          userdish={this.state.userDishes}
           show={this.state.showEditDishesModal}
           dishlist={this.state.dishes}
           handleClose={this.toggleEditDishesModal}
@@ -129,7 +161,11 @@ class GroupBody extends Component {
           {...this.props}
         />
 
-        <ButtonBar toggleAddMemberModal={this.toggleAddMemberModal} name={this.state.name}/>
+        <ButtonBar
+          toggleAddMemberModal={this.toggleAddMemberModal}
+          toggleEditDishesModal={this.toggleEditDishesModal}
+          name={this.state.name}
+        />
         <DishListUser
           changeDishAmount={this.changeDishAmount}
           dishlist={this.state.dishes}

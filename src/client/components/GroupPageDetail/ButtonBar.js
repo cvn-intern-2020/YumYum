@@ -26,6 +26,7 @@ export default class ButtonBar extends Component {
           <Button
             style={{ backgroundColor: "#48BDFF", color: "#080024" }}
             className="float-right mt-4 mr-5 group-button"
+            onClick={this.props.toggleEditDishesModal}
           >
             Edit Dishes
           </Button>

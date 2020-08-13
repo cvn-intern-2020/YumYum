@@ -53,7 +53,7 @@ export default class EditDishesModal extends Component {
                         {this.props.userdish.map((dish) => {
                             return (
                                 <option key={dish._id} className="pl-5" style={{ color: "#080024" }}>
-                                    {dish.name} -   {dish.price}
+                                    {dish.dishName} -   {dish.dishPrice}
                                 </option>
                             );
                         })}
