@@ -51,7 +51,7 @@ class AddDishModal extends Component {
     if (!createDishResult.status) {
       this.props.setAlert("danger", createDishResult.message);
     } else {
-      this.props.handleClose();
+      this.props.addDishToState(createDishResult.newDish);
     }
   };
   render() {
@@ -135,7 +135,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert}, dispatch);
+  return bindActionCreators({ setAlert, hideAlert }, dispatch);
 }
 
 export default withRouter(

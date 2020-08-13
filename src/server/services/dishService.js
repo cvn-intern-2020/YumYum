@@ -13,6 +13,17 @@ export const getDishByUserId = async (userId) => {
   return { result, status: true };
 };
 
+export const getManyDishes = async (dishArray) => {
+  let result = await dishesModel
+    .find({ $and: [{ _id: { $in: [...dishArray] } }, { deleteAt: null }] })
+    .select("-deleteAt -userId")
+    .lean(0);
+  if (!result) {
+    return { message: "No dish found", status: false };
+  }
+  return { result, status: true };
+};
+
 export const createDish = async (name, price, userId) => {
   if (!isObjectID(userId)) {
     return { message: "invalid ownerId", status: false };
