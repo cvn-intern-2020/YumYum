@@ -3,9 +3,11 @@ import {
   addMemberToGroup,
   createGroup,
   isAllowedToEditGroup,
-  editDishes
+  editDishes,
 } from "../services/groupService";
 import { getUserByEmail, addGroupToUser } from "../services/userService";
+import { getManyDishes } from "../services/dishService";
+import mongoose from "mongoose";
 
 export const getGroupController = async (req, res) => {
   let groupId = req.params.groupId;
@@ -80,11 +82,15 @@ export const createNewGroupController = async (req, res) => {
 export const editDishesController = async (req, res) => {
   let dishes = req.body.dishes;
   let groupId = req.params.groupId;
-  let status = await editDishes(groupId, dishes);
-  if (!status) {
+  dishes = dishes.map((dish) => mongoose.Types.ObjectId(dish));
+  let newDishes = await getManyDishes(dishes);
+  console.log(newDishes);
+  if (!newDishes.status || newDishes.result.length < dishes.length) {
+    return res.status(400).json({ message: "dishId does not exist" });
+  }
+  let editedDishes = await editDishes(groupId, dishes);
+  if (!editedDishes.status) {
     return res.status(400).json({ message: "something went wrong" });
   }
-  return res.status(200).json({
-    message: `Edited`,
-  });
+  return res.status(200).json({ newDishes: newDishes.result });
 };
