@@ -9,6 +9,9 @@ import { getGroupRequest } from "../../request/group";
 import DishList from "./DishListUser";
 import DishListUser from "./DishListUser";
 import OrderConfirmModal from "./OrderConfirmModal";
+import EditDishesModal from "./EditDishesModal";
+import { getDishOfUserRequest } from "../../request/dish";
+
 
 class GroupBody extends Component {
   constructor(props) {
@@ -16,7 +19,9 @@ class GroupBody extends Component {
     this.state = {
       showAddMemberModal: false,
       showConfirmOrderModal: false,
+      showEditDishesModal: false,
       dishes: [], // id price quantity sum
+      userDishes: [],
       totalPrice: 0
     };
   }
@@ -24,6 +29,13 @@ class GroupBody extends Component {
     this.setState({
       ...this.state,
       showAddMemberModal: !this.state.showAddMemberModal,
+    });
+  };
+
+  toggleEditDishesModal = () => {
+    this.setState({
+      ...this.state,
+      showEditDishesModal: !this.state.showEditDishesModal,
     });
   };
 
@@ -75,6 +87,12 @@ class GroupBody extends Component {
         ...groupData,
       });
     }
+    let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
+    if (!getDishOfUserResult.status) {
+      console.log(getDishOfUserResult.message);
+    } else {
+      this.setState({ userDishes: [...getDishOfUserResult.dishData].reverse() });
+    }
   }
   render() {
     return (
@@ -98,6 +116,16 @@ class GroupBody extends Component {
           handleClose={this.toggleConfirmOrderModal}
           {...this.props}
         />
+
+        <EditDishesModal
+          userdish = {this.state.userDishes}
+          show={this.state.showEditDishesModal}
+          dishlist={this.state.dishes}
+          handleClose={this.toggleEditDishesModal}
+          token={this.props.token}
+          {...this.props}
+        />
+
         <div className="row w-100 m-0">
           <div className="col-4">
             <Button
@@ -120,6 +148,7 @@ class GroupBody extends Component {
             <Button
               style={{ backgroundColor: "#48BDFF", color: "#080024" }}
               className="float-right mt-4 mr-5 group-button"
+              onClick={this.toggleEditDishesModal}
             >
               Edit Dishes
             </Button>

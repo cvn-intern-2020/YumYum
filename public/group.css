@@ -41,3 +41,23 @@
 .pre{
   font-size: 25px;
 }
+
+.edit-dish-list {
+  background-color: #ffe500;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.modal-content {
+  width: 100%;
+}
+
+@media (min-width: 576px){
+  .modal-dialog {
+    width: 53rem;
+    max-width: 53rem;
+    margin: 1.75rem auto;
+}
+}
