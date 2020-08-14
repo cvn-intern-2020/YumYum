@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { signUpRequest } from "../../request/auth";
 import { throttle, debounce } from "lodash";
+import "../../../../public/signup.css";
 
 class SignUpBody extends Component {
   constructor(props) {

@@ -6,6 +6,7 @@ import { clearUser } from "../../actions/user";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import "../../../../public/index.css";
 
 class MainNavBar extends Component {
   handleLogout = () => {
@@ -39,7 +40,6 @@ class MainNavBar extends Component {
               <Link className="mainnav-label" to="/dish">
                 Dish Management
               </Link>
-
             </div>
             <div className="col p-0">
               <Button
@@ -59,7 +59,7 @@ class MainNavBar extends Component {
                   marginTop: "0.5rem",
                   marginRight: "0.5rem",
                   borderStyle: "solid",
-                  borderRadius: "0.5rem"
+                  borderRadius: "0.5rem",
                 }}
               >
                 {this.props.name}

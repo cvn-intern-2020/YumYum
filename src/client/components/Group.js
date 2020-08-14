@@ -3,6 +3,7 @@ import MainNavBar from "./Common/MainNavBar";
 import GroupBody from "./GroupPageDetail/GroupBody";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import "../../../public/group.css";
 
 class Group extends Component {
   render() {

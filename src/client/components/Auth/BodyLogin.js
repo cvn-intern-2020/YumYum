@@ -11,6 +11,7 @@ import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import { signInRequest } from "../../request/auth";
 import { throttle, debounce } from "lodash";
+import "../../../../public/login.css";
 
 class BodyLogin extends Component {
   constructor(props) {
