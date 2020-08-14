@@ -94,7 +94,7 @@ class EditDishesModal extends Component {
                         style={{ color: "#080024" }}
                         id={dish._id}
                       >
-                        {dish.dishName} - {dish.dishPrice}
+                        {dish.dishName} - {dish.dishPrice}  VND
                       </option>
                     );
                   })}

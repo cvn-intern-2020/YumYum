@@ -14,6 +14,7 @@ import DishListAdmin from "./AdminComponent/DishListAdmin";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
+import OrdersListModal from "./OrdersListModal";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class GroupBody extends Component {
       showAddMemberModal: false,
       showConfirmOrderModal: false,
       showEditDishesModal: false,
+      showOrdersListModal: false,
       dishes: [], // id price quantity sum
       userDishes: [],
       editedDishes: [],
@@ -103,6 +105,13 @@ class GroupBody extends Component {
       showAlert: false,
     });
     this.props.hideAlert();
+  };
+
+  toggleOrdersListModal = () => {
+    this.setState({
+      ...this.state,
+      showOrdersListModal: !this.state.showOrdersListModal,
+    });
   };
 
   changeDishAmount = (isIncrementing, dishId) => {
@@ -251,6 +260,7 @@ class GroupBody extends Component {
               userId={this.props.userId}
               ownerId={this.state.ownerId}
               toggleEditDishesModal={this.toggleEditDishesModal}
+              toggleOrdersListModal={this.toggleOrdersListModal}
             />
             {this.props.userId == this.state.ownerId ? (
               <DishListAdmin dishes={this.state.dishes} />
@@ -262,6 +272,13 @@ class GroupBody extends Component {
                 totalPrice={this.state.totalPrice}
               ></DishListUser>
             )}
+
+            <OrdersListModal
+              show={this.state.showOrdersListModal}
+              handleClose={this.toggleOrdersListModal}
+              token={this.props.token}
+              {...this.props}
+            />
           </>
         )}
       </div>
