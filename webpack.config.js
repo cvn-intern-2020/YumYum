@@ -13,7 +13,7 @@ module.exports = () => {
     entry: "./src/client/components/Index.js",
     output: {
       path: path.resolve(__dirname, "public"),
-      publicPath: "/dist/",
+      publicPath: "/",
       filename: "bundle.js",
       chunkFilename: "[name].bundle.js",
     },
