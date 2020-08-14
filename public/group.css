@@ -44,30 +44,29 @@
   overflow-x: hidden;
 }
 .dish-label {
-  font-size: 25px ;
+  font-size: 25px;
 }
 .dish-label-quantity.col {
   margin-left: -1rem;
   margin-right: 1.2rem;
 }
-.order-label{
+.order-label {
   font-size: 22px;
 }
 
-.order-list-label{
+.order-list-label {
   font-size: 1.2rem;
 }
 
-.tab4{
+.tab4 {
   tab-size: 4;
 }
-.pre{
+.pre {
   font-size: 25px;
 }
 
 .edit-dish-list {
   background-color: #ffe500;
-
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
@@ -77,12 +76,16 @@
   width: 100%;
 }
 
-@media (min-width: 576px){
+.member-modal .list-group-item {
+  padding-left: 0.5rem;
+}
+
+@media (min-width: 576px) {
   .modal-dialog {
     width: 53rem;
     max-width: 53rem;
     margin: 1.75rem auto;
-}
+  }
 }
 
 .text-center-order-list-admin {

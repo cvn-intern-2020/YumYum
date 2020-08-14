@@ -284,6 +284,7 @@ class GroupBody extends Component {
               ownerId={this.state.ownerId}
               toggleEditDishesModal={this.toggleEditDishesModal}
               toggleOrdersListModal={this.toggleOrdersListModal}
+              toggleMemberListModal={this.toggleMemberListModal}
             />
             {this.props.userId == this.state.ownerId ? (
               <DishListAdmin
