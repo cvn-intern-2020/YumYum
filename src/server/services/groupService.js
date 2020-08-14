@@ -5,6 +5,13 @@ import { addGroupToUser } from "./userService";
 // eslint-disable-next-line no-unused-vars
 import dishesModel from "../models/dishes";
 
+export const isAllowedToReadOrders = async (groupId, userId) => {
+  return (
+    (await isUserInGroup(userId, groupId)) ||
+    (await isAllowedToEditGroup(groupId, userId))
+  );
+};
+
 export const isAllowedToEditGroup = async (groupId, userId) => {
   if (!isObjectID(groupId)) {
     return { message: "invalid groupId", status: false };
@@ -14,20 +21,28 @@ export const isAllowedToEditGroup = async (groupId, userId) => {
       _id: mongoose.Types.ObjectId(groupId),
       ownerId: mongoose.Types.ObjectId(userId),
     })
+    .select("ownerId users")
     .lean();
   if (!result) {
     return false;
   }
-  return true;
+  return result;
 };
 
 export const isUserInGroup = async (userId, groupId) => {
-  return await groupModel.exists({
-    $and: [
-      { "users.userId": mongoose.Types.ObjectId(userId) },
-      { _id: mongoose.Types.ObjectId(groupId) },
-    ],
-  });
+  let result = await groupModel
+    .findOne({
+      $and: [
+        { "users.userId": mongoose.Types.ObjectId(userId) },
+        { _id: mongoose.Types.ObjectId(groupId) },
+      ],
+    })
+    .select("users ownerId")
+    .lean();
+  if (!result) {
+    return false;
+  }
+  return result;
 };
 
 export const getGroupById = async (groupId) => {
@@ -129,9 +144,9 @@ export const editDishes = async (groupId, dishes) => {
       _id: groupId,
     },
     {
-      dishes: dishes
+      dishes: dishes,
     },
-    {new: true}
+    { new: true }
   );
   if (!editDishes) {
     return {

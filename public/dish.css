@@ -30,8 +30,12 @@
 
 .order-label button{
   background-color: #17a2b8;
-  
   border-radius: 1rem;
   margin-top: -0.3rem;
+  font-size: 1.2rem;
+}
+
+.order-list-label button{
+  border-radius: 1rem;
   font-size: 1.2rem;
 }
