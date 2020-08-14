@@ -6,7 +6,10 @@ export const getOrderByGroupId = async (groupId) => {
   let groupOrders = await OrdersModel.find({
     groupId: mongoose.Types.ObjectId(groupId),
   })
-    .select("-groupId -__v")
+    .select("-groupId -__v").populate({
+      path: "userId",
+      select: "name"
+    })
     .lean();
   return { result: groupOrders, status: true };
 };

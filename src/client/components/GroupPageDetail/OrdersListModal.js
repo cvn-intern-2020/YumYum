@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button, Modal, ListGroup, Dropdown, Accordion, Card } from 'react-bootstrap';
 import GlobalAlert from '../Common/GlobalAlert';
+import OrderItem from './OrderItem';
 
 export default class OrdersListModal extends Component {
     render() {
@@ -32,28 +33,12 @@ export default class OrdersListModal extends Component {
                         </div>
                         <div className="group-container mt-4"
                             style={{ position: "relative" }}>
-                            <ListGroup style={{ flexDirection: "row", borderRadius: "0" }}>
-                                <ListGroup.Item className="w-100" style={{ backgroundColor: "white" }}>
-
-                                    <Accordion defaultActiveKey="0">
-                                        <Card style={{ borderStyle: "none" }}>
-                                            <Accordion.Toggle as={Card.Header} eventKey="1">
-                                                <div className="row w-100 m-0">
-                                                    <div className="order-list-label col-3" style={{ textAlign: "center", marginLeft: "-1rem" }}>13/8/2020</div>
-                                                    <div className="order-list-label col-3" style={{ textAlign: "center", marginLeft: "1rem" }}>Huy Hoang</div>
-                                                </div>
-                                            </Accordion.Toggle>
-                                            <Accordion.Collapse eventKey="1">
-                                                <Card.Body>
-                                                    Details Here
-                                                </Card.Body>
-                                            </Accordion.Collapse>
-                                        </Card>
-                                    </Accordion>
-
-                                    <div className="order-list-label col-6">
-                                    </div>
-                                </ListGroup.Item>
+                            <ListGroup style={{ flexDirection: "col", borderRadius: "0" }}>
+                                {this.props.orders.map((order) => {
+                                    let date = new Date(order.orderDate);
+                                    order.orderDate = date;
+                                    return <OrderItem key={order._id} order={order} />;
+                                })}
                             </ListGroup>
                         </div>
                     </div>
