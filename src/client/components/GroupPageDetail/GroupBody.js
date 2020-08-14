@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getGroupRequest, editDishesInGroupRequest } from "../../request/group";
 import DishListUser from "./MemberComponent/DishListUser";
-import OrderConfirmModal from "./OrderConfirmModal";
+import OrderConfirmModal from "./MemberComponent/OrderConfirmModal";
 import EditDishesModal from "./EditDishesModal";
 import { getDishOfUserRequest } from "../../request/dish";
 import ButtonBar from "./ButtonBar";
@@ -224,8 +224,10 @@ class GroupBody extends Component {
 
             <OrderConfirmModal
               show={this.state.showConfirmOrderModal}
+              dishes={this.state.dishes}
               handleClose={this.toggleConfirmOrderModal}
               handleCreateOrder={this.handleCreateOrder}
+              totalPrice={this.state.totalPrice}
               {...this.props}
             />
             {this.state.userDishes.length > 0 ? (

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, ModalBody } from "react-bootstrap";
+import OrderConfirmList from "./OrderConfirm/OrderConfirmList";
 
 export default class OrderConfirmModal extends Component {
   render() {
@@ -8,6 +9,12 @@ export default class OrderConfirmModal extends Component {
         <Modal.Header closeButton>
           <Modal.Title>Please confirm your order</Modal.Title>
         </Modal.Header>
+        <ModalBody>
+          <OrderConfirmList
+            totalPrice={this.props.totalPrice}
+            dishes={this.props.dishes.filter((dish) => dish.quantity > 0)}
+          />
+        </ModalBody>
         <Modal.Footer>
           <Button
             style={{
