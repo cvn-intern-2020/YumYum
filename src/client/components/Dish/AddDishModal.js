@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
+import { throttle } from "lodash";
 
 class AddDishModal extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class AddDishModal extends Component {
       name: "",
       price: 0,
     };
+    this.handleClickAddDish = throttle(this.handleClickAddDish, 1000);
   }
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });

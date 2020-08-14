@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import { signInRequest } from "../../request/auth";
+import { throttle } from "lodash";
 
 class BodyLogin extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class BodyLogin extends Component {
       password: "",
       isButtonDisabled: false,
     };
+    this.handleClick = throttle(this.handleClick, 1000);
   }
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });

@@ -19,7 +19,6 @@ export const createOrderRequest = (groupId, token, details, totalPrice) => {
       return { status: true, message: "Add success", newOrder: res.data };
     })
     .catch((err) => {
-      console.log(err.response.data.message);
       return { status: false, message: err.response.data.message };
     });
 };

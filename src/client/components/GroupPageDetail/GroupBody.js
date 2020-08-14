@@ -16,6 +16,7 @@ import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import OrdersListModal from "./OrdersListModal";
 import MemberListModal from "./MemberListModal";
+import { throttle } from "lodash";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -32,7 +33,10 @@ class GroupBody extends Component {
       editedDishes: [],
       orders: [],
       totalPrice: 0,
+      users: []
     };
+    this.handleSaveNewDishes = throttle(this.handleSaveNewDishes, 1000);
+    this.handleCreateOrder = throttle(this.handleCreateOrder, 1000);
   }
   handleSaveNewDishes = async () => {
     let dishArray = this.state.editedDishes.map((dish) => dish._id);
@@ -259,16 +263,47 @@ class GroupBody extends Component {
         {this.state.ownerId == "" ? (
           <></>
         ) : (
-            <>
-              <AddMemberModal
-                show={this.state.showAddMemberModal}
-                handleClose={this.toggleAddMemberModal}
-                token={this.props.token}
-                {...this.props}
-              />
+          <>
+            <AddMemberModal
+              show={this.state.showAddMemberModal}
+              handleClose={this.toggleAddMemberModal}
+              token={this.props.token}
+              {...this.props}
+            />
 
-              <OrderConfirmModal
-                show={this.state.showConfirmOrderModal}
+            <OrderConfirmModal
+              show={this.state.showConfirmOrderModal}
+              dishes={this.state.dishes}
+              handleClose={this.toggleConfirmOrderModal}
+              handleCreateOrder={this.handleCreateOrder}
+              totalPrice={this.state.totalPrice}
+              {...this.props}
+            />
+
+            <MemberListModal
+              show={this.state.showMemberListModal}
+              handleClose={this.toggleMemberListModal}
+              token={this.props.token}
+              users={this.state.users}
+              {...this.props}
+            />
+            {this.state.userDishes.length > 0 ? (
+              <EditDishesModal
+                userDishes={this.state.userDishes}
+                show={this.state.showEditDishesModal}
+                handleClose={this.toggleEditDishesModal}
+
+            <ButtonBar
+              toggleAddMemberModal={this.toggleAddMemberModal}
+              name={this.state.name}
+              userId={this.props.userId}
+              ownerId={this.state.ownerId}
+              toggleEditDishesModal={this.toggleEditDishesModal}
+              toggleOrdersListModal={this.toggleOrdersListModal}
+              toggleMemberListModal={this.toggleMemberListModal}
+            />
+            {this.props.userId == this.state.ownerId ? (
+              <DishListAdmin
                 dishes={this.state.dishes}
                 handleClose={this.toggleConfirmOrderModal}
                 handleCreateOrder={this.handleCreateOrder}

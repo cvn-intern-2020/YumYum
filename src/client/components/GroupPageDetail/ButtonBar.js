@@ -48,6 +48,7 @@ export default class ButtonBar extends Component {
           <Button
             style={{ backgroundColor: "#FF5522", color: "#080024" }}
             className="float-right mt-4 mr-5 group-button"
+            onClick={this.props.toggleMemberListModal}
           >
             Show Member
           </Button>
