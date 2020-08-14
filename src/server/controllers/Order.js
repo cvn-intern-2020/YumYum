@@ -22,12 +22,11 @@ export const getOrderByGroupIdController = async (req, res) => {
     });
   }
   let getOrderResult = await getOrderByGroupId(groupId);
-
   if (userId == result.ownerId) {
     return res.status(200).json(getOrderResult.result);
   }
   getOrderResult = getOrderResult.result.filter(
-    (order) => order.userId == userId
+    (order) => order.userId._id == userId
   );
   return res.status(200).json(getOrderResult);
 };

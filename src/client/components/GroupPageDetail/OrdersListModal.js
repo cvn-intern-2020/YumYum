@@ -37,7 +37,6 @@ export default class OrdersListModal extends Component {
                                 {this.props.orders.map((order) => {
                                     let date = new Date(order.orderDate);
                                     order.orderDate = date;
-                                    console.log(date);
                                     return <OrderItem key={order._id} order={order} />;
                                 })}
                             </ListGroup>
