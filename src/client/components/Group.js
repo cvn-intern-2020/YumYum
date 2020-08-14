@@ -8,7 +8,7 @@ class Group extends Component {
   render() {
     return (
       <div className="h-100">
-        <MainNavBar token={this.props.token} />
+        <MainNavBar token={this.props.token} name={this.props.name} />
         <GroupBody {...this.props} />
       </div>
     );
@@ -18,6 +18,7 @@ class Group extends Component {
 function mapStateToProps(state) {
   return {
     token: state.user.token,
+    name: state.user.name,
   };
 }
 
