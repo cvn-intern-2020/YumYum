@@ -12,7 +12,7 @@ export default class OrderConfirmItem extends Component {
           >
             {this.props.dish.quantity}
           </div>
-          <div className="dish-label col ">{this.props.dish.dishPrice}</div>
+          <div className="dish-label col ">{this.props.dish.dishPrice}  VND</div>
           <div className="dish-label col">
             {this.props.dish.quantity * this.props.dish.dishPrice}
           </div>
