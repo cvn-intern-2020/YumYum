@@ -91,6 +91,13 @@ class GroupBody extends Component {
       getDishOfUserResult.dishData = convertOderFormat(
         getDishOfUserResult.dishData
       );
+      if (getDishOfUserResult.dishData.length == 0) {
+        this.props.history.push({
+          pathname: "/dish",
+          state: { message: "Please create dish before edit in group" },
+        });
+        return;
+      }
       this.setState({
         userDishes: [...getDishOfUserResult.dishData].reverse(),
       });
