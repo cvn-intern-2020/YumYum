@@ -8,7 +8,7 @@ export default class GlobalAlert extends Component {
         variant={this.props.alertType}
         dismissible
         onClose={this.props.toggleAlert}
-        className="text-center"
+        className="text-center mb-0"
       >
         {this.props.message}
       </Alert>

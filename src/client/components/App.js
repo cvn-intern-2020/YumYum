@@ -4,7 +4,7 @@ import Landing from "./Landing";
 import Main from "./Main";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Group from "./Group";
 import Dish from "./Dish";
@@ -12,6 +12,7 @@ import { bindActionCreators } from "redux";
 import { setUser } from "../actions/user";
 import PageNotFound from "./Common/PageNotFound";
 import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 class App extends Component {
   componentDidMount() {
@@ -23,89 +24,45 @@ class App extends Component {
     return (
       <>
         <Switch>
-          <Route
-            exact
+          <PublicRoute
+            component={Landing}
+            token={this.props.token}
             path="/"
-            render={(props) =>
-              this.props.token == "" ? (
-                <Landing {...props} />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/main",
-                    state: { from: props.locations },
-                  }}
-                />
-              )
-            }
-          />
-          <PrivateRoute component={Main} token={this.props.token} path="/main" exact />
-          <Route
             exact
+          />
+          <PrivateRoute
+            component={Main}
+            token={this.props.token}
+            path="/main"
+            exact
+          />
+          <PrivateRoute
+            component={Dish}
+            token={this.props.token}
             path="/dish"
-            render={(props) =>
-              this.props.token == "" ? (
-                <Redirect
-                  to={{
-                    pathname: "/login",
-                    state: { from: props.locations },
-                  }}
-                />
-              ) : (
-                <Dish {...props} />
-              )
-            }
+            exact
+          />
+          <PublicRoute
+            component={Login}
+            token={this.props.token}
+            path="/login"
+            exact
+          />
+          <PublicRoute
+            component={Signup}
+            token={this.props.token}
+            path="/signup"
+            exact
           />
           <Route path="/group">
-            <Route
+            <PrivateRoute
+              component={Group}
+              token={this.props.token}
               path="/group/:groupId"
-              render={(props) =>
-                this.props.token == "" ? (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                      state: { from: props.locations },
-                    }}
-                  />
-                ) : (
-                  <Group {...props} />
-                )
-              }
-            ></Route>
+              exact
+            />
           </Route>
-          <Route
-            exact
-            path="/login"
-            render={(props) =>
-              this.props.token == "" ? (
-                <Login {...props} />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/main",
-                    state: { from: props.locations },
-                  }}
-                />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/signup"
-            render={(props) =>
-              this.props.token == "" ? (
-                <Signup {...props} />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/main",
-                    state: { from: props.locations },
-                  }}
-                />
-              )
-            }
-          />
-           <Route path="*" component={PageNotFound} />
+          <Route path="*" component={PageNotFound} />
         </Switch>
       </>
     );

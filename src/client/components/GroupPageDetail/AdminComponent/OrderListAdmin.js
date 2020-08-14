@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { ListGroup, Button, Dropdown } from "react-bootstrap";
 import DishItemAdmin from "./DishItemAdmin";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default class OrderListAdmin extends Component {
+class OrderListAdmin extends Component {
   render() {
     return (
       <>
@@ -28,11 +30,17 @@ export default class OrderListAdmin extends Component {
               <b>User</b>
             </div>
             <div style={{ textAlign: "end" }} className="order-label col mt-4">
-              <b>Members' List</b>
+              <Button
+                style={{ backgroundColor: "rgb(255, 85, 34)", color: "#080024" }}
+                className="float-right group-button"
+                onClick={this.props.toggleMemberListModal}
+              >
+                Member List
+              </Button>
             </div>
           </div>
           <div className="group-container mt-4">
-            <ListGroup style={{flexDirection:"row", borderRadius:"0"}}>
+            <ListGroup style={{ flexDirection: "row", borderRadius: "0" }}>
               <ListGroup.Item className="w-50">
                 <div className="row w-100 m-0">
                   <div className=" order-label col">13/8/2020</div>
@@ -60,3 +68,12 @@ export default class OrderListAdmin extends Component {
     );
   }
 }
+
+
+function mapStateToProps(state) {
+  return {
+    token: state.user.token,
+  };
+}
+
+export default withRouter(connect(mapStateToProps, null)(OrderListAdmin));

@@ -15,6 +15,7 @@ import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import OrdersListModal from "./OrdersListModal";
+import MemberListModal from "./MemberListModal";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class GroupBody extends Component {
       showConfirmOrderModal: false,
       showEditDishesModal: false,
       showOrdersListModal: false,
+      showMemberListModal: false,
       dishes: [], // id price quantity sum
       userDishes: [],
       editedDishes: [],
@@ -93,6 +95,13 @@ class GroupBody extends Component {
       getDishOfUserResult.dishData = convertOderFormat(
         getDishOfUserResult.dishData
       );
+      if (getDishOfUserResult.dishData.length == 0) {
+        this.props.history.push({
+          pathname: "/dish",
+          state: { message: "Please create dish before edit in group" },
+        });
+        return;
+      }
       this.setState({
         userDishes: [...getDishOfUserResult.dishData].reverse(),
       });
@@ -177,6 +186,13 @@ class GroupBody extends Component {
     );
   };
 
+  toggleMemberListModal = () => {
+    this.setState({
+      ...this.state,
+      showMemberListModal: !this.state.showMemberListModal,
+    });
+  };
+
   async componentDidMount() {
     let getGroupResult = await getGroupRequest(
       this.props.match.params.groupId,
@@ -239,6 +255,13 @@ class GroupBody extends Component {
               totalPrice={this.state.totalPrice}
               {...this.props}
             />
+
+            <MemberListModal
+              show={this.state.showMemberListModal}
+              handleClose={this.toggleMemberListModal}
+              token={this.props.token}
+              {...this.props}
+            />
             {this.state.userDishes.length > 0 ? (
               <EditDishesModal
                 userDishes={this.state.userDishes}
@@ -263,9 +286,13 @@ class GroupBody extends Component {
               toggleOrdersListModal={this.toggleOrdersListModal}
             />
             {this.props.userId == this.state.ownerId ? (
-              <DishListAdmin dishes={this.state.dishes} />
+              <DishListAdmin
+                dishes={this.state.dishes}
+                toggleMemberListModal={this.toggleMemberListModal}
+              />
             ) : (
               <DishListUser
+                show={this.state.showMemberListModal}
                 changeDishAmount={this.changeDishAmount}
                 dishes={this.state.dishes}
                 toggleConfirmOrderModal={this.toggleConfirmOrderModal}
