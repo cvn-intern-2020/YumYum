@@ -4,10 +4,9 @@ import ListGroup from "react-bootstrap/ListGroup";
 import DishItem from "./DishItems";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import axios from "axios";
 import AddDishModal from "./AddDishModal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import { getDishOfUserRequest, deleteDishRequest } from "../../request/dish";
+import { deleteDishRequest } from "../../request/dish";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
@@ -69,6 +68,7 @@ class DishBody extends Component {
     if (this.props.location.state) {
       this.props.setAlert("danger", this.props.location.state.message);
     }
+    let { getDishOfUserRequest } = await import("../../request/dish");
     let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
     if (!getDishOfUserResult.status) {
       console.log(getDishOfUserResult.message);

@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import { Container } from "react-bootstrap";
-import MyOwnGroup from "./MyOwnGroup";
-import MyJoinedGroup from "./MyJoinedGroup";
+const MyOwnGroup = React.lazy(() => import("./MyOwnGroup"));
+const MyJoinedGroup = React.lazy(() => import("./MyJoinedGroup"));
+// import MyOwnGroup from "./MyOwnGroup";
+// import MyJoinedGroup from "./MyJoinedGroup";
 import AddNewGroupModal from "./AddNewGroupModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -36,24 +38,28 @@ class MainBody extends Component {
           handleClose={this.toggleAddGroupModal}
           token={this.props.token}
         />
+
         <Container className="ml-2 main-body-group-container" fluid>
-          {this.props.groups ? (
-            <>
-              <MyJoinedGroup
-                joinedGroups={this.props.groups.filter(
-                  (group) => group.isOwner == false
-                )}
-              />
-              <MyOwnGroup
-                ownGroups={this.props.groups.filter(
-                  (group) => group.isOwner == true
-                )}
-                toggleAddGroupModal={this.toggleAddGroupModal}
-              />
-            </>
-          ) : (
-            <></>
-          )}
+          <Suspense fallback={<div className="loader"></div>}>
+            {this.props.groups ? (
+              <>
+                <MyJoinedGroup
+                  joinedGroups={this.props.groups.filter(
+                    (group) => group.isOwner == false
+                  )}
+                />
+
+                <MyOwnGroup
+                  ownGroups={this.props.groups.filter(
+                    (group) => group.isOwner == true
+                  )}
+                  toggleAddGroupModal={this.toggleAddGroupModal}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+          </Suspense>
         </Container>
       </div>
     );
