@@ -26,7 +26,7 @@ class DishListAdmin extends Component {
             </ListGroup>
           </div>
         </div>
-        <OrderListAdmin></OrderListAdmin>
+        <OrderListAdmin toggleMemberListModal={this.props.toggleMemberListModal}></OrderListAdmin>
       </>
     );
   }
