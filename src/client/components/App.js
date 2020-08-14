@@ -10,6 +10,7 @@ import Group from "./Group";
 import Dish from "./Dish";
 import { bindActionCreators } from "redux";
 import { setUser } from "../actions/user";
+import PrivateRoute from "./PrivateRoute";
 
 class App extends Component {
   componentDidMount() {
@@ -37,22 +38,7 @@ class App extends Component {
               )
             }
           />
-          <Route
-            exact
-            path="/main"
-            render={(props) =>
-              this.props.token == "" ? (
-                <Redirect
-                  to={{
-                    pathname: "/login",
-                    state: { from: props.locations },
-                  }}
-                />
-              ) : (
-                <Main {...props} />
-              )
-            }
-          />
+          <PrivateRoute component={Main} token={this.props.token} path="/main" exact />
           <Route
             exact
             path="/dish"
