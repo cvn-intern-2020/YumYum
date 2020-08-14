@@ -45,6 +45,7 @@ class DishBody extends Component {
             (dish) => dish._id != this.state.selected
           ),
         ],
+        selected: "",
       },
       () => this.toggleConfirmDeleteModal("")
     );
@@ -79,14 +80,21 @@ class DishBody extends Component {
           height: "94%",
         }}
       >
-        {
+        {this.state.selected == "" ? (
+          <></>
+        ) : (
           <ConfirmDeleteModal
             show={this.state.showConfirmDeleteModal}
             handleClose={this.toggleConfirmDeleteModal}
             deleteDish={this.deleteDish}
+            dish={
+              this.state.dishes.filter(
+                (dish) => dish._id == this.state.selected
+              )[0]
+            }
             {...this.props}
           />
-        }
+        )}
         {
           <AddDishModal
             show={this.state.showAddDishModal}

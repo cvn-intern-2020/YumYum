@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, ModalTitle } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import GlobalAlert from "../Common/GlobalAlert";
@@ -9,9 +9,12 @@ class ConfirmDeleteModal extends Component {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirm Delete Dish</Modal.Title>
+          <ModalTitle>Confrim Delete Dish</ModalTitle>
         </Modal.Header>
+        
         <Modal.Body>
+            {" "}
+            Are you sure want to delete "{this.props.dish.name}" dish{" "}
           {this.props.showAlert ? (
             <GlobalAlert
               alertType={this.props.type}
@@ -44,7 +47,7 @@ class ConfirmDeleteModal extends Component {
             }}
             variant="secondary"
             onClick={() => {
-              this.props.handleClose();
+              this.props.handleClose("");
             }}
           >
             No
