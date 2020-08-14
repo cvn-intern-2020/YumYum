@@ -32,6 +32,7 @@ class GroupBody extends Component {
       userDishes: [],
       editedDishes: [],
       totalPrice: 0,
+      users: []
     };
     this.handleSaveNewDishes = throttle(this.handleSaveNewDishes, 1000);
     this.handleCreateOrder = throttle(this.handleCreateOrder, 1000);
@@ -263,6 +264,7 @@ class GroupBody extends Component {
               show={this.state.showMemberListModal}
               handleClose={this.toggleMemberListModal}
               token={this.props.token}
+              users={this.state.users}
               {...this.props}
             />
             {this.state.userDishes.length > 0 ? (
