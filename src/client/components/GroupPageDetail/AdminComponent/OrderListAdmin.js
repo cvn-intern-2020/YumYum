@@ -15,7 +15,7 @@ export default class OrderListAdmin extends Component {
             left: "46%",
             top: "94%",
           }}
-          className="row w-100 m-0"
+          className="row m-0"
         >
           Orders
         </div>

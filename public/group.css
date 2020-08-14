@@ -46,6 +46,10 @@
 .dish-label {
   font-size: 25px ;
 }
+.dish-label-quantity.col {
+  margin-left: -1rem;
+  margin-right: 1.2rem;
+}
 .order-label{
   font-size: 22px;
 }
