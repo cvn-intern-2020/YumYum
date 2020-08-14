@@ -41,7 +41,7 @@ class DishListUser extends Component {
                 className="float-right dish-label"
               >
                 <pre className="dish-label tab4">
-                  Total: {this.props.totalPrice}
+                  Total: {this.props.totalPrice} VND
                 </pre>
               </ListGroup.Item>
               <ListGroup.Item style={{ marginTop: "5rem", height: "30%", backgroundColor: "#ffe500", border:"none"}}>
