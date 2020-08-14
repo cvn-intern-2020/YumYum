@@ -22,7 +22,7 @@ class DishListUser extends Component {
             <b>Sum</b>
           </div>
         </div>
-        <div className="group-container mt-4" style={{position: "relative"}}>
+        <div className="group-container mt-4" style={{ position: "relative" }}>
           <ListGroup>
             {this.props.dishes.map((dish) => {
               return <OrderConfirmItem key={dish._id} dish={dish} />;
@@ -31,7 +31,12 @@ class DishListUser extends Component {
           {this.props.dishes.length > 0 ? (
             <>
               <ListGroup.Item
-                style={{ width: "35%", height: "16%", backgroundColor: "white", border: "none"}}
+                style={{
+                  width: "35%",
+                  height: "16%",
+                  backgroundColor: "white",
+                  border: "none",
+                }}
                 className="float-right dish-label"
               >
                 <pre className="dish-label tab4">

@@ -8,9 +8,7 @@ export default class MyJoinedGroup extends PureComponent {
       <>
         <p className="mt-5 joined-group-text-lable">Joined Group</p>
         <Container fluid className="pr-0 my-joined-own-group-container">
-          <ListGroup
-            className="list-group-container"
-          >
+          <ListGroup className="list-group-container">
             {this.props.joinedGroups.map((group) => {
               return (
                 <GroupItem

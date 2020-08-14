@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button, Dropdown, ListGroup, ModalBody } from "react-bootstrap";
+import { Modal, Button, ListGroup, ModalBody } from "react-bootstrap";
 import EditDishItem from "./EditDishItem";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -107,7 +107,7 @@ class EditDishesModal extends Component {
                         style={{ color: "#080024" }}
                         id={dish._id}
                       >
-                        {dish.dishName} - {dish.dishPrice}  VND
+                        {dish.dishName} - {dish.dishPrice} VND
                       </option>
                     );
                   })}

@@ -66,7 +66,7 @@ class BodyLogin extends Component {
   };
   componentWillUnmount() {
     this.debouncedEvent.cancel();
-    this.handleClick.cancel();  
+    this.handleClick.cancel();
     this.props.hideAlert();
   }
   render() {

@@ -43,7 +43,7 @@ export default class DishItemUser extends Component {
               +
             </Button>
           </div>
-          <div className="dish-label col ">{this.props.dish.dishPrice}  VND</div>
+          <div className="dish-label col ">{this.props.dish.dishPrice} VND</div>
           <div className="dish-label col">
             {this.props.dish.quantity * this.props.dish.dishPrice}
           </div>

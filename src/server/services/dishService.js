@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import dishesModel from "../models/dishes";
 import { isObjectID } from "../utils/validator";
-import e from "express";
 
 export const getDishByUserId = async (userId) => {
   let result = await dishesModel

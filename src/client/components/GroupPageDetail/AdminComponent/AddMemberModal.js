@@ -79,8 +79,8 @@ class AddMemberModal extends Component {
               message={this.props.message}
             />
           ) : (
-              <></>
-            )}
+            <></>
+          )}
           <Form.Group>
             <Form.Label>Member Email: </Form.Label>
             <Form.Control

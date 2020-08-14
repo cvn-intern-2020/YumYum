@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import axios from "axios";
 import GlobalAlert from "../Common/GlobalAlert";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -69,7 +68,7 @@ class AddNewGroupModal extends Component {
     }
   };
   componentWillUnmount() {
-    this.debouncedEvent.cancel(); 
+    this.debouncedEvent.cancel();
     this.props.hideAlert();
   }
   render() {

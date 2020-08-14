@@ -71,7 +71,10 @@ class DishBody extends Component {
     let { getDishOfUserRequest } = await import("../../request/dish");
     let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
     if (!getDishOfUserResult.status) {
-      console.log(getDishOfUserResult.message);
+      this.props.setAlert(
+        "danger",
+        "Something went wrong please refresh the page"
+      );
     } else {
       this.setState({ dishes: [...getDishOfUserResult.dishData].reverse() });
     }

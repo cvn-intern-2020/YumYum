@@ -6,8 +6,6 @@ export const setUser = (token) => async (dispatch) => {
   if (!getUserResult.status) {
     if (getUserResult.errCode == 401) {
       clearUser();
-    } else {
-      console.log(getUserResult.message);
     }
   } else {
     dispatch({ type: SET_USER, payload: { token, ...getUserResult.userData } });

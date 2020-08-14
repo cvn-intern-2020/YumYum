@@ -2,8 +2,6 @@ import React, { Component, Suspense } from "react";
 import { Container } from "react-bootstrap";
 const MyOwnGroup = React.lazy(() => import("./MyOwnGroup"));
 const MyJoinedGroup = React.lazy(() => import("./MyJoinedGroup"));
-// import MyOwnGroup from "./MyOwnGroup";
-// import MyJoinedGroup from "./MyJoinedGroup";
 import AddNewGroupModal from "./AddNewGroupModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";

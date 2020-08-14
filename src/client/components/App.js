@@ -1,12 +1,5 @@
 import React, { Component, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
-// import Landing from "./Landing";
-// import Main from "./Main";
-// import Login from "./Auth/Login";
-// import Signup from "./Auth/Signup";
-// import Group from "./Group";
-// import Dish from "./Dish";
-// import PageNotFound from "./Common/PageNotFound";
 const Main = React.lazy(() => import("./Main"));
 const Login = React.lazy(() => import("./Auth/Login"));
 const Landing = React.lazy(() => import("./Landing"));

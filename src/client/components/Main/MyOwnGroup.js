@@ -28,9 +28,7 @@ export default class MyOwnGroup extends PureComponent {
         </Container>
 
         <Container fluid className="pr-0 my-joined-own-group-container">
-          <ListGroup
-            className="list-group-container"
-          >
+          <ListGroup className="list-group-container">
             {this.props.ownGroups.map((group) => {
               return (
                 <GroupItem

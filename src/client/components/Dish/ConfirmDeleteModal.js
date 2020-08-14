@@ -11,10 +11,10 @@ class ConfirmDeleteModal extends Component {
         <Modal.Header closeButton>
           <ModalTitle>Confrim Delete Dish</ModalTitle>
         </Modal.Header>
-        
+
         <Modal.Body>
-            {" "}
-            Are you sure want to delete "{this.props.dish.name}" dish{" "}
+          {" "}
+          Are you sure want to delete "{this.props.dish.name}" dish{" "}
           {this.props.showAlert ? (
             <GlobalAlert
               alertType={this.props.type}

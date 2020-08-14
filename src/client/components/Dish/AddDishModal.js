@@ -71,7 +71,7 @@ class AddDishModal extends Component {
   };
   componentWillUnmount() {
     this.debouncedEvent.cancel();
-    this.handleClickAddDish.cancel();  
+    this.handleClickAddDish.cancel();
     this.props.hideAlert();
   }
   render() {
@@ -88,8 +88,8 @@ class AddDishModal extends Component {
               message={this.props.message}
             />
           ) : (
-              <></>
-            )}
+            <></>
+          )}
           <Form>
             <Form.Group>
               <Form.Label>Name of dish</Form.Label>
@@ -111,10 +111,7 @@ class AddDishModal extends Component {
                 onChange={this.debounceEvent(this.handleChange, 250)}
               />
               <div className="input-group-append col">
-                <span
-                  className="input-group-text"
-                  style={{ width: "7rem" }}
-                >
+                <span className="input-group-text" style={{ width: "7rem" }}>
                   x 1000 VND
                 </span>
               </div>
