@@ -11,6 +11,7 @@ import { getDishOfUserRequest, deleteDishRequest } from "../../request/dish";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
+import { throttle } from "lodash";
 
 class DishBody extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class DishBody extends Component {
       dishes: [],
       selected: "",
     };
+    this.deleteDish = throttle(this.deleteDish, 1000);
   }
   toggleAddDishModal = () => {
     this.setState({

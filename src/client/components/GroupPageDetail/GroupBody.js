@@ -16,6 +16,7 @@ import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import OrdersListModal from "./OrdersListModal";
 import MemberListModal from "./MemberListModal";
+import { throttle } from "lodash";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -32,6 +33,8 @@ class GroupBody extends Component {
       editedDishes: [],
       totalPrice: 0,
     };
+    this.handleSaveNewDishes = throttle(this.handleSaveNewDishes, 1000);
+    this.handleCreateOrder = throttle(this.handleCreateOrder, 1000);
   }
   handleSaveNewDishes = async () => {
     let dishArray = this.state.editedDishes.map((dish) => dish._id);
