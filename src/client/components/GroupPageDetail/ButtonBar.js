@@ -17,6 +17,17 @@ export default class ButtonBar extends Component {
           ) : (
             <></>
           )}
+          {this.props.userId == this.props.ownerId ? (
+            <Button
+              style={{ backgroundColor: "#FF5522", color: "#080024" }}
+              className="float-right mt-4 mr-5 group-button"
+              onClick={this.props.toggleEditDishesModal}
+            >
+              Edit Dishes
+            </Button>
+          ) : (
+            <></>
+          )}
         </div>
 
         <div
@@ -27,17 +38,18 @@ export default class ButtonBar extends Component {
         </div>
 
         <div className="col-4">
-          {this.props.userId == this.props.ownerId ? (
-            <Button
-              style={{ backgroundColor: "#48BDFF", color: "#080024" }}
-              className="float-right mt-4 mr-5 group-button"
-              onClick={this.props.toggleEditDishesModal}
-            >
-              Edit Dishes
-            </Button>
-          ) : (
-            <></>
-          )}
+          <Button
+            style={{ backgroundColor: "#FF5522", color: "#080024" }}
+            className="float-right mt-4 mr-5 group-button"
+          >
+            Show Order
+          </Button>
+          <Button
+            style={{ backgroundColor: "#FF5522", color: "#080024" }}
+            className="float-right mt-4 mr-5 group-button"
+          >
+            Show Member
+          </Button>
         </div>
       </div>
     );
