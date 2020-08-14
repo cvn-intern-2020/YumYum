@@ -95,7 +95,7 @@ class AddDishModal extends Component {
                 name="price"
                 onChange={this.handleChange}
               />
-              <div className="input-group-append" className="col">
+              <div className="input-group-append col">
                 <span
                   className="input-group-text"
                   style={{ width: "7rem" }}
