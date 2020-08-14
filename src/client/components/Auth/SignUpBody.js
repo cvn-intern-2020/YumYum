@@ -8,7 +8,7 @@ import { setAlert, hideAlert } from "../../actions/alert";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { signUpRequest } from "../../request/auth";
-import { throttle } from "lodash";
+import { throttle, debounce } from "lodash";
 
 class SignUpBody extends Component {
   constructor(props) {
@@ -19,7 +19,15 @@ class SignUpBody extends Component {
       name: "",
       phone: "",
     };
-    this.handleClick = throttle(this.handleClick, 1000);
+    this.handleClick = throttle(this.handleClick, 5000);
+  }
+
+  debounceEvent(...args) {
+    this.debouncedEvent = debounce(...args);
+    return (e) => {
+      e.persist();
+      return this.debouncedEvent(e);
+    };
   }
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
@@ -67,6 +75,8 @@ class SignUpBody extends Component {
     }
   };
   componentWillUnmount() {
+    this.debouncedEvent.cancel();
+    this.handleClick.cancel();
     this.props.hideAlert();
   }
   render() {
@@ -89,7 +99,7 @@ class SignUpBody extends Component {
               name="email"
               placeholder="Enter email"
               className="signup-form-textbox"
-              onChange={this.handleChange}
+              onChange={this.debounceEvent(this.handleChange, 250)}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
@@ -98,7 +108,7 @@ class SignUpBody extends Component {
               placeholder="Password"
               name="password"
               className="signup-form-textbox"
-              onChange={this.handleChange}
+              onChange={this.debounceEvent(this.handleChange, 250)}
             />
           </Form.Group>
           <Form.Group controlId="formBasicName">
@@ -107,7 +117,7 @@ class SignUpBody extends Component {
               placeholder="Name"
               name="name"
               className="signup-form-textbox"
-              onChange={this.handleChange}
+              onChange={this.debounceEvent(this.handleChange, 250)}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPhone">
@@ -116,7 +126,7 @@ class SignUpBody extends Component {
               placeholder="Phone"
               name="phone"
               className="signup-form-textbox"
-              onChange={this.handleChange}
+              onChange={this.debounceEvent(this.handleChange, 250)}
             />
           </Form.Group>
           <div style={{ textAlign: "center" }}>

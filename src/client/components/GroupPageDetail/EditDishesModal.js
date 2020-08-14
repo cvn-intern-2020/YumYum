@@ -6,12 +6,21 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
+import { debounce } from "lodash";
 
 class EditDishesModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selected: props.userDishes[0],
+    };
+  }
+
+  debounceEvent(...args) {
+    this.debouncedEvent = debounce(...args);
+    return (e) => {
+      e.persist();
+      return this.debouncedEvent(e);
     };
   }
   handleSelectChange = (e) => {
@@ -28,6 +37,10 @@ class EditDishesModal extends Component {
     }
     this.props.updateEditedDish(true, this.state.selected);
   };
+  componentWillUnmount() {
+    this.debouncedEvent.cancel();
+    this.props.hideAlert();
+  }
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
@@ -76,7 +89,7 @@ class EditDishesModal extends Component {
                 </Button>
 
                 <select
-                  onChange={this.handleSelectChange}
+                  onChange={this.debounceEvent(this.handleSelectChange, 250)}
                   className="custom-select"
                   style={{
                     width: "14rem",
