@@ -3,6 +3,8 @@ import MainNavBar from "./Common/MainNavBar";
 import DishBody from "./Dish/DishBody";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import "../../../public/dish.css";
+import "../../../public/group.css";
 
 class Dish extends Component {
   render() {
@@ -14,7 +16,6 @@ class Dish extends Component {
     );
   }
 }
-
 
 function mapStateToProps(state) {
   return {
