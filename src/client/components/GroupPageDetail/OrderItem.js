@@ -10,14 +10,14 @@ export default class OrderItem extends Component {
                     <Card style={{ borderStyle: "none" }}>
                         <Accordion.Toggle as={Card.Header} eventKey="1">
                             <div className="row w-100 m-0">
-                                <div className="order-list-label col-3"
+                                <div className="order-list-label col"
                                     style={{
                                         textAlign: "center",
                                         marginLeft: "-1rem"
                                     }}>
                                     {String(this.props.order.orderDate).substr(0,25)}
                                 </div>
-                                <div className="order-list-label col-3"
+                                <div className="order-list-label col"
                                     style={{
                                         textAlign: "center",
                                         marginLeft: "1rem"

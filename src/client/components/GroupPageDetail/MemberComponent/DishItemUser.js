@@ -24,7 +24,7 @@ export default class DishItemUser extends Component {
                 this.props.changeDishAmount(false, this.props.dish._id)
               }
             >
-              [-]
+              -
             </Button>
             {this.props.dish.quantity}
             <Button
@@ -40,7 +40,7 @@ export default class DishItemUser extends Component {
                 this.props.changeDishAmount(true, this.props.dish._id)
               }
             >
-              [+]
+              +
             </Button>
           </div>
           <div className="dish-label col ">{this.props.dish.dishPrice}  VND</div>
