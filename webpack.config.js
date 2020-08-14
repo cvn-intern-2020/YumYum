@@ -36,14 +36,15 @@ module.exports = () => {
           exclude: /node_modules/,
         },
         {
-          test: /\.(png|svg|jpg|gif|jpe?g)$/,
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
+        },
+        {
+          test: /\.(png|jpg|gif)$/,
           use: [
             {
-              options: {
-                name: "[name].[ext]",
-                outputPath: "/",
-              },
               loader: "file-loader",
+              options: {},
             },
           ],
         },
