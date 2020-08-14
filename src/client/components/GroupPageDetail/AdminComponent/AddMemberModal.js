@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Validator from "validator";
 import GlobalAlert from "../../Common/GlobalAlert";
-import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../../actions/alert";
 import { addMemberRequest } from "../../../request/group";
+import { throttle } from "lodash";
 
 class AddMemberModal extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class AddMemberModal extends Component {
     this.state = {
       email: "",
     };
+    this.handleClickAddMember = throttle(this.handleClickAddMember, 1000);
   }
 
   handleChange = (e) => {

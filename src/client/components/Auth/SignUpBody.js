@@ -8,6 +8,7 @@ import { setAlert, hideAlert } from "../../actions/alert";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { signUpRequest } from "../../request/auth";
+import { throttle } from "lodash";
 
 class SignUpBody extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class SignUpBody extends Component {
       name: "",
       phone: "",
     };
+    this.handleClick = throttle(this.handleClick, 1000);
   }
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
