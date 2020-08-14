@@ -15,7 +15,12 @@ export default class DishItem extends Component {
           </div>
 
           <div className="dish-label col">
-            <Button className="float-right" onClick={this.handleClickDelete}>
+            <Button
+              className="float-right"
+              onClick={() => {
+                this.handleClickDelete();
+              }}
+            >
               DELETE
             </Button>
           </div>
