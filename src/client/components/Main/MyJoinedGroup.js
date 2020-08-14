@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Container, ListGroup } from "react-bootstrap";
 import GroupItem from "./GroupItem";
 
-export default class MyJoinedGroup extends Component {
+export default class MyJoinedGroup extends PureComponent {
   render() {
     return (
       <>
