@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import { signInRequest } from "../../request/auth";
-import { throttle } from "lodash";
+import { throttle, debounce } from "lodash";
 
 class BodyLogin extends Component {
   constructor(props) {
@@ -20,7 +20,15 @@ class BodyLogin extends Component {
       password: "",
       isButtonDisabled: false,
     };
-    this.handleClick = throttle(this.handleClick, 1000);
+    this.handleClick = throttle(this.handleClick, 5000);
+  }
+
+  debounceEvent(...args) {
+    this.debouncedEvent = debounce(...args);
+    return (e) => {
+      e.persist();
+      return this.debouncedEvent(e);
+    };
   }
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
@@ -56,6 +64,8 @@ class BodyLogin extends Component {
     }
   };
   componentWillUnmount() {
+    this.debouncedEvent.cancel();
+    this.handleClick.cancel();  
     this.props.hideAlert();
   }
   render() {
@@ -78,7 +88,7 @@ class BodyLogin extends Component {
               type="email"
               placeholder="Enter email"
               name="email"
-              onChange={this.handleChange}
+              onChange={this.debounceEvent(this.handleChange, 250)}
             />
           </Form.Group>
 
@@ -88,7 +98,7 @@ class BodyLogin extends Component {
               type="password"
               placeholder="Password"
               name="password"
-              onChange={this.handleChange}
+              onChange={this.debounceEvent(this.handleChange, 250)}
             />
           </Form.Group>
 

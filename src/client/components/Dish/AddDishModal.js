@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
-import { throttle } from "lodash";
+import { throttle, debounce } from "lodash";
 
 class AddDishModal extends Component {
   constructor(props) {
@@ -16,6 +16,14 @@ class AddDishModal extends Component {
       price: 0,
     };
     this.handleClickAddDish = throttle(this.handleClickAddDish, 1000);
+  }
+
+  debounceEvent(...args) {
+    this.debouncedEvent = debounce(...args);
+    return (e) => {
+      e.persist();
+      return this.debouncedEvent(e);
+    };
   }
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
@@ -61,6 +69,11 @@ class AddDishModal extends Component {
       price: 0,
     });
   };
+  componentWillUnmount() {
+    this.debouncedEvent.cancel();
+    this.handleClickAddDish.cancel();  
+    this.props.hideAlert();
+  }
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
@@ -84,7 +97,7 @@ class AddDishModal extends Component {
                 type="text"
                 name="name"
                 placeholder="Enter dish name"
-                onChange={this.handleChange}
+                onChange={this.debounceEvent(this.handleChange, 250)}
               />
             </Form.Group>
 
@@ -95,7 +108,7 @@ class AddDishModal extends Component {
                 type="number"
                 placeholder="Enter price "
                 name="price"
-                onChange={this.handleChange}
+                onChange={this.debounceEvent(this.handleChange, 250)}
               />
               <div className="input-group-append col">
                 <span

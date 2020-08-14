@@ -12,8 +12,8 @@ export default class MemberListModal extends Component {
           <Modal.Title>Members List</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{padding:"0.5rem", backgroundColor:"rgb(255, 229, 0)"}}>
-          <ListGroup className="member-modal"style={{fontSize: "1.2rem "}}>
-            <ListGroup.Item >User 1</ListGroup.Item>
+          <ListGroup className="member-modal"style={{fontSize: "1.2rem"}}>
+            <ListGroup.Item>User 1</ListGroup.Item>
             <ListGroup.Item>User 1</ListGroup.Item>
             <ListGroup.Item>User 1</ListGroup.Item>
             <ListGroup.Item>User 1</ListGroup.Item>
