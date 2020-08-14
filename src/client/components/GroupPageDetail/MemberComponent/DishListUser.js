@@ -37,20 +37,20 @@ class DishListUser extends Component {
           {this.props.dishes.length > 0 ? (
             <>
               <ListGroup.Item
-                style={{ width: "35%", height: "16%" }}
+                style={{ width: "32.7%", height: "16%", backgroundColor: "#ffe500", border:"none" }}
                 className="float-right dish-label"
               >
                 <pre className="dish-label tab4">
                   Total: {this.props.totalPrice}
                 </pre>
               </ListGroup.Item>
-              <ListGroup.Item style={{ marginTop: "5rem", height: "30%" }}>
+              <ListGroup.Item style={{ marginTop: "5rem", height: "30%", backgroundColor: "#ffe500", border:"none"}}>
                 <Button
                   style={{
                     position: "absolute",
                     bottom: "0",
                     right: "0",
-                    backgroundColor: "#ffe500",
+                    backgroundColor: "#48bdff",
                     fontSize: "1.4rem",
                     color: "#080024",
                     width: "15%",

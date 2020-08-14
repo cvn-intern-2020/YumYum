@@ -10,6 +10,7 @@ import Group from "./Group";
 import Dish from "./Dish";
 import { bindActionCreators } from "redux";
 import { setUser } from "../actions/user";
+import PageNotFound from "./Common/PageNotFound";
 
 class App extends Component {
   componentDidMount() {
@@ -118,6 +119,7 @@ class App extends Component {
               )
             }
           />
+           <Route path="*" component={PageNotFound} />
         </Switch>
       </>
     );
