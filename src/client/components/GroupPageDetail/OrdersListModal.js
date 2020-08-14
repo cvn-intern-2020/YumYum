@@ -22,11 +22,11 @@ export default class OrdersListModal extends Component {
                         )}
                     <div className="text-center-order-list-admin">
                         <div className="row w-100 m-0">
-                            <div className=" order-list-label col-3 mt-4"
+                            <div className=" order-list-label col mt-4"
                                 style={{ textAlign: "center" }}>
                                 <b>Date</b>
                             </div>
-                            <div className="order-list-label col-3 mt-4 ml-2"
+                            <div className="order-list-label col mt-4 ml-2"
                                 style={{ textAlign: "center" }}>
                                 <b>User</b>
                             </div>
