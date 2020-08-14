@@ -6,14 +6,16 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
+import { throttle } from "lodash";
 
 class AddDishModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      price: "",
+      price: 0,
     };
+    this.handleClickAddDish = throttle(this.handleClickAddDish, 1000);
   }
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
@@ -22,7 +24,7 @@ class AddDishModal extends Component {
     this.setState({
       ...this.state,
       name: "",
-      description: "",
+      price: 0,
     });
     this.props.hideAlert();
     this.props.handleClose();
@@ -45,7 +47,7 @@ class AddDishModal extends Component {
       return -1;
     }
     let createDishResult = await createDishRequest(
-      this.state,
+      { name: this.state.name, price: this.state.price * 1000 },
       this.props.token || this.props.location.state.token
     );
     if (!createDishResult.status) {
@@ -53,6 +55,11 @@ class AddDishModal extends Component {
     } else {
       this.props.addDishToState(createDishResult.newDish);
     }
+    this.setState({
+      ...this.state,
+      name: "",
+      price: 0,
+    });
   };
   render() {
     return (
@@ -68,8 +75,8 @@ class AddDishModal extends Component {
               message={this.props.message}
             />
           ) : (
-            <></>
-          )}
+              <></>
+            )}
           <Form>
             <Form.Group>
               <Form.Label>Name of dish</Form.Label>
@@ -81,16 +88,25 @@ class AddDishModal extends Component {
               />
             </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Price</Form.Label>
+            <Form.Label>Price</Form.Label>
+            <Form.Group className="row w">
               <Form.Control
-                as="textarea"
-                rows="4"
-                type="text"
-                placeholder="Enter price"
+                className="w-25 col ml-3"
+                type="number"
+                placeholder="Enter price "
                 name="price"
                 onChange={this.handleChange}
               />
+              <div className="input-group-append col">
+                <span
+                  className="input-group-text"
+                  style={{ width: "7rem" }}
+                >
+                  x 1000 VND
+                </span>
+              </div>
+              <div className="col"></div>
+              <div className="col"></div>
             </Form.Group>
           </Form>
         </Modal.Body>

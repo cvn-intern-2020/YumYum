@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getGroupRequest, editDishesInGroupRequest } from "../../request/group";
 import DishListUser from "./MemberComponent/DishListUser";
-import OrderConfirmModal from "./OrderConfirmModal";
+import OrderConfirmModal from "./MemberComponent/OrderConfirmModal";
 import EditDishesModal from "./EditDishesModal";
 import { getDishOfUserRequest } from "../../request/dish";
 import ButtonBar from "./ButtonBar";
@@ -14,6 +14,9 @@ import DishListAdmin from "./AdminComponent/DishListAdmin";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
+import OrdersListModal from "./OrdersListModal";
+import MemberListModal from "./MemberListModal";
+import { throttle } from "lodash";
 
 class GroupBody extends Component {
   constructor(props) {
@@ -23,11 +26,16 @@ class GroupBody extends Component {
       showAddMemberModal: false,
       showConfirmOrderModal: false,
       showEditDishesModal: false,
+      showOrdersListModal: false,
+      showMemberListModal: false,
       dishes: [], // id price quantity sum
       userDishes: [],
       editedDishes: [],
       totalPrice: 0,
+      users: []
     };
+    this.handleSaveNewDishes = throttle(this.handleSaveNewDishes, 1000);
+    this.handleCreateOrder = throttle(this.handleCreateOrder, 1000);
   }
   handleSaveNewDishes = async () => {
     let dishArray = this.state.editedDishes.map((dish) => dish._id);
@@ -91,6 +99,13 @@ class GroupBody extends Component {
       getDishOfUserResult.dishData = convertOderFormat(
         getDishOfUserResult.dishData
       );
+      if (getDishOfUserResult.dishData.length == 0) {
+        this.props.history.push({
+          pathname: "/dish",
+          state: { message: "Please create dish before edit in group" },
+        });
+        return;
+      }
       this.setState({
         userDishes: [...getDishOfUserResult.dishData].reverse(),
       });
@@ -103,6 +118,13 @@ class GroupBody extends Component {
       showAlert: false,
     });
     this.props.hideAlert();
+  };
+
+  toggleOrdersListModal = () => {
+    this.setState({
+      ...this.state,
+      showOrdersListModal: !this.state.showOrdersListModal,
+    });
   };
 
   changeDishAmount = (isIncrementing, dishId) => {
@@ -168,6 +190,13 @@ class GroupBody extends Component {
     );
   };
 
+  toggleMemberListModal = () => {
+    this.setState({
+      ...this.state,
+      showMemberListModal: !this.state.showMemberListModal,
+    });
+  };
+
   async componentDidMount() {
     let getGroupResult = await getGroupRequest(
       this.props.match.params.groupId,
@@ -195,7 +224,7 @@ class GroupBody extends Component {
       <div
         style={{
           backgroundImage: "url(../../../public/background2.png)",
-          backgroundRepeat: "no-repeat",
+          backgroundRepeat: "repeat-y",
           backgroundSize: "cover",
           height: "94%",
         }}
@@ -224,8 +253,18 @@ class GroupBody extends Component {
 
             <OrderConfirmModal
               show={this.state.showConfirmOrderModal}
+              dishes={this.state.dishes}
               handleClose={this.toggleConfirmOrderModal}
               handleCreateOrder={this.handleCreateOrder}
+              totalPrice={this.state.totalPrice}
+              {...this.props}
+            />
+
+            <MemberListModal
+              show={this.state.showMemberListModal}
+              handleClose={this.toggleMemberListModal}
+              token={this.props.token}
+              users={this.state.users}
               {...this.props}
             />
             {this.state.userDishes.length > 0 ? (
@@ -249,17 +288,30 @@ class GroupBody extends Component {
               userId={this.props.userId}
               ownerId={this.state.ownerId}
               toggleEditDishesModal={this.toggleEditDishesModal}
+              toggleOrdersListModal={this.toggleOrdersListModal}
+              toggleMemberListModal={this.toggleMemberListModal}
             />
             {this.props.userId == this.state.ownerId ? (
-              <DishListAdmin dishes={this.state.dishes} />
+              <DishListAdmin
+                dishes={this.state.dishes}
+                toggleMemberListModal={this.toggleMemberListModal}
+              />
             ) : (
               <DishListUser
+                show={this.state.showMemberListModal}
                 changeDishAmount={this.changeDishAmount}
                 dishes={this.state.dishes}
                 toggleConfirmOrderModal={this.toggleConfirmOrderModal}
                 totalPrice={this.state.totalPrice}
               ></DishListUser>
             )}
+
+            <OrdersListModal
+              show={this.state.showOrdersListModal}
+              handleClose={this.toggleOrdersListModal}
+              token={this.props.token}
+              {...this.props}
+            />
           </>
         )}
       </div>

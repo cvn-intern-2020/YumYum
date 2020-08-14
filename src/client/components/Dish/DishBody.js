@@ -10,6 +10,8 @@ import ConfirmDeleteModal from "./ConfirmDeleteModal";
 import { getDishOfUserRequest, deleteDishRequest } from "../../request/dish";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
+import GlobalAlert from "../Common/GlobalAlert";
+import { throttle } from "lodash";
 
 class DishBody extends Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class DishBody extends Component {
       dishes: [],
       selected: "",
     };
+    this.deleteDish = throttle(this.deleteDish, 1000);
   }
   toggleAddDishModal = () => {
     this.setState({
@@ -45,6 +48,7 @@ class DishBody extends Component {
             (dish) => dish._id != this.state.selected
           ),
         ],
+        selected: "",
       },
       () => this.toggleConfirmDeleteModal("")
     );
@@ -62,6 +66,9 @@ class DishBody extends Component {
     });
   };
   async componentDidMount() {
+    if (this.props.location.state) {
+      this.props.setAlert("danger", this.props.location.state.message);
+    }
     let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
     if (!getDishOfUserResult.status) {
       console.log(getDishOfUserResult.message);
@@ -79,14 +86,30 @@ class DishBody extends Component {
           height: "94%",
         }}
       >
-        {
+        {this.props.location.state ? (
+          <GlobalAlert
+            alertType={this.props.type}
+            toggleAlert={this.props.hideAlert}
+            message={this.props.message}
+          />
+        ) : (
+          <></>
+        )}
+        {this.state.selected == "" ? (
+          <></>
+        ) : (
           <ConfirmDeleteModal
             show={this.state.showConfirmDeleteModal}
             handleClose={this.toggleConfirmDeleteModal}
             deleteDish={this.deleteDish}
+            dish={
+              this.state.dishes.filter(
+                (dish) => dish._id == this.state.selected
+              )[0]
+            }
             {...this.props}
           />
-        }
+        )}
         {
           <AddDishModal
             show={this.state.showAddDishModal}

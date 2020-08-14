@@ -10,12 +10,18 @@ export default class DishItem extends Component {
       <ListGroup.Item>
         <div className="row w-100 m-0">
           <div className=" dish-label col">
-            Name: {this.props.dish.name} <br></br> Price:{" "}
-            {this.props.dish.price}
+            Name:{"  "} {this.props.dish.name} 
+            <br></br> 
+            Price:{"  "} {this.props.dish.price} VND
           </div>
 
           <div className="dish-label col">
-            <Button className="float-right" onClick={this.handleClickDelete}>
+            <Button
+              className="float-right"
+              onClick={() => {
+                this.handleClickDelete();
+              }}
+            >
               DELETE
             </Button>
           </div>

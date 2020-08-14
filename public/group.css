@@ -31,20 +31,42 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+.text-center-order {
+  width: 70%;
+  height: 60%;
+  position: absolute;
+  left: 15%;
+  top: 100%;
+  background-color: #ffe500;
+  margin-top: 15px;
+  border-radius: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 .dish-label {
-  font-size: 25px ;
+  font-size: 25px;
+}
+.dish-label-quantity.col {
+  margin-left: -1rem;
+  margin-right: 1.2rem;
+}
+.order-label {
+  font-size: 22px;
 }
 
-.tab4{
+.order-list-label {
+  font-size: 1.2rem;
+}
+
+.tab4 {
   tab-size: 4;
 }
-.pre{
+.pre {
   font-size: 25px;
 }
 
 .edit-dish-list {
   background-color: #ffe500;
-
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
@@ -54,10 +76,26 @@
   width: 100%;
 }
 
-@media (min-width: 576px){
+.member-modal .list-group-item {
+  padding-left: 0.5rem;
+}
+
+@media (min-width: 576px) {
   .modal-dialog {
     width: 53rem;
     max-width: 53rem;
     margin: 1.75rem auto;
+  }
 }
+
+.text-center-order-list-admin {
+  width: 100%;
+  height: 100%;
+  left: 15%;
+  top: 100%;
+  background-color: #ffe500;
+  margin-top: 15px;
+  border-radius: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
