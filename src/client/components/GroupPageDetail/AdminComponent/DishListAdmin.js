@@ -3,7 +3,6 @@ import { ListGroup } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import DishItemAdmin from "./DishItemAdmin";
-import OrderListAdmin from "./OrderListAdmin";
 
 class DishListAdmin extends Component {
   render() {

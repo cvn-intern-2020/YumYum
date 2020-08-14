@@ -1,16 +1,23 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
-import Landing from "./Landing";
-import Main from "./Main";
-import Login from "./Auth/Login";
-import Signup from "./Auth/Signup";
+// import Landing from "./Landing";
+// import Main from "./Main";
+// import Login from "./Auth/Login";
+// import Signup from "./Auth/Signup";
+// import Group from "./Group";
+// import Dish from "./Dish";
+// import PageNotFound from "./Common/PageNotFound";
+const Main = React.lazy(() => import("./Main"));
+const Login = React.lazy(() => import("./Auth/Login"));
+const Landing = React.lazy(() => import("./Landing"));
+const Signup = React.lazy(() => import("./Auth/Signup"));
+const Group = React.lazy(() => import("./Group"));
+const Dish = React.lazy(() => import("./Dish"));
+const PageNotFound = React.lazy(() => import("./Common/PageNotFound"));
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Group from "./Group";
-import Dish from "./Dish";
 import { bindActionCreators } from "redux";
 import { setUser } from "../actions/user";
-import PageNotFound from "./Common/PageNotFound";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
@@ -23,47 +30,49 @@ class App extends Component {
   render() {
     return (
       <>
-        <Switch>
-          <PublicRoute
-            component={Landing}
-            token={this.props.token}
-            path="/"
-            exact
-          />
-          <PrivateRoute
-            component={Main}
-            token={this.props.token}
-            path="/main"
-            exact
-          />
-          <PrivateRoute
-            component={Dish}
-            token={this.props.token}
-            path="/dish"
-            exact
-          />
-          <PublicRoute
-            component={Login}
-            token={this.props.token}
-            path="/login"
-            exact
-          />
-          <PublicRoute
-            component={Signup}
-            token={this.props.token}
-            path="/signup"
-            exact
-          />
-          <Route path="/group">
-            <PrivateRoute
-              component={Group}
+        <Suspense fallback={<div className="loader"></div>}>
+          <Switch>
+            <PublicRoute
+              component={Landing}
               token={this.props.token}
-              path="/group/:groupId"
+              path="/"
               exact
             />
-          </Route>
-          <Route path="*" component={PageNotFound} />
-        </Switch>
+            <PrivateRoute
+              component={Main}
+              token={this.props.token}
+              path="/main"
+              exact
+            />
+            <PrivateRoute
+              component={Dish}
+              token={this.props.token}
+              path="/dish"
+              exact
+            />
+            <PublicRoute
+              component={Login}
+              token={this.props.token}
+              path="/login"
+              exact
+            />
+            <PublicRoute
+              component={Signup}
+              token={this.props.token}
+              path="/signup"
+              exact
+            />
+            <Route path="/group">
+              <PrivateRoute
+                component={Group}
+                token={this.props.token}
+                path="/group/:groupId"
+                exact
+              />
+            </Route>
+            <Route path="*" component={PageNotFound} />
+          </Switch>
+        </Suspense>
       </>
     );
   }

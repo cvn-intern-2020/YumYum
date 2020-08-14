@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { setUser } from "../../actions/user";
 import { createGroupRequest } from "../../request/group";
+import { debounce } from "lodash";
 
 class AddNewGroupModal extends Component {
   constructor(props) {
@@ -18,6 +19,13 @@ class AddNewGroupModal extends Component {
     };
   }
 
+  debounceEvent(...args) {
+    this.debouncedEvent = debounce(...args);
+    return (e) => {
+      e.persist();
+      return this.debouncedEvent(e);
+    };
+  }
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -61,6 +69,7 @@ class AddNewGroupModal extends Component {
     }
   };
   componentWillUnmount() {
+    this.debouncedEvent.cancel(); 
     this.props.hideAlert();
   }
   render() {
@@ -86,7 +95,7 @@ class AddNewGroupModal extends Component {
                 type="text"
                 name="name"
                 placeholder="Enter group name"
-                onChange={this.handleChange}
+                onChange={this.debounceEvent(this.handleChange, 250)}
               />
             </Form.Group>
 
@@ -98,7 +107,7 @@ class AddNewGroupModal extends Component {
                 type="text"
                 placeholder="Enter description"
                 name="description"
-                onChange={this.handleChange}
+                onChange={this.debounceEvent(this.handleChange, 250)}
               />
             </Form.Group>
           </Form>

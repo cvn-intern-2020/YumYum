@@ -13,8 +13,9 @@ module.exports = () => {
     entry: "./src/client/components/Index.js",
     output: {
       path: path.resolve(__dirname, "public"),
-      publicPath: "/",
+      publicPath: "/dist/",
       filename: "bundle.js",
+      chunkFilename: "[name].bundle.js",
     },
     devServer: {
       contentBase: "./",

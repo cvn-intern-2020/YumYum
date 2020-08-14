@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../../actions/alert";
 import { addMemberRequest } from "../../../request/group";
-import { throttle } from "lodash";
+import { throttle, debounce } from "lodash";
 
 class AddMemberModal extends Component {
   constructor(props) {
@@ -17,7 +17,13 @@ class AddMemberModal extends Component {
     };
     this.handleClickAddMember = throttle(this.handleClickAddMember, 1000);
   }
-
+  debounceEvent(...args) {
+    this.debouncedEvent = debounce(...args);
+    return (e) => {
+      e.persist();
+      return this.debouncedEvent(e);
+    };
+  }
   handleChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
@@ -55,6 +61,8 @@ class AddMemberModal extends Component {
     );
   };
   componentWillUnmount() {
+    this.debouncedEvent.cancel();
+    this.handleClickAddMember.cancel();
     this.props.hideAlert();
   }
   render() {
@@ -80,7 +88,7 @@ class AddMemberModal extends Component {
               type="email"
               name="email"
               placeholder="abcdxy@example.com"
-              onChange={this.handleChange}
+              onChange={this.debounceEvent(this.handleChange, 250)}
             />
           </Form.Group>
         </Modal.Body>

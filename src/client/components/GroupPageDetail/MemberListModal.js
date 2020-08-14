@@ -8,6 +8,7 @@ export default class MemberListModal extends Component {
         <Modal.Header style={{ backgroundColor: "rgb(255, 229, 0)" }}>
           <Modal.Title>Members List</Modal.Title>
         </Modal.Header>
+
         <Modal.Body
           style={{ padding: "0.5rem", backgroundColor: "rgb(255, 229, 0)" }}
         >
