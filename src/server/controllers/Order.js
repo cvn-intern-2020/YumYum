@@ -1,7 +1,7 @@
 import {
-  isAllowedToEditGroup,
   isUserInGroup,
   areDishesInGroup,
+  isAllowedToReadOrders,
 } from "../services/groupService";
 import { isObjectID } from "../utils/validator";
 import { getOrderByGroupId, createOrder } from "../services/orderService";
@@ -14,16 +14,22 @@ export const getOrderByGroupIdController = async (req, res) => {
   if (!isObjectID(groupId)) {
     return res.status(400).json({ message: "Invalid GroupId" });
   }
-  let ownerId = req._id;
-  let isAllowed = await isAllowedToEditGroup(groupId, ownerId);
-  if (!isAllowed) {
+  let userId = req._id;
+  let result = await isAllowedToReadOrders(groupId, userId);
+  if (!result) {
     return res.status(400).json({
-      message: "Not allowed to read group orders or groupId does not exist",
+      message: "Not alow to read order in group",
     });
   }
-
   let getOrderResult = await getOrderByGroupId(groupId);
-  return res.status(200).json(getOrderResult.result);
+
+  if (userId == result.ownerId) {
+    return res.status(200).json(getOrderResult.result);
+  }
+  getOrderResult = getOrderResult.result.filter(
+    (order) => order.userId == userId
+  );
+  return res.status(200).json(getOrderResult);
 };
 export const createNewOrderController = async (req, res) => {
   let userId = req._id;

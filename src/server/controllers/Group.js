@@ -14,7 +14,7 @@ export const getGroupController = async (req, res) => {
   let userId = req._id;
   let result = await getGroupById(groupId);
   if (!result.status) {
-    return res.status(400).json({message: result.message});
+    return res.status(400).json({ message: result.message });
   }
   result = result.result;
   if (result.ownerId == userId) {
