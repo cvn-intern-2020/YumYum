@@ -12,7 +12,11 @@ export const signUpRequest = ({ name, phone, email, password }) => {
       return { status: true };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };
 
@@ -27,6 +31,10 @@ export const signInRequest = ({ email, password }) => {
       return { status: true, token: res.data.token };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };

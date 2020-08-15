@@ -10,7 +10,11 @@ export const createDishRequest = ({ name, price }, token) => {
       return { status: true, message: "Add success", newDish: res.data };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };
 
@@ -25,7 +29,11 @@ export const deleteDishRequest = (dishId, token) => {
       return { status: true, message: "Successfully deleted" };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };
 export const getDishOfUserRequest = () => {
@@ -35,6 +43,10 @@ export const getDishOfUserRequest = () => {
       return { status: true, dishData: res.data };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };

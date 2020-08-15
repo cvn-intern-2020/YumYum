@@ -10,7 +10,11 @@ export const createGroupRequest = ({ name, description }) => {
       return { status: true };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };
 
@@ -21,7 +25,11 @@ export const getGroupRequest = (groupId) => {
       return { status: true, groupData: res.data };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };
 
@@ -34,7 +42,11 @@ export const addMemberRequest = (groupId, email) => {
       return { status: true, message: "Add Sucessfully" };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };
 
@@ -47,6 +59,10 @@ export const editDishesInGroupRequest = (groupId, dishArray) => {
       return { status: true, newDishes: res.data.newDishes };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };

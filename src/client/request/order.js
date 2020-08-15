@@ -29,6 +29,7 @@ export const getOrderByGroupIdRequest = (groupId) => {
     .catch((err) => {
       return {
         status: false,
+        errCode: err.response.status,
         message: err.response.data.message,
       };
     });

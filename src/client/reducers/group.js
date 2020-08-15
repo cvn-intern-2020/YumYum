@@ -1,4 +1,4 @@
-import { SET_GROUP } from "../actions/types";
+import { SET_GROUP, CREATE_GROUP } from "../actions/types";
 
 const initialState = {
   ownerId: "",
@@ -23,7 +23,9 @@ export default (state = initialState, action) => {
     case SET_GROUP: {
       return { ...state, ...action.payload };
     }
-    default: {
+
+    default:
+    case CREATE_GROUP: {
       return state;
     }
   }

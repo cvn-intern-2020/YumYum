@@ -7,6 +7,7 @@ import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { setUser } from "../../actions/user";
 import { createGroupRequest } from "../../request/group";
+import { createGroup } from "../../actions/group";
 import { debounce } from "lodash";
 
 class AddNewGroupModal extends Component {
@@ -56,6 +57,7 @@ class AddNewGroupModal extends Component {
       this.props.setAlert("danger", "Group's description is empty");
       return -1;
     }
+    this.props.createGroup(this.state);
     let createGroupResult = await createGroupRequest(this.state);
     if (!createGroupResult.status) {
       this.props.setAlert("danger", createGroupResult.message);
@@ -151,7 +153,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert, setUser }, dispatch);
+  return bindActionCreators(
+    { setAlert, hideAlert, setUser, createGroup },
+    dispatch
+  );
 }
 
 export default withRouter(

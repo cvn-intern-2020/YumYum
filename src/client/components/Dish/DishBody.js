@@ -11,6 +11,7 @@ import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import { throttle } from "lodash";
+import { getDish } from "../../actions/dish";
 
 class DishBody extends Component {
   constructor(props) {
@@ -62,6 +63,7 @@ class DishBody extends Component {
     });
   };
   async componentDidMount() {
+    this.props.getDish();
     if (this.props.location.state) {
       this.props.setAlert("danger", this.props.location.state.message);
     }
@@ -174,7 +176,7 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  return bindActionCreators({ setAlert, hideAlert, getDish }, dispatch);
 }
 
 export default withRouter(

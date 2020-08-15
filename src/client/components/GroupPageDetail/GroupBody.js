@@ -21,6 +21,7 @@ import { addToOrder, createOrder } from "../../actions/order";
 import GlobalAlert from "../Common/GlobalAlert";
 import OrdersListModal from "./OrdersListModal";
 import MemberListModal from "./MemberListModal";
+import { getDish } from "../../actions/dish";
 import { throttle } from "lodash";
 
 class GroupBody extends Component {
@@ -96,6 +97,7 @@ class GroupBody extends Component {
   };
   toggleEditDishesModal = async () => {
     if (!this.state.showEditDishesModal) {
+      this.props.getDish();
       let getDishOfUserResult = await getDishOfUserRequest();
       if (!getDishOfUserResult.status) {
         this.props.setAlert("danger", getDishOfUserResult.message);
@@ -355,7 +357,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { setAlert, hideAlert, setGroup, addToOrder, createOrder },
+    { setAlert, hideAlert, setGroup, addToOrder, createOrder, getDish },
     dispatch
   );
 }
