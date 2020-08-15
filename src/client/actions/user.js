@@ -8,7 +8,8 @@ export const setUser = (token) => async (dispatch) => {
       clearUser();
     }
   } else {
-    dispatch({ type: SET_USER, payload: { token, ...getUserResult.userData } });
+    dispatch({ type: SET_USER, payload: { ...getUserResult.userData } });
+    return getUserResult.userData.token;
   }
 };
 

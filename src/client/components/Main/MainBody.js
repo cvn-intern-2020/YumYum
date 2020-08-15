@@ -31,16 +31,15 @@ class MainBody extends Component {
   render() {
     return (
       <div className="main-body-background-div">
-        <AddNewGroupModal
-          show={this.state.showAddGroupModal}
-          handleClose={this.toggleAddGroupModal}
-          token={this.props.token}
-        />
-
         <Container className="ml-2 main-body-group-container" fluid>
           <Suspense fallback={<div className="loader"></div>}>
             {this.props.groups ? (
               <>
+                <AddNewGroupModal
+                  show={this.state.showAddGroupModal}
+                  handleClose={this.toggleAddGroupModal}
+                  token={this.props.token}
+                />
                 <MyJoinedGroup
                   joinedGroups={this.props.groups.filter(
                     (group) => group.isOwner == false

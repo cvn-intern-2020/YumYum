@@ -69,7 +69,6 @@ class AddNewGroupModal extends Component {
   };
   componentWillUnmount() {
     this.debouncedEvent.cancel();
-    this.props.hideAlert();
   }
   render() {
     return (

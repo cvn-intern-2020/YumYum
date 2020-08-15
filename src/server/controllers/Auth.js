@@ -8,7 +8,7 @@ export const signUpController = async (req, res) => {
   if (duplicate.status) {
     return res.status(400).json({ message: "Duplicate email!" });
   }
-  let {result, status} = await signUpService(email, phone, password, name);
+  let { result, status } = await signUpService(email, phone, password, name);
   if (!status) {
     return res.status(400).json({ message: "Something went wrong" });
   }
@@ -27,7 +27,12 @@ export const signInController = async (req, res) => {
   if (!result.status) {
     return res.status(400).json({ message: result.message });
   }
-  return res.status(200).json({
-    token: result.token,
-  });
+  return res
+    .status(200)
+    .cookie("token", result.token, {
+      maxAge: 3600000,
+    })
+    .json({
+      token: result.token,
+    });
 };

@@ -23,6 +23,7 @@ export const signInRequest = ({ email, password }) => {
       password: password,
     })
     .then((res) => {
+      axios.defaults.withCredentials = true;
       return { status: true, token: res.data.token };
     })
     .catch((err) => {

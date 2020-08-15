@@ -78,7 +78,9 @@ class SignUpBody extends Component {
   componentWillUnmount() {
     this.debouncedEvent.cancel();
     this.handleClick.cancel();
-    this.props.hideAlert();
+    if (this.props.showAlert) {
+      this.props.hideAlert();
+    }
   }
   render() {
     return (

@@ -39,7 +39,9 @@ class EditDishesModal extends Component {
   };
   componentWillUnmount() {
     this.debouncedEvent.cancel();
-    this.props.hideAlert();
+    if (this.props.showAlert) {
+      this.props.hideAlert();
+    }
   }
   render() {
     return (

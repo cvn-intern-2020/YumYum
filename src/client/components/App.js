@@ -13,53 +13,54 @@ import { bindActionCreators } from "redux";
 import { setUser } from "../actions/user";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
+import axios from "axios";
 
 class App extends Component {
-  componentDidMount() {
-    if (this.props.userId == "" && this.props.token != "") {
-      this.props.setUser(this.props.token);
-    }
+  constructor(props) {
+    super(props);
+    axios.defaults.withCredentials = true;
+    this.props.setUser();
   }
   render() {
     return (
       <>
         <Suspense fallback={<div className="loader"></div>}>
           <Switch>
-            <PublicRoute
-              component={Landing}
-              token={this.props.token}
-              path="/"
-              exact
-            />
-            <PrivateRoute
-              component={Main}
-              token={this.props.token}
+            <Route
               path="/main"
+              token={this.props.token}
+              render={(props) => <Main {...props} />}
               exact
             />
-            <PrivateRoute
-              component={Dish}
+            <Route
+              path="/"
               token={this.props.token}
+              render={(props) => <Landing {...props} />}
+              exact
+            />
+            <Route
               path="/dish"
+              token={this.props.token}
+              render={(props) => <Dish {...props} />}
               exact
             />
-            <PublicRoute
-              component={Login}
-              token={this.props.token}
+            <Route
               path="/login"
+              token={this.props.token}
+              render={(props) => <Login {...props} />}
               exact
             />
-            <PublicRoute
-              component={Signup}
-              token={this.props.token}
+            <Route
               path="/signup"
+              token={this.props.token}
+              render={(props) => <Signup {...props} />}
               exact
             />
             <Route path="/group">
-              <PrivateRoute
-                component={Group}
-                token={this.props.token}
+              <Route
                 path="/group/:groupId"
+                token={this.props.token}
+                render={(props) => <Group {...props} />}
                 exact
               />
             </Route>

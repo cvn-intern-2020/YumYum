@@ -1,19 +1,18 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, withRouter } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, token, ...rest }) => {
+const PrivateRoute = ({ component: Component, token, location, ...rest }) => {
   return (
     <Route
       {...rest}
       render={(props) => {
-        return token != "" ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        );
+        if (token != "" || location.state.token != "") {
+          return <Component {...props} />;
+        }
+        return <Redirect to="/login" />;
       }}
     />
   );
 };
 
-export default PrivateRoute;
+export default withRouter(PrivateRoute);

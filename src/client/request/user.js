@@ -2,11 +2,7 @@ import axios from "axios";
 
 export const getUserRequest = (token) => {
   return axios
-    .get(`${process.env.API_URL}/api/users`, {
-      headers: {
-        Authorization: token,
-      },
-    })
+    .get(`${process.env.API_URL}/api/users`)
     .then((res) => {
       return { status: true, userData: res.data };
     })

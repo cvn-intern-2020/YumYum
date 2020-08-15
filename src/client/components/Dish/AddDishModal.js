@@ -72,7 +72,9 @@ class AddDishModal extends Component {
   componentWillUnmount() {
     this.debouncedEvent.cancel();
     this.handleClickAddDish.cancel();
-    this.props.hideAlert();
+    if (this.props.showAlert) {
+      this.props.hideAlert();
+    }
   }
   render() {
     return (

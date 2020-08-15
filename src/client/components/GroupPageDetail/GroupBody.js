@@ -178,6 +178,10 @@ class GroupBody extends Component {
   };
 
   toggleConfirmOrderModal = () => {
+    if (this.state.dishes.filter((dish) => dish.quantity > 0).length == 0) {
+      this.props.setAlert("danger", "You haven't order anything yet");
+      return -1;
+    }
     this.setState({
       ...this.state,
       showConfirmOrderModal: !this.state.showConfirmOrderModal,
@@ -240,7 +244,9 @@ class GroupBody extends Component {
     }
   }
   componentWillUnmount() {
-    this.props.hideAlert();
+    if (this.props.showAlert) {
+      this.props.hideAlert();
+    }
   }
   render() {
     return (
