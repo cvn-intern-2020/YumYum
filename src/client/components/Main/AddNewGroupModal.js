@@ -56,10 +56,7 @@ class AddNewGroupModal extends Component {
       this.props.setAlert("danger", "Group's description is empty");
       return -1;
     }
-    let createGroupResult = await createGroupRequest(
-      this.state,
-      this.props.token || this.props.location.state.token
-    );
+    let createGroupResult = await createGroupRequest(this.state);
     if (!createGroupResult.status) {
       this.props.setAlert("danger", createGroupResult.message);
     } else {

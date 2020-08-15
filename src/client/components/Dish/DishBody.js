@@ -31,10 +31,7 @@ class DishBody extends Component {
   };
 
   deleteDish = async () => {
-    let deleteDishResult = await deleteDishRequest(
-      this.state.selected,
-      this.props.token
-    );
+    let deleteDishResult = await deleteDishRequest(this.state.selected);
     if (!deleteDishResult.status) {
       this.props.setAlert("danger", deleteDishResult.message);
       return -1;
@@ -69,7 +66,7 @@ class DishBody extends Component {
       this.props.setAlert("danger", this.props.location.state.message);
     }
     let { getDishOfUserRequest } = await import("../../request/dish");
-    let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
+    let getDishOfUserResult = await getDishOfUserRequest();
     if (!getDishOfUserResult.status) {
       this.props.setAlert(
         "danger",

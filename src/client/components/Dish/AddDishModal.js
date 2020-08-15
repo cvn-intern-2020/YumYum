@@ -54,10 +54,10 @@ class AddDishModal extends Component {
       this.props.setAlert("danger", "Price is empty");
       return -1;
     }
-    let createDishResult = await createDishRequest(
-      { name: this.state.name, price: this.state.price * 1000 },
-      this.props.token || this.props.location.state.token
-    );
+    let createDishResult = await createDishRequest({
+      name: this.state.name,
+      price: this.state.price * 1000,
+    });
     if (!createDishResult.status) {
       this.props.setAlert("danger", createDishResult.message);
     } else {

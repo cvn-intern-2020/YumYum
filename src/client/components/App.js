@@ -11,15 +11,18 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setUser } from "../actions/user";
-import PrivateRoute from "./PrivateRoute";
-import PublicRoute from "./PublicRoute";
 import axios from "axios";
 
 class App extends Component {
   constructor(props) {
     super(props);
     axios.defaults.withCredentials = true;
-    this.props.setUser();
+  }
+  async componentDidMount() {
+    let isLogin = await this.props.setUser();
+    if (!isLogin) {
+      this.props.history.push("/");
+    }
   }
   render() {
     return (

@@ -52,8 +52,7 @@ class AddMemberModal extends Component {
     }
     let addMemberResult = await addMemberRequest(
       this.props.match.params.groupId,
-      this.state.email,
-      this.props.token || this.props.location.state.token
+      this.state.email
     );
     this.props.setAlert(
       addMemberResult.status ? "success" : "danger",

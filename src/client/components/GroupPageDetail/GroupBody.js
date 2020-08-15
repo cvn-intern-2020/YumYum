@@ -45,8 +45,7 @@ class GroupBody extends Component {
     let dishArray = this.state.editedDishes.map((dish) => dish._id);
     let editDishesResult = await editDishesInGroupRequest(
       this.state._id,
-      dishArray,
-      this.props.token
+      dishArray
     );
     if (!editDishesResult.status) {
       this.props.setAlert("danger", editDishesResult.message);
@@ -95,7 +94,7 @@ class GroupBody extends Component {
   };
   toggleEditDishesModal = async () => {
     if (!this.state.showEditDishesModal) {
-      let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
+      let getDishOfUserResult = await getDishOfUserRequest();
       if (!getDishOfUserResult.status) {
         this.props.setAlert("danger", getDishOfUserResult.message);
         return -1;
@@ -127,8 +126,7 @@ class GroupBody extends Component {
   toggleOrdersListModal = async () => {
     if (!this.state.showOrdersListModal) {
       let getOrderByGroupIdResult = await getOrderByGroupIdRequest(
-        this.props.match.params.groupId,
-        this.props.token
+        this.props.match.params.groupId
       );
 
       if (!getOrderByGroupIdResult.status) {
@@ -196,7 +194,6 @@ class GroupBody extends Component {
     }
     let createOrderResult = await createOrderRequest(
       this.state._id,
-      this.props.token,
       dishArray,
       this.state.totalPrice
     );
@@ -225,10 +222,7 @@ class GroupBody extends Component {
   };
 
   async componentDidMount() {
-    let getGroupResult = await getGroupRequest(
-      this.props.match.params.groupId,
-      this.props.token
-    );
+    let getGroupResult = await getGroupRequest(this.props.match.params.groupId);
     if (!getGroupResult.status) {
       this.props.setAlert("danger", getGroupResult.message);
     } else {

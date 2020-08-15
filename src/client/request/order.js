@@ -1,35 +1,28 @@
 import axios from "axios";
 
-export const createOrderRequest = (groupId, token, details, totalPrice) => {
+export const createOrderRequest = (groupId, details, totalPrice) => {
   return axios
-    .post(
-      `${process.env.API_URL}/api/orders/new`,
-      {
-        groupId: groupId,
-        details,
-        totalPrice: totalPrice,
-      },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    )
+    .post(`${process.env.API_URL}/api/orders/new`, {
+      groupId: groupId,
+      details,
+      totalPrice: totalPrice,
+    })
     .then((res) => {
       return { status: true, message: "Add success", newOrder: res.data };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
+      // return { status: false, message: err.response.data.message };
     });
 };
 
-export const getOrderByGroupIdRequest = (groupId, token) => {
+export const getOrderByGroupIdRequest = (groupId) => {
   return axios
-    .get(`${process.env.API_URL}/api/orders/group/${groupId}`, {
-      headers: {
-        Authorization: token,
-      },
-    })
+    .get(`${process.env.API_URL}/api/orders/group/${groupId}`)
     .then((res) => {
       return { status: true, groupOrdersData: res.data };
     })
