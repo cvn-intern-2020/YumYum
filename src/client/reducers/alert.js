@@ -13,9 +13,9 @@ export default (state = initialState, action) => {
       return { message, type, showAlert: true };
     }
     case HIDE_ALERT: {
-      return initialState;
+      return { ...initialState };
     }
     default:
-      return initialState;
+      return state;
   }
 };

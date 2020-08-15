@@ -15,10 +15,10 @@ export default (state = initialState, action) => {
       return { ...action.payload };
     }
     case CLEAR_USER: {
-      return initialState;
+      return { ...initialState };
     }
     default: {
-      return initialState;
+      return state;
     }
   }
 };

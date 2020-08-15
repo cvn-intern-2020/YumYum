@@ -2,4 +2,4 @@ import { combineReducers } from "redux";
 import user from "./user";
 import alert from "./alert";
 
-export default combineReducers({ alert, user });
+export default combineReducers({ alert: alert, user: user });
