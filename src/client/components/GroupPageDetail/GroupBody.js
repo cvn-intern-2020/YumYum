@@ -16,6 +16,8 @@ import convertOderFormat from "../../utils/convertOrderFormat";
 import DishListAdmin from "./AdminComponent/DishListAdmin";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
+import { setGroup } from "../../actions/group";
+import { addToOrder, createOrder } from "../../actions/order";
 import GlobalAlert from "../Common/GlobalAlert";
 import OrdersListModal from "./OrdersListModal";
 import MemberListModal from "./MemberListModal";
@@ -149,6 +151,7 @@ class GroupBody extends Component {
   };
 
   changeDishAmount = (isIncrementing, dishId) => {
+    this.props.addToOrder(dishId, isIncrementing);
     let newDishState = this.state.dishes.map((dish) => {
       if (dish._id == dishId) {
         if (dish.quantity == 0 && !isIncrementing) {
@@ -187,6 +190,7 @@ class GroupBody extends Component {
   };
 
   handleCreateOrder = async () => {
+    this.props.createOrder(this.state._id);
     let dishArray = this.state.dishes.filter((dish) => dish.quantity > 0);
     if (dishArray.length == 0) {
       this.props.setAlert("danger", "No dish is ordered");
@@ -222,6 +226,7 @@ class GroupBody extends Component {
   };
 
   async componentDidMount() {
+    this.props.setGroup(this.props.match.params.groupId);
     let getGroupResult = await getGroupRequest(this.props.match.params.groupId);
     if (!getGroupResult.status) {
       this.props.setAlert("danger", getGroupResult.message);
@@ -349,7 +354,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  return bindActionCreators(
+    { setAlert, hideAlert, setGroup, addToOrder, createOrder },
+    dispatch
+  );
 }
 
 export default withRouter(
