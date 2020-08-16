@@ -8,7 +8,7 @@ import { setAlert } from "./alert";
 export const setGroup = (groupId) => async (dispatch) => {
   let getGroupResult = await getGroupRequest(groupId);
   if (!getGroupResult.status) {
-    this.props.setAlert("danger", getGroupResult.message);
+    dispatch(setAlert("danger", getGroupResult.message));
   } else {
     let groupData = getGroupResult.groupData;
     groupData.dishes = convertOderFormat(groupData.dishes);

@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
+import { addEditedDish } from "../../actions/dish";
 import GlobalAlert from "../Common/GlobalAlert";
 import { debounce } from "lodash";
 
@@ -35,6 +36,7 @@ class EditDishesModal extends Component {
         return;
       }
     }
+    this.props.addEditedDish(this.state.selected);
     this.props.updateEditedDish(true, this.state.selected);
   };
   componentWillUnmount() {
@@ -168,7 +170,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  return bindActionCreators({ setAlert, hideAlert, addEditedDish }, dispatch);
 }
 
 export default withRouter(

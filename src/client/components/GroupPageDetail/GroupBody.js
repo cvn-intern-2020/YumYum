@@ -21,7 +21,7 @@ import { addToOrder, createOrder } from "../../actions/order";
 import GlobalAlert from "../Common/GlobalAlert";
 import OrdersListModal from "./OrdersListModal";
 import MemberListModal from "./MemberListModal";
-import { getDish } from "../../actions/dish";
+import { getDish, updateToEditDish, editDish } from "../../actions/dish";
 import { throttle } from "lodash";
 
 class GroupBody extends Component {
@@ -45,6 +45,7 @@ class GroupBody extends Component {
     this.handleCreateOrder = throttle(this.handleCreateOrder, 1000);
   }
   handleSaveNewDishes = async () => {
+    this.props.editDish();
     let dishArray = this.state.editedDishes.map((dish) => dish._id);
     let editDishesResult = await editDishesInGroupRequest(
       this.state._id,
@@ -113,6 +114,7 @@ class GroupBody extends Component {
         });
         return;
       }
+      this.props.updateToEditDish();
       this.setState({
         userDishes: [...getDishOfUserResult.dishData].reverse(),
       });
@@ -357,7 +359,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { setAlert, hideAlert, setGroup, addToOrder, createOrder, getDish },
+    {
+      setAlert,
+      hideAlert,
+      setGroup,
+      addToOrder,
+      createOrder,
+      getDish,
+      updateToEditDish,
+      editDish,
+    },
     dispatch
   );
 }

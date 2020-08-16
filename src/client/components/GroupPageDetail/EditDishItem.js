@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Button } from "react-bootstrap";
-export default class EditDishItem extends Component {
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { deleteEditedDish } from "../../actions/dish";
+
+class EditDishItem extends Component {
   handleClickDelete = () => {
+    this.props.deleteEditedDish(this.props.dish);
     this.props.updateEditedDish(false, this.props.dish);
   };
   render() {
@@ -24,3 +30,9 @@ export default class EditDishItem extends Component {
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ deleteEditedDish }, dispatch);
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(EditDishItem));
