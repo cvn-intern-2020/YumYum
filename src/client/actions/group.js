@@ -3,6 +3,7 @@ import {
   CREATE_GROUP,
   SET_ORDER_TO_GROUP,
   ADD_MEMBER,
+  CLEAR_GROUP,
 } from "./types";
 import {
   getGroupRequest,
@@ -10,10 +11,11 @@ import {
   addMemberRequest,
 } from "../request/group";
 import convertOderFormat from "../utils/convertOrderFormat";
-import { setOrder } from "./order";
+import { setOrder, clearOrder } from "./order";
 import { setUser } from "./user";
 import { setAlert } from "./alert";
 import { getOrderByGroupIdRequest } from "../request/order";
+import { clearEditedDish } from "./dish";
 
 export const setGroup = (groupId) => async (dispatch) => {
   let getGroupResult = await getGroupRequest(groupId);
@@ -57,4 +59,10 @@ export const createGroup = ({ name, description }) => async (dispatch) => {
   }
   dispatch({ type: CREATE_GROUP });
   dispatch(setUser());
+};
+
+export const clearGroup = () => (dispatch) => {
+  dispatch({ type: CLEAR_GROUP });
+  dispatch(clearEditedDish());
+  dispatch(clearOrder());
 };

@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { ListGroup } from "react-bootstrap";
-import OrderConfirmItem from "./OrderConfirmItem";
+import OrderConfirmItem from "../MemberComponent/OrderConfirm/OrderConfirmItem";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-class DishListUser extends Component {
+class OrderDetailList extends Component {
+  componentDidMount() {
+    console.log(this.props);
+  }
   render() {
     return (
       <>
@@ -24,11 +27,11 @@ class DishListUser extends Component {
         </div>
         <div className="group-container mt-4" style={{ position: "relative" }}>
           <ListGroup>
-            {this.props.order.dishes.map((dish) => {
+            {this.props.order.details.map((dish) => {
               return <OrderConfirmItem key={dish._id} dish={dish} />;
             })}
           </ListGroup>
-          {this.props.order.dishes.length > 0 ? (
+          {this.props.order.details.length > 0 ? (
             <>
               <ListGroup.Item
                 style={{
@@ -53,10 +56,4 @@ class DishListUser extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    order: state.order,
-  };
-}
-
-export default withRouter(connect(mapStateToProps, null)(DishListUser));
+export default OrderDetailList;

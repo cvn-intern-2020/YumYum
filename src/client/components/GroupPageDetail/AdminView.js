@@ -18,7 +18,6 @@ class AdminView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ownerId: "",
       showAddMemberModal: false,
       showEditDishesModal: false,
       showOrdersListModal: false,
@@ -70,34 +69,6 @@ class AdminView extends Component {
       ...this.state,
       showOrdersListModal: !this.state.showOrdersListModal,
     });
-  };
-
-  changeDishAmount = (isIncrementing, dishId) => {
-    this.props.addToOrder(dishId, isIncrementing);
-    let newDishState = this.state.dishes.map((dish) => {
-      if (dish._id == dishId) {
-        if (dish.quantity == 0 && !isIncrementing) {
-          return dish;
-        }
-        dish.quantity = isIncrementing ? dish.quantity + 1 : dish.quantity - 1;
-      }
-      return dish;
-    });
-    this.setState(
-      {
-        ...this.state,
-        dishes: [...newDishState],
-      },
-      () => this.calculateTotalPrice()
-    );
-  };
-
-  calculateTotalPrice = () => {
-    let totalDishesCalculate = 0;
-    this.state.dishes.map((dish) => {
-      totalDishesCalculate += dish.quantity * dish.dishPrice;
-    });
-    this.setState({ ...this.state, totalPrice: totalDishesCalculate });
   };
 
   toggleMemberListModal = () => {

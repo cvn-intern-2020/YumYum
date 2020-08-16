@@ -16,3 +16,6 @@ export const UPDATE_DISH_TO_EDIT = "UPDATE_DISH_TO_EDIT";
 export const ADD_EDITED_DISH = "ADD_EDITED_DISH";
 export const DELETE_EDITED_DISH = "DELETE_EDITED_DISH";
 export const EDIT_DISH = "EDIT_DISH";
+export const CLEAR_GROUP = "CLEAR_GROUP";
+export const CLEAR_ORDER = "CLEAR_ORDER";
+export const CLEAR_EDITED_DISH = "CLEAR_EDITED_DISH";

@@ -6,6 +6,7 @@ import {
   ADD_EDITED_DISH,
   DELETE_EDITED_DISH,
   EDIT_DISH,
+  CLEAR_EDITED_DISH,
 } from "./types";
 import {
   getDishOfUserRequest,
@@ -82,4 +83,8 @@ export const editDish = () => async (dispatch, getState) => {
     dispatch(setGroup(groupId));
     dispatch({ type: EDIT_DISH });
   }
+};
+
+export const clearEditedDish = () => (dispatch) => {
+  dispatch({ type: CLEAR_EDITED_DISH });
 };

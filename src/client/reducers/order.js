@@ -1,4 +1,9 @@
-import { ADD_TO_ORDER, SET_ORDER, CREATE_ORDER } from "../actions/types";
+import {
+  ADD_TO_ORDER,
+  SET_ORDER,
+  CREATE_ORDER,
+  CLEAR_ORDER,
+} from "../actions/types";
 
 const initialState = { totalPrice: 0, dishes: [] };
 
@@ -6,7 +11,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case SET_ORDER:
     case CREATE_ORDER: {
-      return { totalPrice: 0, dishes: action.payload };
+      return { totalPrice: 0, dishes: [] };
     }
     case ADD_TO_ORDER: {
       let updatedDish = action.payload;
@@ -23,6 +28,9 @@ export default (state = initialState, action) => {
         totalPrice: updatedState.totalPrice,
         dishes: [...updatedState.dishes],
       };
+    }
+    case CLEAR_ORDER: {
+      return { ...initialState };
     }
     default: {
       return state;

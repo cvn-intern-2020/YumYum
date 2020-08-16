@@ -1,4 +1,4 @@
-import { ADD_TO_ORDER, SET_ORDER, CREATE_ORDER } from "./types";
+import { ADD_TO_ORDER, SET_ORDER, CREATE_ORDER, CLEAR_ORDER } from "./types";
 import { setAlert } from "./alert";
 import { createOrderRequest } from "../request/order";
 
@@ -44,4 +44,8 @@ export const createOrder = (groupId) => async (dispatch, getState) => {
   });
   dispatch({ type: CREATE_ORDER, payload: dishes });
   dispatch(setAlert("success", "Order Successfully"));
+};
+
+export const clearOrder = () => (dispatch) => {
+  dispatch({ type: CLEAR_ORDER });
 };

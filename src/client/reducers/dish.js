@@ -6,6 +6,7 @@ import {
   ADD_EDITED_DISH,
   DELETE_EDITED_DISH,
   EDIT_DISH,
+  CLEAR_EDITED_DISH,
 } from "../actions/types";
 
 const initialState = {
@@ -49,7 +50,8 @@ export default (state = initialState, action) => {
         ],
       };
     }
-    case EDIT_DISH: {
+    case EDIT_DISH:
+    case CLEAR_EDITED_DISH: {
       return {
         ...state,
         editedDishes: [],

@@ -3,6 +3,7 @@ import {
   CREATE_GROUP,
   SET_ORDER_TO_GROUP,
   ADD_MEMBER,
+  CLEAR_GROUP,
 } from "../actions/types";
 
 const initialState = {
@@ -27,6 +28,9 @@ export default (state = initialState, action) => {
     }
     case SET_ORDER_TO_GROUP: {
       return { ...state, orders: action.payload };
+    }
+    case CLEAR_GROUP: {
+      return { ...initialState };
     }
     default:
     case ADD_MEMBER:
