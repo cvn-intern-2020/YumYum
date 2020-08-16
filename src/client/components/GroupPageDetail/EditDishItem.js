@@ -9,7 +9,6 @@ import { deleteEditedDish } from "../../actions/dish";
 class EditDishItem extends Component {
   handleClickDelete = () => {
     this.props.deleteEditedDish(this.props.dish);
-    this.props.updateEditedDish(false, this.props.dish);
   };
   render() {
     return (

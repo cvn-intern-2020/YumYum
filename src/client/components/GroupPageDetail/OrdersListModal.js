@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Button, Modal, ListGroup } from "react-bootstrap";
 import GlobalAlert from "../Common/GlobalAlert";
 import OrderItem from "./OrderItem";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default class OrdersListModal extends Component {
+class OrdersListModal extends Component {
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
@@ -39,13 +41,17 @@ export default class OrdersListModal extends Component {
               className="group-container mt-4"
               style={{ position: "relative" }}
             >
-              <ListGroup style={{ flexDirection: "col", borderRadius: "0" }}>
-                {this.props.orders.map((order) => {
-                  let date = new Date(order.orderDate);
-                  order.orderDate = date;
-                  return <OrderItem key={order._id} order={order} />;
-                })}
-              </ListGroup>
+              {this.props.orders.length == 0 ? (
+                <div className="loader"></div>
+              ) : (
+                <ListGroup style={{ flexDirection: "col", borderRadius: "0" }}>
+                  {this.props.orders.map((order) => {
+                    let date = new Date(order.orderDate);
+                    order.orderDate = date;
+                    return <OrderItem key={order._id} order={order} />;
+                  })}
+                </ListGroup>
+              )}
             </div>
           </div>
         </Modal.Body>
@@ -66,3 +72,11 @@ export default class OrdersListModal extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    orders: state.group.orders,
+  };
+}
+
+export default withRouter(connect(mapStateToProps, null)(OrdersListModal));

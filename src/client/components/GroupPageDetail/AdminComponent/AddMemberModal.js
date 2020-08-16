@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../../actions/alert";
-import { addMemberRequest } from "../../../request/group";
+import { addMember } from "../../../actions/group";
 import { throttle, debounce } from "lodash";
 
 class AddMemberModal extends Component {
@@ -28,14 +28,18 @@ class AddMemberModal extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleCloseButton = () => {
-    this.setState({
-      ...this.state,
-      email: "",
-      err: "",
-      showAlert: false,
-    });
-    this.props.hideAlert();
-    this.props.handleClose();
+    this.setState(
+      {
+        ...this.state,
+        email: "",
+        err: "",
+        showAlert: false,
+      },
+      () => {
+        this.props.hideAlert();
+        this.props.handleClose();
+      }
+    );
   };
   handleClickAddMember = async () => {
     if (this.state.email == "") {
@@ -50,14 +54,7 @@ class AddMemberModal extends Component {
       this.props.setAlert("danger", "Invalid email");
       return -1;
     }
-    let addMemberResult = await addMemberRequest(
-      this.props.match.params.groupId,
-      this.state.email
-    );
-    this.props.setAlert(
-      addMemberResult.status ? "success" : "danger",
-      addMemberResult.message
-    );
+    this.props.addMember(this.props.match.params.groupId, this.state.email);
   };
   componentWillUnmount() {
     this.debouncedEvent.cancel();
@@ -131,7 +128,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  return bindActionCreators({ setAlert, hideAlert, addMember }, dispatch);
 }
 
 export default withRouter(

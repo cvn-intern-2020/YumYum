@@ -27,12 +27,13 @@ export const getDish = () => async (dispatch) => {
     getDishOfUserResult.dishData
   );
   if (getDishOfUserResult.dishData.length == 0) {
-    return -1;
+    return false;
   }
   dispatch({
     type: GET_DISH,
     payload: [...getDishOfUserResult.dishData].reverse(),
   });
+  return true;
 };
 export const addDish = (name, price) => async (dispatch) => {
   let createDishResult = await createDishRequest({

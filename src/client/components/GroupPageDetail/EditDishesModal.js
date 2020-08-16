@@ -13,10 +13,12 @@ class EditDishesModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: props.userDishes[0],
+      selected: "",
     };
   }
-
+  componentDidMount() {
+    this.setState({ selected: this.props.userDishes[0] });
+  }
   debounceEvent(...args) {
     this.debouncedEvent = debounce(...args);
     return (e) => {
@@ -37,7 +39,6 @@ class EditDishesModal extends Component {
       }
     }
     this.props.addEditedDish(this.state.selected);
-    this.props.updateEditedDish(true, this.state.selected);
   };
   componentWillUnmount() {
     this.debouncedEvent.cancel();
@@ -165,6 +166,8 @@ class EditDishesModal extends Component {
 
 function mapStateToProps(state) {
   return {
+    userDishes: state.dish.userDishes,
+    editedDishes: state.dish.editedDishes,
     ...state.alert,
   };
 }

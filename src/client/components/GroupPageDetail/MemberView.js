@@ -23,9 +23,8 @@ import OrdersListModal from "./OrdersListModal";
 import MemberListModal from "./MemberListModal";
 import { getDish, updateToEditDish, editDish } from "../../actions/dish";
 import { throttle } from "lodash";
-import AdminView from "./AdminView";
 
-class GroupBody extends Component {
+class MemberView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -232,20 +231,20 @@ class GroupBody extends Component {
 
   async componentDidMount() {
     this.props.setGroup(this.props.match.params.groupId);
-    // let getGroupResult = await getGroupRequest(this.props.match.params.groupId);
-    // if (!getGroupResult.status) {
-    //   this.props.setAlert("danger", getGroupResult.message);
-    // } else {
-    //   let groupData = getGroupResult.groupData;
-    //   groupData.dishes = groupData.dishes.map((dish) => {
-    //     return { ...dish, quantity: 0 };
-    //   });
-    //   groupData.dishes = convertOderFormat(groupData.dishes);
-    //   this.setState({
-    //     ...this.state,
-    //     ...groupData,
-    //   });
-    // }
+    let getGroupResult = await getGroupRequest(this.props.match.params.groupId);
+    if (!getGroupResult.status) {
+      this.props.setAlert("danger", getGroupResult.message);
+    } else {
+      let groupData = getGroupResult.groupData;
+      groupData.dishes = groupData.dishes.map((dish) => {
+        return { ...dish, quantity: 0 };
+      });
+      groupData.dishes = convertOderFormat(groupData.dishes);
+      this.setState({
+        ...this.state,
+        ...groupData,
+      });
+    }
   }
   componentWillUnmount() {
     if (this.props.showAlert) {
@@ -262,14 +261,7 @@ class GroupBody extends Component {
           height: "94%",
         }}
       >
-        {this.props.group._id == "" ? (
-          <div className="loader"></div>
-        ) : this.props.group.ownerId == this.props.userId ? (
-          <AdminView />
-        ) : (
-          <h1>Member</h1>
-        )}
-        {/* {this.props.showAlert &&
+        {this.props.showAlert &&
         !this.state.showEditDishesModal &&
         !this.state.showAddMemberModal ? (
           <GlobalAlert
@@ -351,7 +343,7 @@ class GroupBody extends Component {
             )}
             :
           </>
-        )} */}
+        )}
       </div>
     );
   }
@@ -361,7 +353,6 @@ function mapStateToProps(state) {
   return {
     token: state.user.token,
     userId: state.user._id,
-    group: state.group,
     ...state.alert,
   };
 }
@@ -383,5 +374,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(GroupBody)
+  connect(mapStateToProps, mapDispatchToProps)(MemberView)
 );

@@ -1,4 +1,9 @@
-import { SET_GROUP, CREATE_GROUP } from "../actions/types";
+import {
+  SET_GROUP,
+  CREATE_GROUP,
+  SET_ORDER_TO_GROUP,
+  ADD_MEMBER,
+} from "../actions/types";
 
 const initialState = {
   ownerId: "",
@@ -8,10 +13,7 @@ const initialState = {
   showOrdersListModal: false,
   showMemberListModal: false,
   dishes: [],
-  userDishes: [],
-  editedDishes: [],
   orders: [],
-  totalPrice: 0,
   users: [],
   _id: "",
   name: "",
@@ -23,8 +25,11 @@ export default (state = initialState, action) => {
     case SET_GROUP: {
       return { ...state, ...action.payload };
     }
-
+    case SET_ORDER_TO_GROUP: {
+      return { ...state, orders: action.payload };
+    }
     default:
+    case ADD_MEMBER:
     case CREATE_GROUP: {
       return state;
     }

@@ -33,6 +33,7 @@ class DishListAdmin extends Component {
 function mapStateToProps(state) {
   return {
     token: state.user.token,
+    dishes: state.group.dishes,
   };
 }
 
