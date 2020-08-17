@@ -108,11 +108,12 @@ class AddDishModal extends Component {
             <Form.Group className="row w">
               <Form.Control
                 className="w-25 col ml-3"
-                type="number"
+                type="text"
+                pattern="\d*"
+                maxLength="9"
                 placeholder="Enter price "
                 name="price"
                 onChange={this.debounceEvent(this.handleChange, 250)}
-                maxLength={9}
               />
               <div className="input-group-append col">
                 <span className="input-group-text" style={{ width: "7rem" }}>
