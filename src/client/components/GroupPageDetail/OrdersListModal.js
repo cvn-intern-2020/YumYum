@@ -42,7 +42,7 @@ class OrdersListModal extends Component {
               style={{ position: "relative" }}
             >
               {this.props.orders.length == 0 ? (
-                <div className="loader"></div>
+                <></>
               ) : (
                 <ListGroup style={{ flexDirection: "col", borderRadius: "0" }}>
                   {this.props.orders.map((order) => {
