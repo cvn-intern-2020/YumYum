@@ -72,6 +72,12 @@ export const addMemberController = async (req, res) => {
 export const createNewGroupController = async (req, res) => {
   let { name, description } = req.body;
   let ownerId = req._id;
+  if (!name) {
+    return res.status(400).json({ message: "Name field is empty" })
+  }
+  if (!description) {
+    return res.status(400).json({ message: "Description field is empty" })
+  }
   let { result, status } = await createGroup(name, ownerId, description);
   if (!status) {
     return res.status(400).json({ message: "something went wrong" });
@@ -93,7 +99,7 @@ export const editDishesController = async (req, res) => {
   }
   let editedDishes = await editDishes(groupId, dishes);
   if (!editedDishes.status) {
-    return res.status(400).json({ message: "something went wrong" });
+    return res.status(400).json({ message: editedDishes.message });
   }
   return res.status(200).json({ newDishes: newDishes.result });
 };
