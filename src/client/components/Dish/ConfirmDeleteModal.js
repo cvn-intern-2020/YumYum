@@ -7,7 +7,7 @@ import GlobalAlert from "../Common/GlobalAlert";
 class ConfirmDeleteModal extends Component {
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <Modal show={this.props.show} onHide={() => this.props.handleClose("")}>
         <Modal.Header closeButton>
           <ModalTitle>Confrim Delete Dish</ModalTitle>
         </Modal.Header>

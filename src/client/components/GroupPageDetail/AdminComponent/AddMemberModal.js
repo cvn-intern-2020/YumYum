@@ -15,7 +15,7 @@ class AddMemberModal extends Component {
     this.state = {
       email: "",
     };
-    this.handleClickAddMember = throttle(this.handleClickAddMember, 1000);
+    this.handleClickAddMember = throttle(this.handleClickAddMember, 5000);
   }
   debounceEvent(...args) {
     this.debouncedEvent = debounce(...args);
@@ -36,6 +36,7 @@ class AddMemberModal extends Component {
         showAlert: false,
       },
       () => {
+        this.handleClickAddMember.cancel();
         this.props.hideAlert();
         this.props.handleClose();
       }
