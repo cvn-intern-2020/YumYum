@@ -9,7 +9,7 @@ export default class MyOwnGroup extends PureComponent {
         <Container fluid>
           <Row>
             <Col>
-              <p className="mt-2 my-own-group-text-lable">My Own Group</p>
+              <p className="mt-3 my-own-group-text-lable">My Own Group</p>
             </Col>
             <Col></Col>
             <Col>
