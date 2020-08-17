@@ -6,10 +6,19 @@ import { setAlert, hideAlert } from "../../actions/alert";
 import { setGroup } from "../../actions/group";
 import AdminView from "./AdminView";
 import MemberView from "./MemberView";
+import GlobalAlert from "../Common/GlobalAlert";
+import PageNotFound from "../Common/PageNotFound";
 
 class GroupBody extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      doesGroupExist: true,
+    };
+  }
   async componentDidMount() {
-    this.props.setGroup(this.props.match.params.groupId);
+    let result = await this.props.setGroup(this.props.match.params.groupId);
+    this.setState({ doesGroupExist: result });
   }
   componentWillUnmount() {
     if (this.props.showAlert) {
@@ -27,7 +36,9 @@ class GroupBody extends Component {
         }}
       >
         {this.props.group._id == "" ? (
-          <div className="loader"></div>
+          <>
+            {this.state.doesGroupExist ? <div className="loader"></div> : <PageNotFound />}
+          </>
         ) : this.props.group.ownerId == this.props.userId ? (
           <AdminView />
         ) : (

@@ -20,13 +20,13 @@ import { clearEditedDish } from "./dish";
 export const setGroup = (groupId) => async (dispatch) => {
   let getGroupResult = await getGroupRequest(groupId);
   if (!getGroupResult.status) {
-    dispatch(setAlert("danger", getGroupResult.message));
-  } else {
-    let groupData = getGroupResult.groupData;
-    groupData.dishes = convertOderFormat(groupData.dishes);
-    dispatch({ type: SET_GROUP, payload: { ...groupData } });
-    dispatch(setOrder());
+    return false;
   }
+  let groupData = getGroupResult.groupData;
+  groupData.dishes = convertOderFormat(groupData.dishes);
+  dispatch({ type: SET_GROUP, payload: { ...groupData } });
+  dispatch(setOrder());
+  return true;
 };
 
 export const setOrderToGroup = (groupId) => async (dispatch) => {
