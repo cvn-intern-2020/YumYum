@@ -44,13 +44,12 @@ export const createInviteController = async (req, res) => {
   let groupId = req.params.groupId;
   let isAllowedResult = isAllowedToEditGroup(groupId, ownerId);
   if (!isAllowedResult) {
-    return res
-      .status(400)
-      .json({
-        message: "not allowed to create invite link or group does not exist",
-      });
+    return res.status(400).json({
+      message: "not allowed to create invite link or group does not exist",
+    });
   }
-  let payload = JSON.stringify({ groupId, exp: Date.now() + 3600 });
+
+  let payload = JSON.stringify({ groupId, exp: Date.now() / 1000 + 3600 });
   jwt.sign(payload, process.env.SECRET_KEY, (err, token) => {
     return res.status(200).json({ token });
   });
