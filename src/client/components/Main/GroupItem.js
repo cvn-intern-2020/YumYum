@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default class GroupItem extends Component {
   render() {
     return (
-      <ListGroup.Item style={{ padding: 0  }}>
+      <ListGroup.Item style={{ padding: 0 }}>
         <Row>
           <Col xs={6} md={3} lg={1}>
             <Image
@@ -28,7 +28,7 @@ export default class GroupItem extends Component {
                   fontSize: "2rem",
                   float: "left",
                   position: "relative",
-                  marginTop: "1.7rem"
+                  marginTop: "1.7rem",
                 }}
                 to={`/group/${this.props.groupId}`}
               >

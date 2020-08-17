@@ -2,8 +2,6 @@ import React, { Component, Suspense } from "react";
 import { Container } from "react-bootstrap";
 const MyOwnGroup = React.lazy(() => import("./MyOwnGroup"));
 const MyJoinedGroup = React.lazy(() => import("./MyJoinedGroup"));
-// import MyOwnGroup from "./MyOwnGroup";
-// import MyJoinedGroup from "./MyJoinedGroup";
 import AddNewGroupModal from "./AddNewGroupModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -33,16 +31,15 @@ class MainBody extends Component {
   render() {
     return (
       <div className="main-body-background-div">
-        <AddNewGroupModal
-          show={this.state.showAddGroupModal}
-          handleClose={this.toggleAddGroupModal}
-          token={this.props.token}
-        />
-
-        <Container className="ml-2 main-body-group-container" fluid>
+        <Container className=" main-body-group-container" fluid>
           <Suspense fallback={<div className="loader"></div>}>
             {this.props.groups ? (
               <>
+                <AddNewGroupModal
+                  show={this.state.showAddGroupModal}
+                  handleClose={this.toggleAddGroupModal}
+                  token={this.props.token}
+                />
                 <MyJoinedGroup
                   joinedGroups={this.props.groups.filter(
                     (group) => group.isOwner == false

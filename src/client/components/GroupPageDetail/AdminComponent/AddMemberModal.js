@@ -6,8 +6,10 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../../actions/alert";
-import { addMemberRequest } from "../../../request/group";
+import { addMember } from "../../../actions/group";
 import { throttle, debounce } from "lodash";
+import { createInviteRequest } from "../../../request/invite";
+import copy from "copy-to-clipboard";
 
 class AddMemberModal extends Component {
   constructor(props) {
@@ -15,7 +17,7 @@ class AddMemberModal extends Component {
     this.state = {
       email: "",
     };
-    this.handleClickAddMember = throttle(this.handleClickAddMember, 1000);
+    this.handleClickAddMember = throttle(this.handleClickAddMember, 5000);
   }
   debounceEvent(...args) {
     this.debouncedEvent = debounce(...args);
@@ -28,14 +30,19 @@ class AddMemberModal extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleCloseButton = () => {
-    this.setState({
-      ...this.state,
-      email: "",
-      err: "",
-      showAlert: false,
-    });
-    this.props.hideAlert();
-    this.props.handleClose();
+    this.setState(
+      {
+        ...this.state,
+        email: "",
+        err: "",
+        showAlert: false,
+      },
+      () => {
+        this.handleClickAddMember.cancel();
+        this.props.hideAlert();
+        this.props.handleClose();
+      }
+    );
   };
   handleClickAddMember = async () => {
     if (this.state.email == "") {
@@ -50,26 +57,43 @@ class AddMemberModal extends Component {
       this.props.setAlert("danger", "Invalid email");
       return -1;
     }
-    let addMemberResult = await addMemberRequest(
-      this.props.match.params.groupId,
-      this.state.email,
-      this.props.token || this.props.location.state.token
-    );
-    this.props.setAlert(
-      addMemberResult.status ? "success" : "danger",
-      addMemberResult.message
-    );
+    this.props.addMember(this.props.match.params.groupId, this.state.email);
   };
   componentWillUnmount() {
     this.debouncedEvent.cancel();
     this.handleClickAddMember.cancel();
-    this.props.hideAlert();
+    if (this.props.showAlert) {
+      this.props.hideAlert();
+    }
   }
+  generateInviteLink = async () => {
+    let createInviteResult = await createInviteRequest(this.props.groupId);
+    if (!createInviteResult.status) {
+      this.props.setAlert("danger", createInviteResult.message);
+      return -1;
+    }
+    copy(
+      `${process.env.FRONT_END_URL}/invite/?token=${createInviteResult.token}`
+    );
+    this.props.setAlert("success", "Invite link copied in clipboard");
+  };
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Member</Modal.Title>
+          <Modal.Title className="mr-5">Add New Member</Modal.Title>
+          <Button
+            style={{
+              backgroundColor: "#FF5522",
+              color: "#080024",
+              border: "none",
+            }}
+            variant="primary"
+            onClick={this.generateInviteLink}
+            className="ml-5"
+          >
+            Create Invite Link
+          </Button>
         </Modal.Header>
         <Modal.Body>
           {this.props.showAlert ? (
@@ -79,8 +103,8 @@ class AddMemberModal extends Component {
               message={this.props.message}
             />
           ) : (
-              <></>
-            )}
+            <></>
+          )}
           <Form.Group>
             <Form.Label>Member Email: </Form.Label>
             <Form.Control
@@ -89,6 +113,7 @@ class AddMemberModal extends Component {
               name="email"
               placeholder="abcdxy@example.com"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={50}
             />
           </Form.Group>
         </Modal.Body>
@@ -130,7 +155,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  return bindActionCreators({ setAlert, hideAlert, addMember }, dispatch);
 }
 
 export default withRouter(

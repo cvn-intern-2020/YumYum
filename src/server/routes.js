@@ -37,4 +37,16 @@ router.use(
   passport.authenticate("jwt", { session: false }),
   require("./routes/orders")
 );
+
+router.use(
+  "/invite",
+  passport.authenticate("jwt", { session: false }),
+  require("./routes/invite")
+);
+
+router.use(
+  "/auth/signout",
+  passport.authenticate("jwt", { session: false }),
+  require("./routes/auth/signout")
+);
 module.exports = router;

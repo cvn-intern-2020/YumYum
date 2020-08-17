@@ -2,23 +2,19 @@ import axios from "axios";
 
 export const createDishRequest = ({ name, price }, token) => {
   return axios
-    .post(
-      `${process.env.API_URL}/api/dishes/new`,
-      {
-        name: name,
-        price: price,
-      },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    )
+    .post(`${process.env.API_URL}/api/dishes/new`, {
+      name: name,
+      price: price,
+    })
     .then((res) => {
       return { status: true, message: "Add success", newDish: res.data };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };
 
@@ -33,20 +29,24 @@ export const deleteDishRequest = (dishId, token) => {
       return { status: true, message: "Successfully deleted" };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };
-export const getDishOfUserRequest = (token) => {
+export const getDishOfUserRequest = () => {
   return axios
-    .get(`${process.env.API_URL}/api/dishes/user`, {
-      headers: {
-        Authorization: token,
-      },
-    })
+    .get(`${process.env.API_URL}/api/dishes/user`, {})
     .then((res) => {
       return { status: true, dishData: res.data };
     })
     .catch((err) => {
-      return { status: false, message: err.response.data.message };
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
     });
 };

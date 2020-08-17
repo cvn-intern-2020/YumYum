@@ -60,6 +60,26 @@ export const getGroupById = async (groupId) => {
   return { result, status: true };
 };
 
+export const inviteMemberToGroup = async (user, groupId) => {
+  let result = await groupModel.findOneAndUpdate(
+    {
+      _id: mongoose.Types.ObjectId(groupId),
+    },
+    {
+      $push: {
+        users: {
+          userId: mongoose.Types.ObjectId(user._id),
+          name: user.name,
+        },
+      },
+    }
+  );
+  if (!result) {
+    return { status: false, message: "Something went wrong" };
+  }
+  return { status: true, result };
+};
+
 export const addMemberToGroup = async (ownerId, user, groupId) => {
   if (!isObjectID(ownerId)) {
     return { message: "invalid ownerId", status: false };
@@ -139,6 +159,9 @@ export const areDishesInGroup = async (groupId, dishDetails) => {
 };
 
 export const editDishes = async (groupId, dishes) => {
+  if (!isObjectID(groupId)) {
+    return { message: "invalid groupId", status: false };
+  }
   let editDishes = await groupModel.findOneAndUpdate(
     {
       _id: groupId,

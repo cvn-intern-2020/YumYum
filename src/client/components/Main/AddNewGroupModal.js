@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import axios from "axios";
 import GlobalAlert from "../Common/GlobalAlert";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -8,6 +7,7 @@ import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { setUser } from "../../actions/user";
 import { createGroupRequest } from "../../request/group";
+import { createGroup } from "../../actions/group";
 import { debounce } from "lodash";
 
 class AddNewGroupModal extends Component {
@@ -57,20 +57,14 @@ class AddNewGroupModal extends Component {
       this.props.setAlert("danger", "Group's description is empty");
       return -1;
     }
-    let createGroupResult = await createGroupRequest(
-      this.state,
-      this.props.token || this.props.location.state.token
-    );
-    if (!createGroupResult.status) {
-      this.props.setAlert("danger", createGroupResult.message);
-    } else {
-      this.props.setUser(this.props.token);
-      this.props.handleClose();
-    }
+    this.props.createGroup(this.state);
+    this.props.handleClose();
   };
   componentWillUnmount() {
-    this.debouncedEvent.cancel(); 
-    this.props.hideAlert();
+    if (this.props.showAlert) {
+      this.props.hideAlert();
+    }
+    this.debouncedEvent.cancel();
   }
   render() {
     return (
@@ -96,6 +90,7 @@ class AddNewGroupModal extends Component {
                 name="name"
                 placeholder="Enter group name"
                 onChange={this.debounceEvent(this.handleChange, 250)}
+                maxLength={20}
               />
             </Form.Group>
 
@@ -108,6 +103,7 @@ class AddNewGroupModal extends Component {
                 placeholder="Enter description"
                 name="description"
                 onChange={this.debounceEvent(this.handleChange, 250)}
+                maxLength={100}
               />
             </Form.Group>
           </Form>
@@ -153,7 +149,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert, setUser }, dispatch);
+  return bindActionCreators(
+    { setAlert, hideAlert, setUser, createGroup },
+    dispatch
+  );
 }
 
 export default withRouter(

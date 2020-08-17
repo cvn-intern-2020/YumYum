@@ -1,12 +1,5 @@
 import React, { Component, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
-// import Landing from "./Landing";
-// import Main from "./Main";
-// import Login from "./Auth/Login";
-// import Signup from "./Auth/Signup";
-// import Group from "./Group";
-// import Dish from "./Dish";
-// import PageNotFound from "./Common/PageNotFound";
 const Main = React.lazy(() => import("./Main"));
 const Login = React.lazy(() => import("./Auth/Login"));
 const Landing = React.lazy(() => import("./Landing"));
@@ -17,56 +10,70 @@ const PageNotFound = React.lazy(() => import("./Common/PageNotFound"));
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setUser } from "../actions/user";
-import PrivateRoute from "./PrivateRoute";
-import PublicRoute from "./PublicRoute";
+import { setUser, clearUser } from "../actions/user";
+import axios from "axios";
+import Invite from "./Invite";
 
 class App extends Component {
-  componentDidMount() {
-    if (this.props.userId == "" && this.props.token != "") {
-      this.props.setUser(this.props.token);
+  constructor(props) {
+    super(props);
+    axios.defaults.withCredentials = true;
+    window.addEventListener("storage", (e) => {
+      if (e.newValue == "false") {
+        this.props.clearUser();
+        this.props.history.push("/");
+      }
+    });
+  }
+  async componentDidMount() {
+    let isLogin = await this.props.setUser();
+    if (!isLogin) {
+      this.props.history.push("/");
+    } else {
+      if (
+        this.props.token &&
+        this.props.token != "" &&
+        ["/login", "/signup", "/"].includes(this.props.location.pathname)
+      ) {
+        this.props.history.push("/main");
+      }
     }
   }
+
   render() {
     return (
       <>
         <Suspense fallback={<div className="loader"></div>}>
           <Switch>
-            <PublicRoute
-              component={Landing}
-              token={this.props.token}
+            <Route path="/main" render={() => <Main {...this.props} />} exact />
+            <Route
               path="/"
+              token={this.props.token}
+              render={() => <Landing {...this.props} />}
               exact
             />
-            <PrivateRoute
-              component={Main}
-              token={this.props.token}
-              path="/main"
+            <Route
+              path="/invite"
+              render={() => <Invite {...this.props} />}
               exact
-            />
-            <PrivateRoute
-              component={Dish}
-              token={this.props.token}
-              path="/dish"
-              exact
-            />
-            <PublicRoute
-              component={Login}
-              token={this.props.token}
+            ></Route>
+            <Route path="/dish" render={() => <Dish {...this.props} />} exact />
+            <Route
               path="/login"
+              token={this.props.token}
+              render={() => <Login {...this.props} />}
               exact
             />
-            <PublicRoute
-              component={Signup}
-              token={this.props.token}
+            <Route
               path="/signup"
+              token={this.props.token}
+              render={() => <Signup {...this.props} />}
               exact
             />
             <Route path="/group">
-              <PrivateRoute
-                component={Group}
-                token={this.props.token}
+              <Route
                 path="/group/:groupId"
+                render={() => <Group {...this.props} />}
                 exact
               />
             </Route>
@@ -86,7 +93,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setUser }, dispatch);
+  return bindActionCreators({ setUser, clearUser }, dispatch);
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

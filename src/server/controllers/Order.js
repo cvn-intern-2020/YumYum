@@ -33,6 +33,7 @@ export const getOrderByGroupIdController = async (req, res) => {
 export const createNewOrderController = async (req, res) => {
   let userId = req._id;
   let { details, totalPrice, groupId } = req.body;
+  console.log(req.body);
   if (!(await isUserInGroup(userId, groupId))) {
     return res.status(400).json({
       message: "groupId does not exist or not allowed to order in this group",

@@ -10,7 +10,7 @@ class Dish extends Component {
   render() {
     return (
       <div className="h-100">
-        <MainNavBar token={this.props.token} />
+        <MainNavBar token={this.props.token} name={this.props.userName} />
         <DishBody {...this.props} />
       </div>
     );
@@ -20,6 +20,7 @@ class Dish extends Component {
 function mapStateToProps(state) {
   return {
     token: state.user.token,
+    userName: state.user.name,
   };
 }
 

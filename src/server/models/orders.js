@@ -24,9 +24,7 @@ OrdersSchema.statics.getOrderById = async function (orderId) {
   for (let dishId of Object.keys(result.details)) {
     let orderDetail = await dishesModel.getDishById(dishId);
     result.details[dishId] = { ...orderDetail, amount: result.details[dishId] };
-    console.log(result.details[dishId]);
   }
-  console.log(result);
 };
 
 const OrdersModel = mongoose.model("Orders", OrdersSchema);

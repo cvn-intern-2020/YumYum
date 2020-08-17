@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Modal, Button, ListGroup } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default class MemberListModal extends Component {
+class MemberListModal extends Component {
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
@@ -38,3 +40,11 @@ export default class MemberListModal extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    users: state.group.users,
+  };
+}
+
+export default withRouter(connect(mapStateToProps, null)(MemberListModal));

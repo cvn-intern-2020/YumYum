@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ListGroup, Button, ListGroupItem } from "react-bootstrap";
+import { ListGroup, Button } from "react-bootstrap";
 import DishItemUser from "./DishItemUser";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -25,26 +25,32 @@ class DishListUser extends Component {
         <div className="group-container mt-4">
           <ListGroup>
             {this.props.dishes.map((dish) => {
-              return (
-                <DishItemUser
-                  key={dish._id}
-                  dish={dish}
-                  changeDishAmount={this.props.changeDishAmount}
-                />
-              );
+              return <DishItemUser key={dish._id} dish={dish} />;
             })}
           </ListGroup>
           {this.props.dishes.length > 0 ? (
             <>
               <ListGroup.Item
-                style={{ width: "32.7%", height: "16%", backgroundColor: "#ffe500", border:"none" }}
+                style={{
+                  width: "32.7%",
+                  height: "16%",
+                  backgroundColor: "#ffe500",
+                  border: "none",
+                }}
                 className="float-right dish-label"
               >
                 <pre className="dish-label tab4">
                   Total: {this.props.totalPrice} VND
                 </pre>
               </ListGroup.Item>
-              <ListGroup.Item style={{ marginTop: "5rem", height: "30%", backgroundColor: "#ffe500", border:"none"}}>
+              <ListGroup.Item
+                style={{
+                  marginTop: "5rem",
+                  height: "30%",
+                  backgroundColor: "#ffe500",
+                  border: "none",
+                }}
+              >
                 <Button
                   style={{
                     position: "absolute",
@@ -73,7 +79,8 @@ class DishListUser extends Component {
 
 function mapStateToProps(state) {
   return {
-    token: state.user.token,
+    dishes: state.group.dishes,
+    totalPrice: state.order.totalPrice,
   };
 }
 
