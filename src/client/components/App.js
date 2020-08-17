@@ -52,11 +52,13 @@ class App extends Component {
               render={() => <Landing {...this.props} />}
               exact
             />
-            <Route
-              path="/invite"
-              render={() => <Invite {...this.props} />}
-              exact
-            ></Route>
+            <Route path="/invite">
+              <Route
+                path="/invite/:inviteHash"
+                render={() => <Invite {...this.props} />}
+                exact
+              />
+            </Route>
             <Route path="/dish" render={() => <Dish {...this.props} />} exact />
             <Route
               path="/login"

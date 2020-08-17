@@ -4,13 +4,23 @@ import {
   inviteMemberToGroup,
   isAllowedToEditGroup,
 } from "../services/groupService";
+import { storeToken, findToken } from "../services/redisService";
+import { nanoid } from "nanoid";
 
 export const getInviteController = async (req, res) => {
-  let inviteToken = req.params.inviteToken;
+  let inviteHash = req.params.inviteHash;
   let userId = req._id;
+  let inviteToken = await findToken(inviteHash);
+  if (!inviteToken) {
+    return res
+      .status(400)
+      .json({ message: "Invite hash is not valid or expired" });
+  }
   jwt.verify(inviteToken, process.env.SECRET_KEY, async (err, decoded) => {
     if (err) {
-      return res.status(400).json({ message: "token is invalid or expired" });
+      return res
+        .status(400)
+        .json({ message: "Invite token is invalid or expired" });
     }
     let groupId = decoded.groupId;
     let user = await getUserById(userId);
@@ -48,9 +58,10 @@ export const createInviteController = async (req, res) => {
       message: "not allowed to create invite link or group does not exist",
     });
   }
-
   let payload = JSON.stringify({ groupId, exp: Date.now() / 1000 + 3600 });
-  jwt.sign(payload, process.env.SECRET_KEY, (err, token) => {
-    return res.status(200).json({ token });
+  jwt.sign(payload, process.env.SECRET_KEY, async (err, token) => {
+    let hash = await nanoid(10);
+    await storeToken(hash, token);
+    return res.status(200).json({ hash });
   });
 };
