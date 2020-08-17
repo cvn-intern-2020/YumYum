@@ -4,7 +4,7 @@ import SignUpBody from "./SignUpBody";
 
 export default class Signup extends Component {
   componentDidMount(){
-    if (this.props.token != "") {
+    if (this.props.token && this.props.token != "") {
       this.props.history.push("/main");
     }
   }

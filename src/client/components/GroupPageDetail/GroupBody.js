@@ -1,12 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { setGroup } from "../../actions/group";
-import AdminView from "./AdminView";
-import MemberView from "./MemberView";
-import GlobalAlert from "../Common/GlobalAlert";
+const AdminView = React.lazy(() => import("./AdminView"));
+const MemberView = React.lazy(() => import("./MemberView"));
 import PageNotFound from "../Common/PageNotFound";
 
 class GroupBody extends Component {
@@ -40,9 +39,9 @@ class GroupBody extends Component {
             {this.state.doesGroupExist ? <div className="loader"></div> : <PageNotFound />}
           </>
         ) : this.props.group.ownerId == this.props.userId ? (
-          <AdminView />
+          <Suspense fallback={<div className="loader"></div>}><AdminView /></Suspense>
         ) : (
-          <MemberView />
+          <Suspense fallback={<div className="loader"></div>}><MemberView /></Suspense>
         )}
       </div>
     );

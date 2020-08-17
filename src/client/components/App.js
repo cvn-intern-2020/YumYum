@@ -17,16 +17,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     axios.defaults.withCredentials = true;
+    window.addEventListener("storage", (e) => {
+      console.log(e);
+    });
   }
   async componentDidMount() {
     let isLogin = await this.props.setUser();
     if (!isLogin) {
       this.props.history.push("/");
     }
-    if (this.props.token != "") {
+    if (this.props.token && this.props.token != "") {
       this.props.history.push("/main");
     }
   }
+
   render() {
     return (
       <>

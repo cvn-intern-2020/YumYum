@@ -10,10 +10,12 @@ export const setUser = () => async (dispatch) => {
     }
   } else {
     dispatch({ type: SET_USER, payload: { ...getUserResult.userData } });
+    await localStorage.setItem("isLogin", "true");
     return getUserResult.userData.token;
   }
 };
 
-export const clearUser = () => (dispatch) => {
+export const clearUser = () => async (dispatch) => {
+  await localStorage.setItem("isLogin", "false");
   dispatch({ type: CLEAR_USER });
 };
