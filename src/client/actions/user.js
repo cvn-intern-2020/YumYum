@@ -1,5 +1,6 @@
 import { SET_USER, CLEAR_USER } from "./types";
 import { getUserRequest } from "../request/user";
+import { signOutRequest } from "../request/auth";
 
 export const setUser = () => async (dispatch) => {
   let getUserResult = await getUserRequest();
@@ -17,5 +18,6 @@ export const setUser = () => async (dispatch) => {
 
 export const clearUser = () => async (dispatch) => {
   await localStorage.setItem("isLogin", "false");
+  await signOutRequest();
   dispatch({ type: CLEAR_USER });
 };
