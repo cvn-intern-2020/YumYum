@@ -35,6 +35,7 @@ export const setOrderToGroup = (groupId) => async (dispatch) => {
     dispatch(setAlert("danger", getOrderByGroupIdResult.message));
   } else {
     let groupOrdersData = getOrderByGroupIdResult.groupOrdersData;
+    groupOrdersData = groupOrdersData.reverse();
     dispatch({ type: SET_ORDER_TO_GROUP, payload: groupOrdersData });
   }
 };

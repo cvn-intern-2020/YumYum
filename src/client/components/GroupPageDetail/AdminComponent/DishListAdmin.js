@@ -11,7 +11,7 @@ class DishListAdmin extends Component {
         <div className="text-center-group">
           <div className="row w-100 m-0">
             <div className=" dish-label col mt-4">
-              <b>User</b>
+              <b>Food Name</b>
             </div>
             <div className="dish-label col mt-4">
               <b>Price</b>

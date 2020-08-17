@@ -31,7 +31,7 @@ class MainBody extends Component {
   render() {
     return (
       <div className="main-body-background-div">
-        <Container className="ml-2 main-body-group-container" fluid>
+        <Container className=" main-body-group-container" fluid>
           <Suspense fallback={<div className="loader"></div>}>
             {this.props.groups ? (
               <>

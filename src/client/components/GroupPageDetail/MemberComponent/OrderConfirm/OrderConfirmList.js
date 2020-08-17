@@ -25,7 +25,9 @@ class DishListUser extends Component {
         <div className="group-container mt-4" style={{ position: "relative" }}>
           <ListGroup>
             {this.props.order.dishes.map((dish) => {
-              return <OrderConfirmItem key={dish._id} dish={dish} />;
+              if (dish.quantity > 0) {
+                return <OrderConfirmItem key={dish._id} dish={dish} />;
+              }
             })}
           </ListGroup>
           {this.props.order.dishes.length > 0 ? (

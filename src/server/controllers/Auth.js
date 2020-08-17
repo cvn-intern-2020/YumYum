@@ -31,6 +31,7 @@ export const signInController = async (req, res) => {
     .status(200)
     .cookie("token", result.token, {
       maxAge: 3600000,
+      httpOnly: true,
     })
     .json({
       token: result.token,

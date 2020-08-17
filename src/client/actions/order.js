@@ -16,6 +16,9 @@ export const addToOrder = (dishId, isAdding) => async (dispatch, getState) => {
   if (isAdding) {
     updatedDish.quantity = updatedDish.quantity + 1;
   } else {
+    if (updatedDish.quantity <= 0) {
+      return;
+    }
     updatedDish.quantity = updatedDish.quantity - 1;
   }
   dispatch({ type: ADD_TO_ORDER, payload: { ...updatedDish } });

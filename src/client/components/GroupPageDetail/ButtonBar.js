@@ -12,14 +12,14 @@ class ButtonBar extends Component {
             <>
               <Button
                 style={{ backgroundColor: "#FF5522", color: "#080024" }}
-                className="float-left ml-5 mt-4 group-button"
+                className="float-left mt-4 ml-5 group-button"
                 onClick={this.props.toggleAddMemberModal}
               >
                 Add Member
               </Button>
               <Button
                 style={{ backgroundColor: "#FF5522", color: "#080024" }}
-                className="float-right mt-4 mr-5 group-button"
+                className="float-left mt-4 ml-5 group-button"
                 onClick={this.props.toggleEditDishesModal}
               >
                 Edit Dishes

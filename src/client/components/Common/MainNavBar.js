@@ -64,13 +64,6 @@ class MainNavBar extends Component {
               >
                 {this.props.name}
               </b>
-              <img
-                src="../../../public/noti.png"
-                width="40"
-                height="40"
-                alt="React Bootstrap logo"
-                className="float-right mt-2 mr-2"
-              />
             </div>
           </div>
         </Navbar>

@@ -69,13 +69,25 @@ class MemberView extends Component {
     }
   }
   render() {
+    let {
+      showConfirmOrderModal,
+      showOrdersListModal,
+      showMemberListModal,
+    } = this.state;
     return (
       <>
-        <GlobalAlert
-          alertType={this.props.type}
-          message={this.props.message}
-          toggleAlert={this.props.hideAlert}
-        />
+        {!showConfirmOrderModal &&
+        !showOrdersListModal &&
+        !showMemberListModal ? (
+          <GlobalAlert
+            alertType={this.props.type}
+            message={this.props.message}
+            toggleAlert={this.props.hideAlert}
+          />
+        ) : (
+          <></>
+        )}
+
         <>
           <OrdersListModal
             show={this.state.showOrdersListModal}

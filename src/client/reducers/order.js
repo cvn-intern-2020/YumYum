@@ -9,9 +9,9 @@ const initialState = { totalPrice: 0, dishes: [] };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_ORDER:
-    case CREATE_ORDER: {
-      return { totalPrice: 0, dishes: [] };
+    case CREATE_ORDER:
+    case SET_ORDER: {
+      return { totalPrice: 0, dishes: action.payload };
     }
     case ADD_TO_ORDER: {
       let updatedDish = action.payload;

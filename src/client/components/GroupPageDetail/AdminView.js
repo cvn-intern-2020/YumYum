@@ -83,13 +83,27 @@ class AdminView extends Component {
     }
   }
   render() {
+    let {
+      showAddMemberModal,
+      showEditDishesModal,
+      showOrdersListModal,
+      showMemberListModal,
+    } = this.state;
     return (
       <>
-        <GlobalAlert
-          alertType={this.props.type}
-          message={this.props.message}
-          toggleAlert={this.props.hideAlert}
-        />
+        {!showAddMemberModal &&
+        !showEditDishesModal &&
+        !showOrdersListModal &&
+        !showMemberListModal ? (
+          <GlobalAlert
+            alertType={this.props.type}
+            message={this.props.message}
+            toggleAlert={this.props.hideAlert}
+          />
+        ) : (
+          <></>
+        )}
+
         <AddMemberModal
           show={this.state.showAddMemberModal}
           handleClose={this.toggleAddMemberModal}
