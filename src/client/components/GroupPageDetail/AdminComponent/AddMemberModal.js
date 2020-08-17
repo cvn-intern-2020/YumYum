@@ -75,6 +75,7 @@ class AddMemberModal extends Component {
     copy(
       `${process.env.FRONT_END_URL}/invite/?token=${createInviteResult.token}`
     );
+    this.props.setAlert("success", "Invite link copied in clipboard");
   };
   render() {
     return (
