@@ -73,10 +73,10 @@ export const createNewGroupController = async (req, res) => {
   let { name, description } = req.body;
   let ownerId = req._id;
   if (!name) {
-    return res.status(400).json({ message: "Name field is empty" })
+    return res.status(400).json({ message: "Name field is empty" });
   }
   if (!description) {
-    return res.status(400).json({ message: "Description field is empty" })
+    return res.status(400).json({ message: "Description field is empty" });
   }
   let { result, status } = await createGroup(name, ownerId, description);
   if (!status) {
