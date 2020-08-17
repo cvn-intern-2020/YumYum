@@ -10,7 +10,7 @@ const PageNotFound = React.lazy(() => import("./Common/PageNotFound"));
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setUser } from "../actions/user";
+import { setUser, clearUser } from "../actions/user";
 import axios from "axios";
 
 class App extends Component {
@@ -18,7 +18,10 @@ class App extends Component {
     super(props);
     axios.defaults.withCredentials = true;
     window.addEventListener("storage", (e) => {
-      console.log(e);
+      if (e.newValue == "false"){
+        this.props.clearUser();
+        this.props.history.push("/");
+      }
     });
   }
   async componentDidMount() {
@@ -79,7 +82,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setUser }, dispatch);
+  return bindActionCreators({ setUser, clearUser }, dispatch);
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
