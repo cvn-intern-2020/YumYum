@@ -159,6 +159,9 @@ export const areDishesInGroup = async (groupId, dishDetails) => {
 };
 
 export const editDishes = async (groupId, dishes) => {
+  if (!isObjectID(groupId)) {
+    return { message: "invalid groupId", status: false };
+  }
   let editDishes = await groupModel.findOneAndUpdate(
     {
       _id: groupId,
