@@ -6,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.get("/:inviteToken", getInviteController);
+router.get("/:inviteHash", getInviteController);
 router.get("/group/:groupId", createInviteController);
 
 module.exports = router;

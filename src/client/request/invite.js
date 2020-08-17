@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const getInviteRequest = (inviteToken) => {
+export const getInviteRequest = (inviteHash) => {
   return axios
-    .get(`${process.env.API_URL}/api/invite/${inviteToken}`)
+    .get(`${process.env.API_URL}/api/invite/${inviteHash}`)
     .then((res) => {
       return { status: true, groupId: res.data.groupId };
     })
@@ -19,7 +19,7 @@ export const createInviteRequest = (groupId) => {
   return axios
     .get(`${process.env.API_URL}/api/invite/group/${groupId}`)
     .then((res) => {
-      return { status: true, token: res.data.token };
+      return { status: true, hash: res.data.hash };
     })
     .catch((err) => {
       return {

@@ -9,7 +9,6 @@ import GlobalAlert from "./Common/GlobalAlert";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../actions/alert";
 import { setUser } from "../actions/user";
-import qs from "query-string";
 
 class Invite extends Component {
   constructor(props) {
@@ -19,13 +18,13 @@ class Invite extends Component {
     };
   }
   async componentDidMount() {
-    let inviteToken = qs.parse(this.props.location.search).token;
-    let inviteResult = await getInviteRequest(inviteToken);
+    let inviteHash = this.props.match.params.inviteHash;
+    let inviteResult = await getInviteRequest(inviteHash);
     if (!inviteResult.status) {
       this.setState({ isCheckingInvite: false });
       this.props.setAlert("danger", inviteResult.message);
-      if (inviteResult.errCode == 401){
-          return;
+      if (inviteResult.errCode == 401) {
+        return;
       }
       setTimeout(() => this.props.history.push("/main"), 7000);
     } else {
