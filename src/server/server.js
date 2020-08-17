@@ -22,7 +22,7 @@ const app = express();
 app.use(morgan("tiny"));
 app.use(compression());
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: process.env.FRONT_END_URL }));
+app.use(cors({ credentials: true, origin: [process.env.FRONT_END_URL, process.env.FRONT_END_URL2] }));
 app.use(passport.initialize());
 require("./utils/passport")(passport);
 app.use(bodyParser.json());
