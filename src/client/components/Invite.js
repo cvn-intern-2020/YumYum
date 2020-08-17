@@ -8,6 +8,7 @@ import { getInviteRequest } from "../request/invite";
 import GlobalAlert from "./Common/GlobalAlert";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../actions/alert";
+import { setUser } from "../actions/user";
 import qs from "query-string";
 
 class Invite extends Component {
@@ -20,12 +21,12 @@ class Invite extends Component {
   async componentDidMount() {
     let inviteToken = qs.parse(this.props.location.search).token;
     let inviteResult = await getInviteRequest(inviteToken);
-    console.log(inviteResult);
     if (!inviteResult.status) {
       this.setState({ isCheckingInvite: false });
       this.props.setAlert("danger", inviteResult.message);
       setTimeout(() => this.props.history.push("/main"), 7000);
     } else {
+      this.props.setUser();
       this.props.history.push(`/group/${inviteResult.groupId}`);
     }
   }
@@ -51,7 +52,7 @@ class Invite extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  return bindActionCreators({ setAlert, hideAlert, setUser }, dispatch);
 }
 
 function mapStateToProps(state) {
