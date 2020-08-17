@@ -24,6 +24,9 @@ class Invite extends Component {
     if (!inviteResult.status) {
       this.setState({ isCheckingInvite: false });
       this.props.setAlert("danger", inviteResult.message);
+      if (inviteResult.errCode == 401){
+          return;
+      }
       setTimeout(() => this.props.history.push("/main"), 7000);
     } else {
       this.props.setUser();

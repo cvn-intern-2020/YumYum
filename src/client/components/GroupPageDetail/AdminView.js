@@ -108,6 +108,7 @@ class AdminView extends Component {
         <AddMemberModal
           show={this.state.showAddMemberModal}
           handleClose={this.toggleAddMemberModal}
+          groupId={this.props.group._id}
         />
         <OrdersListModal
           show={this.state.showOrdersListModal}

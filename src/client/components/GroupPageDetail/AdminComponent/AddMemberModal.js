@@ -8,6 +8,8 @@ import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../../actions/alert";
 import { addMember } from "../../../actions/group";
 import { throttle, debounce } from "lodash";
+import { createInviteRequest } from "../../../request/invite";
+import copy from "copy-to-clipboard";
 
 class AddMemberModal extends Component {
   constructor(props) {
@@ -64,11 +66,33 @@ class AddMemberModal extends Component {
       this.props.hideAlert();
     }
   }
+  generateInviteLink = async () => {
+    let createInviteResult = await createInviteRequest(this.props.groupId);
+    if (!createInviteResult.status) {
+      this.props.setAlert("danger", createInviteResult.message);
+      return -1;
+    }
+    copy(
+      `${process.env.FRONT_END_URL}/invite/?token=${createInviteResult.token}`
+    );
+  };
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Member</Modal.Title>
+          <Modal.Title className="mr-5">Add New Member</Modal.Title>
+          <Button
+            style={{
+              backgroundColor: "#FF5522",
+              color: "#080024",
+              border: "none",
+            }}
+            variant="primary"
+            onClick={this.generateInviteLink}
+            className="ml-5"
+          >
+            Create Invite Link
+          </Button>
         </Modal.Header>
         <Modal.Body>
           {this.props.showAlert ? (

@@ -14,3 +14,18 @@ export const getInviteRequest = (inviteToken) => {
       };
     });
 };
+
+export const createInviteRequest = (groupId) => {
+  return axios
+    .get(`${process.env.API_URL}/api/invite/group/${groupId}`)
+    .then((res) => {
+      return { status: true, token: res.data.token };
+    })
+    .catch((err) => {
+      return {
+        status: false,
+        errCode: err.response.status,
+        message: err.response.data.message,
+      };
+    });
+};
