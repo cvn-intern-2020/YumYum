@@ -94,7 +94,8 @@ class AdminView extends Component {
         {!showAddMemberModal &&
         !showEditDishesModal &&
         !showOrdersListModal &&
-        !showMemberListModal ? (
+        !showMemberListModal &&
+        this.props.showAlert ? (
           <GlobalAlert
             alertType={this.props.type}
             message={this.props.message}

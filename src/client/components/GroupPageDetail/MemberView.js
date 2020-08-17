@@ -78,7 +78,7 @@ class MemberView extends Component {
       <>
         {!showConfirmOrderModal &&
         !showOrdersListModal &&
-        !showMemberListModal ? (
+        !showMemberListModal && this.props.showAlert ? (
           <GlobalAlert
             alertType={this.props.type}
             message={this.props.message}
