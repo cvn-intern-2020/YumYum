@@ -58,13 +58,14 @@ class AddNewGroupModal extends Component {
       return -1;
     }
     this.props.createGroup(this.state);
-    let createGroupResult = await createGroupRequest(this.state);
-    if (!createGroupResult.status) {
-      this.props.setAlert("danger", createGroupResult.message);
-    } else {
-      this.props.setUser(this.props.token);
-      this.props.handleClose();
-    }
+    this.props.handleClose();
+    // let createGroupResult = await createGroupRequest(this.state);
+    // if (!createGroupResult.status) {
+    //   this.props.setAlert("danger", createGroupResult.message);
+    // } else {
+    //   this.props.setUser(this.props.token);
+    //   this.props.handleClose();
+    // }
   };
   componentWillUnmount() {
     if (this.props.showAlert) {
