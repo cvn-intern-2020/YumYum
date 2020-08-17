@@ -5,6 +5,7 @@ import cors from "cors";
 import morgan from "morgan";
 import passport from "passport";
 import path from "path";
+import cookieParser from "cookie-parser";
 
 const data_uri =
   "mongodb+srv://hasagi:hasagi@cluster0.zspjy.gcp.mongodb.net/YumYum?retryWrites=true&w=majority";
@@ -13,11 +14,13 @@ mongoose.connect(data_uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
+  useCreateIndex: true,
 });
 
 const app = express();
 app.use(morgan("tiny"));
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({ credentials: true, origin: process.env.FRONT_END_URL }));
 app.use(passport.initialize());
 require("./utils/passport")(passport);
 app.use(bodyParser.json());

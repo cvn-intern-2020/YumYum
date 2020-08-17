@@ -15,7 +15,7 @@ class AddDishModal extends Component {
       name: "",
       price: 0,
     };
-    this.handleClickAddDish = throttle(this.handleClickAddDish, 1000);
+    this.handleClickAddDish = throttle(this.handleClickAddDish, 5000);
   }
 
   debounceEvent(...args) {
@@ -46,7 +46,7 @@ class AddDishModal extends Component {
       this.props.setAlert("danger", "Name is empty");
       return -1;
     }
-    if (this.state.dishPrice == "") {
+    if (this.state.price == "") {
       if (this.state.err != "") {
         this.props.setAlert("danger", "Price is empty");
         return -1;
@@ -54,10 +54,10 @@ class AddDishModal extends Component {
       this.props.setAlert("danger", "Price is empty");
       return -1;
     }
-    let createDishResult = await createDishRequest(
-      { name: this.state.name, price: this.state.price * 1000 },
-      this.props.token || this.props.location.state.token
-    );
+    let createDishResult = await createDishRequest({
+      name: this.state.name,
+      price: this.state.price * 1000,
+    });
     if (!createDishResult.status) {
       this.props.setAlert("danger", createDishResult.message);
     } else {
@@ -72,7 +72,9 @@ class AddDishModal extends Component {
   componentWillUnmount() {
     this.debouncedEvent.cancel();
     this.handleClickAddDish.cancel();
-    this.props.hideAlert();
+    if (this.props.showAlert) {
+      this.props.hideAlert();
+    }
   }
   render() {
     return (
@@ -98,6 +100,7 @@ class AddDishModal extends Component {
                 name="name"
                 placeholder="Enter dish name"
                 onChange={this.debounceEvent(this.handleChange, 250)}
+                maxLength={20}
               />
             </Form.Group>
 
@@ -105,7 +108,9 @@ class AddDishModal extends Component {
             <Form.Group className="row w">
               <Form.Control
                 className="w-25 col ml-3"
-                type="number"
+                type="text"
+                pattern="\d*"
+                maxLength="9"
                 placeholder="Enter price "
                 name="price"
                 onChange={this.debounceEvent(this.handleChange, 250)}

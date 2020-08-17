@@ -3,7 +3,10 @@ import { Alert } from "react-bootstrap";
 
 export default class GlobalAlert extends Component {
   componentDidMount() {
-    setTimeout(this.props.toggleAlert, 5000);
+    this.timer = setTimeout(this.props.toggleAlert, 5000);
+  }
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   }
   render() {
     return (

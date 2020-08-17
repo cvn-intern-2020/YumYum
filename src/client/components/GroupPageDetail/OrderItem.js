@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ListGroup, Accordion, Card } from "react-bootstrap";
-import OrderConfirmList from "./MemberComponent/OrderConfirm/OrderConfirmList";
+import OrderDetailList from "./Common/OrderDetailList";
 
 export default class OrderItem extends Component {
   render() {
@@ -32,12 +32,7 @@ export default class OrderItem extends Component {
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                <OrderConfirmList
-                  totalPrice={this.props.order.totalPrice}
-                  dishes={this.props.order.details.filter(
-                    (dish) => dish.quantity > 0
-                  )}
-                />
+                <OrderDetailList order={this.props.order} />
               </Card.Body>
             </Accordion.Collapse>
           </Card>

@@ -3,18 +3,26 @@ import { Modal, Button, ModalTitle } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import GlobalAlert from "../Common/GlobalAlert";
+import { debounce } from "lodash";
 
 class ConfirmDeleteModal extends Component {
+  debounceEvent(...args) {
+    this.debouncedEvent = debounce(...args);
+    return (e) => {
+      e.persist();
+      return this.debouncedEvent(e);
+    };
+  }
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <Modal show={this.props.show} onHide={() => this.props.handleClose("")}>
         <Modal.Header closeButton>
           <ModalTitle>Confrim Delete Dish</ModalTitle>
         </Modal.Header>
 
         <Modal.Body>
           {" "}
-          Are you sure want to delete "{this.props.dish.name}" dish{" "}
+          Are you sure want to delete "{this.props.dish.name}" dish?{" "}
           {this.props.showAlert ? (
             <GlobalAlert
               alertType={this.props.type}
@@ -34,7 +42,7 @@ class ConfirmDeleteModal extends Component {
             }}
             variant="primary"
             onClick={() => {
-              this.props.deleteDish();
+              this.debounceEvent(this.props.deleteDish(), 250);
             }}
           >
             Yes
@@ -47,7 +55,7 @@ class ConfirmDeleteModal extends Component {
             }}
             variant="secondary"
             onClick={() => {
-              this.props.handleClose("");
+              this.debounceEvent(this.props.handleClose(""), 250);
             }}
           >
             No

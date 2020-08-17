@@ -11,7 +11,7 @@ const passwordCompare = async (password, user) => {
     let token = jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: 3600,
     });
-    return { status: true, token: "Bearer " + token };
+    return { status: true, token: token };
   }
   return { status: false, message: "Password incorrect" };
 };

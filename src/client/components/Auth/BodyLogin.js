@@ -60,14 +60,19 @@ class BodyLogin extends Component {
     } else {
       this.setState({ ...this.state, isButtonDisabled: true }, () => {
         this.props.setUser(signInResult.token);
-        this.props.history.push("/main", { token: signInResult.token });
+        this.props.history.push({
+          pathname: "/main",
+          state: { token: signInResult.token },
+        });
       });
     }
   };
   componentWillUnmount() {
     this.debouncedEvent.cancel();
     this.handleClick.cancel();
-    this.props.hideAlert();
+    if (this.props.showAlert) {
+      this.props.hideAlert();
+    }
   }
   render() {
     return (
@@ -90,6 +95,7 @@ class BodyLogin extends Component {
               placeholder="Enter email"
               name="email"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={50}
             />
           </Form.Group>
 
@@ -100,6 +106,7 @@ class BodyLogin extends Component {
               placeholder="Password"
               name="password"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={50}
             />
           </Form.Group>
 

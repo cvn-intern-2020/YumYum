@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Button } from "react-bootstrap";
-export default class DishItemUser extends Component {
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { addToOrder } from "../../../actions/order";
+class DishItemUser extends Component {
   render() {
     return (
       <ListGroup.Item>
@@ -20,13 +24,17 @@ export default class DishItemUser extends Component {
                 paddingTop: 0,
                 boxShadow: "none",
               }}
-              onClick={() =>
-                this.props.changeDishAmount(false, this.props.dish._id)
-              }
+              onClick={() => this.props.addToOrder(this.props.dish._id, false)}
             >
               -
             </Button>
-            {this.props.dish.quantity}
+            {this.props.order.dishes.length == 0 ? (
+              <> </>
+            ) : (
+              this.props.order.dishes.find(
+                (dish) => dish._id == this.props.dish._id
+              ).quantity
+            )}
             <Button
               style={{
                 backgroundColor: "transparent",
@@ -36,19 +44,42 @@ export default class DishItemUser extends Component {
                 paddingTop: 0,
                 boxShadow: "none",
               }}
-              onClick={() =>
-                this.props.changeDishAmount(true, this.props.dish._id)
-              }
+              onClick={() => this.props.addToOrder(this.props.dish._id, true)}
             >
               +
             </Button>
           </div>
           <div className="dish-label col ">{this.props.dish.dishPrice} VND</div>
           <div className="dish-label col">
-            {this.props.dish.quantity * this.props.dish.dishPrice}
+            {this.props.order.dishes.length == 0 ? (
+              <> </>
+            ) : (
+              this.props.order.dishes.find(
+                (dish) => dish._id == this.props.dish._id
+              ).quantity * this.props.dish.dishPrice
+            )}
           </div>
         </div>
       </ListGroup.Item>
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addToOrder,
+    },
+    dispatch
+  );
+}
+
+function mapStateToProps(state) {
+  return {
+    order: state.order,
+  };
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DishItemUser)
+);

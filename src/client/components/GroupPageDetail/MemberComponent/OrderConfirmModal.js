@@ -10,10 +10,7 @@ export default class OrderConfirmModal extends Component {
           <Modal.Title>Please confirm your order</Modal.Title>
         </Modal.Header>
         <ModalBody>
-          <OrderConfirmList
-            totalPrice={this.props.totalPrice}
-            dishes={this.props.dishes.filter((dish) => dish.quantity > 0)}
-          />
+          <OrderConfirmList />
         </ModalBody>
         <Modal.Footer>
           <Button

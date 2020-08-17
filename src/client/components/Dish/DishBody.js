@@ -11,6 +11,7 @@ import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import { throttle } from "lodash";
+import { getDish } from "../../actions/dish";
 
 class DishBody extends Component {
   constructor(props) {
@@ -31,10 +32,7 @@ class DishBody extends Component {
   };
 
   deleteDish = async () => {
-    let deleteDishResult = await deleteDishRequest(
-      this.state.selected,
-      this.props.token
-    );
+    let deleteDishResult = await deleteDishRequest(this.state.selected);
     if (!deleteDishResult.status) {
       this.props.setAlert("danger", deleteDishResult.message);
       return -1;
@@ -65,11 +63,12 @@ class DishBody extends Component {
     });
   };
   async componentDidMount() {
+    this.props.getDish();
     if (this.props.location.state) {
       this.props.setAlert("danger", this.props.location.state.message);
     }
     let { getDishOfUserRequest } = await import("../../request/dish");
-    let getDishOfUserResult = await getDishOfUserRequest(this.props.token);
+    let getDishOfUserResult = await getDishOfUserRequest();
     if (!getDishOfUserResult.status) {
       this.props.setAlert(
         "danger",
@@ -177,7 +176,7 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert }, dispatch);
+  return bindActionCreators({ setAlert, hideAlert, getDish }, dispatch);
 }
 
 export default withRouter(
