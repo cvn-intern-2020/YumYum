@@ -1,8 +1,8 @@
 import express from "express";
-import { inviteController } from "../controllers/Invite";
+import { getInviteController } from "../controllers/Invite";
 
 const router = express.Router();
 
-router.get("/:inviteToken", inviteController);
+router.get("/:inviteToken", getInviteController);
 
 module.exports = router;

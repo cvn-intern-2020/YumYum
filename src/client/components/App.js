@@ -12,13 +12,14 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setUser, clearUser } from "../actions/user";
 import axios from "axios";
+import Invite from "./Invite";
 
 class App extends Component {
   constructor(props) {
     super(props);
     axios.defaults.withCredentials = true;
     window.addEventListener("storage", (e) => {
-      if (e.newValue == "false"){
+      if (e.newValue == "false") {
         this.props.clearUser();
         this.props.history.push("/");
       }
@@ -28,9 +29,14 @@ class App extends Component {
     let isLogin = await this.props.setUser();
     if (!isLogin) {
       this.props.history.push("/");
-    }
-    if (this.props.token && this.props.token != "") {
-      this.props.history.push("/main");
+    } else {
+      if (
+        this.props.token &&
+        this.props.token != "" &&
+        ["/login", "/signup", "/"].includes(this.props.location.pathname)
+      ) {
+        this.props.history.push("/main");
+      }
     }
   }
 
@@ -39,30 +45,35 @@ class App extends Component {
       <>
         <Suspense fallback={<div className="loader"></div>}>
           <Switch>
-            <Route path="/main" render={(props) => <Main {...props} />} exact />
+            <Route path="/main" render={() => <Main {...this.props} />} exact />
             <Route
               path="/"
               token={this.props.token}
-              render={(props) => <Landing {...props} />}
+              render={() => <Landing {...this.props} />}
               exact
             />
-            <Route path="/dish" render={(props) => <Dish {...props} />} exact />
+            <Route
+              path="/invite"
+              render={() => <Invite {...this.props} />}
+              exact
+            ></Route>
+            <Route path="/dish" render={() => <Dish {...this.props} />} exact />
             <Route
               path="/login"
               token={this.props.token}
-              render={(props) => <Login {...props} />}
+              render={() => <Login {...this.props} />}
               exact
             />
             <Route
               path="/signup"
               token={this.props.token}
-              render={(props) => <Signup {...props} />}
+              render={() => <Signup {...this.props} />}
               exact
             />
             <Route path="/group">
               <Route
                 path="/group/:groupId"
-                render={(props) => <Group {...props} />}
+                render={() => <Group {...this.props} />}
                 exact
               />
             </Route>
