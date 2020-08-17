@@ -59,13 +59,6 @@ class AddNewGroupModal extends Component {
     }
     this.props.createGroup(this.state);
     this.props.handleClose();
-    // let createGroupResult = await createGroupRequest(this.state);
-    // if (!createGroupResult.status) {
-    //   this.props.setAlert("danger", createGroupResult.message);
-    // } else {
-    //   this.props.setUser(this.props.token);
-    //   this.props.handleClose();
-    // }
   };
   componentWillUnmount() {
     if (this.props.showAlert) {
@@ -97,6 +90,7 @@ class AddNewGroupModal extends Component {
                 name="name"
                 placeholder="Enter group name"
                 onChange={this.debounceEvent(this.handleChange, 250)}
+                maxLength={20}
               />
             </Form.Group>
 
@@ -109,6 +103,7 @@ class AddNewGroupModal extends Component {
                 placeholder="Enter description"
                 name="description"
                 onChange={this.debounceEvent(this.handleChange, 250)}
+                maxLength={100}
               />
             </Form.Group>
           </Form>

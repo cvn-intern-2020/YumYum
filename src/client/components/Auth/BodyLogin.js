@@ -95,6 +95,7 @@ class BodyLogin extends Component {
               placeholder="Enter email"
               name="email"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={50}
             />
           </Form.Group>
 
@@ -105,6 +106,7 @@ class BodyLogin extends Component {
               placeholder="Password"
               name="password"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={50}
             />
           </Form.Group>
 

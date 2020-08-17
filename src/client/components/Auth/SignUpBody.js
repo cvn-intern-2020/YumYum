@@ -103,6 +103,7 @@ class SignUpBody extends Component {
               placeholder="Enter email"
               className="signup-form-textbox"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={20}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
@@ -112,6 +113,7 @@ class SignUpBody extends Component {
               name="password"
               className="signup-form-textbox"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={50}
             />
           </Form.Group>
           <Form.Group controlId="formBasicName">
@@ -121,6 +123,7 @@ class SignUpBody extends Component {
               name="name"
               className="signup-form-textbox"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={20}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPhone">

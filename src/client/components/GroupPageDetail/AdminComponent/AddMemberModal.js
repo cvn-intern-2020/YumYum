@@ -87,6 +87,7 @@ class AddMemberModal extends Component {
               name="email"
               placeholder="abcdxy@example.com"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={50}
             />
           </Form.Group>
         </Modal.Body>

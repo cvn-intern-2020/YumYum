@@ -100,6 +100,7 @@ class AddDishModal extends Component {
                 name="name"
                 placeholder="Enter dish name"
                 onChange={this.debounceEvent(this.handleChange, 250)}
+                maxLength={20}
               />
             </Form.Group>
 
@@ -111,6 +112,7 @@ class AddDishModal extends Component {
                 placeholder="Enter price "
                 name="price"
                 onChange={this.debounceEvent(this.handleChange, 250)}
+                maxLength={9}
               />
               <div className="input-group-append col">
                 <span className="input-group-text" style={{ width: "7rem" }}>
