@@ -15,7 +15,7 @@ class AddDishModal extends Component {
       name: "",
       price: 0,
     };
-    this.handleClickAddDish = throttle(this.handleClickAddDish, 1000);
+    this.handleClickAddDish = throttle(this.handleClickAddDish, 5000);
   }
 
   debounceEvent(...args) {
@@ -46,7 +46,7 @@ class AddDishModal extends Component {
       this.props.setAlert("danger", "Name is empty");
       return -1;
     }
-    if (this.state.dishPrice == "") {
+    if (this.state.price == "") {
       if (this.state.err != "") {
         this.props.setAlert("danger", "Price is empty");
         return -1;
