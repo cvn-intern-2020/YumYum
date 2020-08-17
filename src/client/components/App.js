@@ -23,30 +23,23 @@ class App extends Component {
     if (!isLogin) {
       this.props.history.push("/");
     }
+    if (this.props.token != "") {
+      this.props.history.push("/main");
+    }
   }
   render() {
     return (
       <>
         <Suspense fallback={<div className="loader"></div>}>
           <Switch>
-            <Route
-              path="/main"
-              token={this.props.token}
-              render={(props) => <Main {...props} />}
-              exact
-            />
+            <Route path="/main" render={(props) => <Main {...props} />} exact />
             <Route
               path="/"
               token={this.props.token}
               render={(props) => <Landing {...props} />}
               exact
             />
-            <Route
-              path="/dish"
-              token={this.props.token}
-              render={(props) => <Dish {...props} />}
-              exact
-            />
+            <Route path="/dish" render={(props) => <Dish {...props} />} exact />
             <Route
               path="/login"
               token={this.props.token}
@@ -62,7 +55,6 @@ class App extends Component {
             <Route path="/group">
               <Route
                 path="/group/:groupId"
-                token={this.props.token}
                 render={(props) => <Group {...props} />}
                 exact
               />
