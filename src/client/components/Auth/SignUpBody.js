@@ -60,8 +60,7 @@ class SignUpBody extends Component {
       return -1;
     }
     if (
-      this.state.phone.length < 10 ||
-      this.state.phone.length > 11 ||
+      this.state.phone.length != 10 ||
       !Validator.isNumeric(this.state.phone)
     ) {
       this.props.setAlert("danger", "Phone number must be 10 number");

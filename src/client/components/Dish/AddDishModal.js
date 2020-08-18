@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { throttle, debounce } from "lodash";
+import validator from "validator";
 
 class AddDishModal extends Component {
   constructor(props) {
@@ -54,6 +55,18 @@ class AddDishModal extends Component {
       this.props.setAlert("danger", "Price is empty");
       return -1;
     }
+    let price = parseInt(this.state.price);
+
+    if (!validator.isNumeric(this.state.price) || price < 0) {
+      this.props.setAlert("danger", "Price is not numeric or smaller than 0");
+      return -1;
+    }
+    let cleanName = this.state.name.replace(/\s/g, "");
+    if (cleanName.length == 0) {
+      this.props.setAlert("danger", "Name not allow all space");
+      return -1;
+    }
+
     let createDishResult = await createDishRequest({
       name: this.state.name,
       price: this.state.price * 1000,
@@ -109,7 +122,6 @@ class AddDishModal extends Component {
               <Form.Control
                 className="w-25 col ml-3"
                 type="text"
-                pattern="\d*"
                 maxLength="9"
                 placeholder="Enter price "
                 name="price"
