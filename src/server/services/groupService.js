@@ -14,7 +14,7 @@ export const isAllowedToReadOrders = async (groupId, userId) => {
 
 export const isAllowedToEditGroup = async (groupId, userId) => {
   if (!isObjectID(groupId)) {
-    return { message: "invalid groupId", status: false };
+    return { message: "invalid group, check your Id", status: false };
   }
   let result = await groupModel
     .findOne({
@@ -47,7 +47,7 @@ export const isUserInGroup = async (userId, groupId) => {
 
 export const getGroupById = async (groupId) => {
   if (!isObjectID(groupId)) {
-    return { message: "invalid groupId", status: false };
+    return { message: "invalid group, check your Id", status: false };
   }
   let result = await groupModel
     .findOne({
@@ -55,7 +55,7 @@ export const getGroupById = async (groupId) => {
     })
     .populate("dishes");
   if (!result) {
-    return { message: "groupId does not exist", status: false };
+    return { message: "group does not exist", status: false };
   }
   return { result, status: true };
 };
@@ -82,10 +82,10 @@ export const inviteMemberToGroup = async (user, groupId) => {
 
 export const addMemberToGroup = async (ownerId, user, groupId) => {
   if (!isObjectID(ownerId)) {
-    return { message: "invalid ownerId", status: false };
+    return { message: "you are not the owner of this group", status: false };
   }
   if (!isObjectID(groupId)) {
-    return { message: "invalid groupId", status: false };
+    return { message: "invalid group, check your Id", status: false };
   }
 
   let result = await groupModel.findOneAndUpdate(
@@ -110,7 +110,7 @@ export const addMemberToGroup = async (ownerId, user, groupId) => {
 
 export const createGroup = async (name, ownerId, description) => {
   if (!isObjectID(ownerId)) {
-    return { message: "invalid ownerId", status: false };
+    return { message: "invalid owner, check your Id", status: false };
   }
   let createdGroup = await groupModel.create({
     name,
@@ -160,7 +160,7 @@ export const areDishesInGroup = async (groupId, dishDetails) => {
 
 export const editDishes = async (groupId, dishes) => {
   if (!isObjectID(groupId)) {
-    return { message: "invalid groupId", status: false };
+    return { message: "invalid group, check your Id", status: false };
   }
   let editDishes = await groupModel.findOneAndUpdate(
     {
@@ -173,7 +173,7 @@ export const editDishes = async (groupId, dishes) => {
   );
   if (!editDishes) {
     return {
-      message: "dishId or groupId does not exist",
+      message: "dish or group does not exist",
       status: false,
     };
   }

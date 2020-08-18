@@ -37,7 +37,7 @@ export const getDish = () => async (dispatch) => {
   return true;
 };
 export const addDish = (name, price) => async (dispatch) => {
-  let createDishResult = await createDishRequest({
+  const createDishResult = await createDishRequest({
     name,
     price: price * 1000,
   });
@@ -49,7 +49,7 @@ export const addDish = (name, price) => async (dispatch) => {
 };
 
 export const deleteDish = (dishId) => async (dispatch) => {
-  let deleteDishResult = await deleteDishRequest(dishId);
+  const deleteDishResult = await deleteDishRequest(dishId);
   if (!deleteDishResult.status) {
     dispatch(setAlert("danger", deleteDishResult.message));
   } else {
@@ -58,10 +58,10 @@ export const deleteDish = (dishId) => async (dispatch) => {
 };
 
 export const updateToEditDish = () => async (dispatch, getState) => {
-  let groupId = getState().group._id;
+  const groupId = getState().group._id;
   dispatch(getDish());
   dispatch(setGroup(groupId));
-  let dishes = getState().group.dishes;
+  const dishes = getState().group.dishes;
   dispatch({ type: UPDATE_DISH_TO_EDIT, payload: dishes });
 };
 
@@ -74,9 +74,9 @@ export const deleteEditedDish = (changeDish) => (dispatch) => {
 };
 
 export const editDish = () => async (dispatch, getState) => {
-  let dishArray = getState().dish.editedDishes.map((dish) => dish._id);
-  let groupId = getState().group._id;
-  let editDishesResult = await editDishesInGroupRequest(groupId, dishArray);
+  const dishArray = getState().dish.editedDishes.map((dish) => dish._id);
+  const groupId = getState().group._id;
+  const editDishesResult = await editDishesInGroupRequest(groupId, dishArray);
   if (!editDishesResult.status) {
     dispatch(setAlert("danger", editDishesResult.message));
   } else {

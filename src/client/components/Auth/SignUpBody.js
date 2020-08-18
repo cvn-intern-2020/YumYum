@@ -52,7 +52,7 @@ class SignUpBody extends Component {
       return -1;
     }
 
-    let signUpResult = await signUpRequest(this.state);
+    const signUpResult = await signUpRequest(this.state);
     if (!signUpResult.status) {
       this.props.setAlert("danger", signUpResult.message);
     } else {

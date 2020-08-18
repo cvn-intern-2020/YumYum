@@ -46,7 +46,7 @@ class AddDishModal extends Component {
       return -1;
     }
 
-    let createDishResult = await createDishRequest({
+    const createDishResult = await createDishRequest({
       name: this.state.name,
       price: this.state.price * 1000,
     });
@@ -125,7 +125,7 @@ class AddDishModal extends Component {
             }}
             variant="primary"
             onClick={() => {
-              this.handleClickAddDish();
+              this.debounceEvent(this.handleClickAddDish(), 250);
             }}
           >
             Save
