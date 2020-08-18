@@ -34,6 +34,7 @@ class AdminView extends Component {
       ...this.state,
       showAddMemberModal: !this.state.showAddMemberModal,
     });
+    this.props.hideAlert();
   };
   toggleEditDishesModal = async () => {
     if (!this.state.showEditDishesModal) {
