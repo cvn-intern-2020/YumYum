@@ -3,7 +3,7 @@ import MainNavBar from "./Common/MainNavBar";
 import MainBody from "./Main/MainBody";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import "../../../public/main.css";
+import "../../../public/css/main/main.css";
 
 class Main extends Component {
   render() {

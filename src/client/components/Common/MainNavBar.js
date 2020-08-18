@@ -6,7 +6,7 @@ import { clearUser } from "../../actions/user";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import "../../../../public/index.css";
+import "../../../../public/css/index.css";
 
 class MainNavBar extends Component {
   handleLogout = () => {
