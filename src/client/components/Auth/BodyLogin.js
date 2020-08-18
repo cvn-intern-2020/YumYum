@@ -40,12 +40,12 @@ class BodyLogin extends Component {
       this.props.setAlert("danger", "Email is empty");
       return -1;
     }
-    if (this.state.password == "") {
-      this.props.setAlert("danger", "Password is empty");
-      return -1;
-    }
     if (!Validator.isEmail(this.state.email)) {
       this.props.setAlert("danger", "not email");
+      return -1;
+    }
+    if (this.state.password == "") {
+      this.props.setAlert("danger", "Password is empty");
       return -1;
     }
     if (this.state.password.length < 6) {

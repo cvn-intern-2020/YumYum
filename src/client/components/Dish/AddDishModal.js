@@ -125,7 +125,7 @@ class AddDishModal extends Component {
             }}
             variant="primary"
             onClick={() => {
-              this.debounceEvent(this.handleClickAddDish(), 250);
+              this.handleClickAddDish();
             }}
           >
             Save
