@@ -35,6 +35,7 @@ export const validateRegister = (name, phone, email, password) => {
         "Please enter all fields required: name, phone, email and password",
     };
   }
+  if (isEmpt)
   if (name == "") {
     return { status: false, message: "Name is empty" };
   }
