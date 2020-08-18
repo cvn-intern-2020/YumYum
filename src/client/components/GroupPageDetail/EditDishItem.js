@@ -26,8 +26,9 @@ class EditDishItem extends Component {
               <div key="default-checkbox" className="mb-3">
                 <Form.Check
                   type="checkbox"
-                  id={this.props.id}
-                  onClick={this.props.handleOnClick}
+                  checked={this.props.checked}
+                  onChange={ this.props.handleSelectChange } 
+                  name={this.props.dish._id}
                 />
               </div>
             </Form>
