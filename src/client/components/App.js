@@ -43,7 +43,7 @@ class App extends Component {
   }
 
   render() {
-    const {token} = this.props
+    const { token } = this.props;
     return (
       <>
         <Suspense fallback={<div className="loader"></div>}>

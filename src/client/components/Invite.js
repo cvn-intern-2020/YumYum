@@ -18,7 +18,7 @@ class Invite extends Component {
     };
   }
   async componentDidMount() {
-    const {match, setAlert, history, setUser} = this.props
+    const { match, setAlert, history, setUser } = this.props;
     let inviteHash = match.params.inviteHash;
     let inviteResult = await getInviteRequest(inviteHash);
     if (!inviteResult.status) {

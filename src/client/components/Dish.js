@@ -8,7 +8,7 @@ import "../../../public/group.css";
 
 class Dish extends Component {
   render() {
-    const {userName} = this.props
+    const { userName } = this.props;
     return (
       <div className="h-100">
         <MainNavBar name={userName} />
