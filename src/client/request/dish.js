@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const createDishRequest = ({ name, price }, token) => {
+export const createDishRequest = ({ name, price }) => {
   return axios
     .post(`${process.env.API_URL}/api/dishes/new`, {
-      name: name,
-      price: price,
+      name, 
+      price
     })
     .then((res) => {
       return { status: true, message: "Add success", newDish: res.data };
