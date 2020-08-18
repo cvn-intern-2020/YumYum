@@ -62,8 +62,7 @@ export const validateRegister = (name, phone, email, password) => {
 export const createGroup = (name, description) => {
   if (
     isUndefined(name) ||
-    isUndefined(description)
-  ) {
+    isUndefined(description)  ) {
     return {
       status: false,
       message:
@@ -82,5 +81,29 @@ export const createGroup = (name, description) => {
   if (description.length > 100) {
     return { status: false, message: "description is too long" };
   }
-  return { status: true };
+  return { status: true };};
+
+  export const validateLogin = (email, password) => {
+  if (
+    isUndefined(email) ||
+    isUndefined(password)  ) {
+    return {
+      status: false,
+      message:
+        "Please enter all fields required: email, password",
+    };
+  }
+  if (email == "") {
+    return { status: false, message: "Email is empty" };
+  }
+  if (!isEmail(email)) {
+    return { status: false, message: "Email is invalid" };
+  }
+  if (password == "") {
+    return { status: false, message: "Password is empty" };
+  }
+  if (password.length < 6) {
+    return { status: false, message: "Password is too short" };
+  }
+  return {status: true};
 };

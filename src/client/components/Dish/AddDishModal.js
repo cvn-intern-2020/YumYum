@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { throttle, debounce } from "lodash";
 import validator from "validator";
+import { DISH_MAX_LENGTH, PRICE_MAX_LENGTH } from "../../constant";
 
 class AddDishModal extends Component {
   constructor(props) {
@@ -113,7 +114,7 @@ class AddDishModal extends Component {
                 name="name"
                 placeholder="Enter dish name"
                 onChange={this.debounceEvent(this.handleChange, 250)}
-                maxLength={20}
+                maxLength={DISH_MAX_LENGTH}
               />
             </Form.Group>
 
@@ -122,7 +123,7 @@ class AddDishModal extends Component {
               <Form.Control
                 className="w-25 col ml-3"
                 type="text"
-                maxLength="9"
+                maxLength={PRICE_MAX_LENGTH}
                 placeholder="Enter price "
                 name="price"
                 onChange={this.debounceEvent(this.handleChange, 250)}

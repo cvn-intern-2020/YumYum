@@ -10,6 +10,7 @@ import { bindActionCreators } from "redux";
 import { signUpRequest } from "../../request/auth";
 import { throttle, debounce } from "lodash";
 import "../../../../public/signup.css";
+import { PHONE_MAX_LENGTH, EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH, NAME_MAX_LENGTH } from "../../constant";
 
 class SignUpBody extends Component {
   constructor(props) {
@@ -46,8 +47,20 @@ class SignUpBody extends Component {
       this.props.setAlert("danger", "Name is empty");
       return -1;
     }
+
+    let cleanUserName = this.state.name.replace(/\s/g, "");
+    if (cleanUserName.length == 0) {
+      this.props.setAlert("danger", "Name not allow all space");
+      return -1;
+    }
+
     if (this.state.phone == "") {
       this.props.setAlert("danger", "Phone is empty");
+      return -1;
+    }
+    let cleanPhone = this.state.phone.replace(/\s/g, "");
+    if (cleanPhone.length == 0) {
+      this.props.setAlert("danger", "Phone number not allow all space");
       return -1;
     }
 
@@ -60,8 +73,8 @@ class SignUpBody extends Component {
       return -1;
     }
     if (
-      this.state.phone.length != 10 ||
-      !Validator.isNumeric(this.state.phone)
+      (this.state.phone.length != PHONE_MAX_LENGTH,
+      !Validator.isNumeric(this.state.phone))
     ) {
       this.props.setAlert("danger", "Phone number must be 10 number");
       return -1;
@@ -102,7 +115,7 @@ class SignUpBody extends Component {
               placeholder="Enter email"
               className="signup-form-textbox"
               onChange={this.debounceEvent(this.handleChange, 250)}
-              maxLength={20}
+              maxLength={EMAIL_MAX_LENGTH}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
@@ -112,7 +125,7 @@ class SignUpBody extends Component {
               name="password"
               className="signup-form-textbox"
               onChange={this.debounceEvent(this.handleChange, 250)}
-              maxLength={50}
+              maxLength={PASSWORD_MAX_LENGTH}
             />
           </Form.Group>
           <Form.Group controlId="formBasicName">
@@ -122,7 +135,7 @@ class SignUpBody extends Component {
               name="name"
               className="signup-form-textbox"
               onChange={this.debounceEvent(this.handleChange, 250)}
-              maxLength={20}
+              maxLength={NAME_MAX_LENGTH}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPhone">
