@@ -4,6 +4,7 @@ import {
   deleteDish,
 } from "../services/dishService";
 import { pullDishFromGroup } from "../services/groupService";
+import { validateDish } from "../utils/validators";
 
 export const getDishByUserIdController = async (req, res) => {
   let userId = req._id;
@@ -17,6 +18,10 @@ export const getDishByUserIdController = async (req, res) => {
 export const createDishController = async (req, res) => {
   let userId = req._id;
   let { name, price } = req.body;
+  let validateResult = validateDish(name, price);
+  if (!validateResult.status) {
+    return res.status(400).json({ message: validateResult.message });
+  }
   let createDishResult = await createDish(name, price, userId);
   if (!createDishResult.status) {
     return res.status(400).json({ message: createDishResult.message });
@@ -32,9 +37,7 @@ export const deleteDishController = async (req, res) => {
     return res.status(400).json({ message: deletedDish.message });
   }
   let cascadeDeleteDish = await pullDishFromGroup(dishId);
-  return res
-    .status(200)
-    .json({
-      message: `Delete successfully with ${cascadeDeleteDish} groups updated`,
-    });
+  return res.status(200).json({
+    message: `Delete successfully with ${cascadeDeleteDish} groups updated`,
+  });
 };
