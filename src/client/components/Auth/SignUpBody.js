@@ -10,7 +10,13 @@ import { bindActionCreators } from "redux";
 import { signUpRequest } from "../../request/auth";
 import { throttle, debounce } from "lodash";
 import "../../../../public/signup.css";
-import { PHONE_MAX_LENGTH, EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH, NAME_MAX_LENGTH } from "../../constant";
+import {
+  PHONE_MAX_LENGTH,
+  EMAIL_MAX_LENGTH,
+  PASSWORD_MAX_LENGTH,
+  NAME_MAX_LENGTH,
+} from "../../constant";
+import { validateSignUp } from "../../utils/validator";
 
 class SignUpBody extends Component {
   constructor(props) {
@@ -35,48 +41,14 @@ class SignUpBody extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleClick = async () => {
-    if (this.state.email == "") {
-      this.props.setAlert("danger", "Email is empty");
-      return -1;
-    }
-    if (this.state.password == "") {
-      this.props.setAlert("danger", "Password is empty");
-      return -1;
-    }
-    if (this.state.name == "") {
-      this.props.setAlert("danger", "Name is empty");
-      return -1;
-    }
-
-    let cleanUserName = this.state.name.replace(/\s/g, "");
-    if (cleanUserName.length == 0) {
-      this.props.setAlert("danger", "Name not allow all space");
-      return -1;
-    }
-
-    if (this.state.phone == "") {
-      this.props.setAlert("danger", "Phone is empty");
-      return -1;
-    }
-    let cleanPhone = this.state.phone.replace(/\s/g, "");
-    if (cleanPhone.length == 0) {
-      this.props.setAlert("danger", "Phone number not allow all space");
-      return -1;
-    }
-
-    if (!Validator.isEmail(this.state.email)) {
-      this.props.setAlert("danger", "Invalid email");
-      return -1;
-    }
-    if (this.state.password.length < 6) {
-      this.props.setAlert("danger", "Password must be 6 character at least");
-      return -1;
-    }
-    if (
-      (this.state.phone.length != PHONE_MAX_LENGTH,
-      !Validator.isNumeric(this.state.phone))
-    ) {
-      this.props.setAlert("danger", "Phone number must be 10 number");
+    let validateResult = validateSignUp(
+      this.state.email,
+      this.state.password,
+      this.state.name,
+      this.state.phone
+    );
+    if (!validateResult.status) {
+      this.props.setAlert("danger", validateResult.message);
       return -1;
     }
 
@@ -145,6 +117,7 @@ class SignUpBody extends Component {
               name="phone"
               className="signup-form-textbox"
               onChange={this.debounceEvent(this.handleChange, 250)}
+              maxLength={PHONE_MAX_LENGTH}
             />
           </Form.Group>
           <div style={{ textAlign: "center" }}>
