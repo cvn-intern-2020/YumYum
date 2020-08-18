@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { clearGroup } from "../actions/group";
-import "../../../public/group.css";
+import "../../../public/css/group/group.css";
 
 class Group extends Component {
   componentWillUnmount() {

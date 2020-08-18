@@ -10,7 +10,7 @@ import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import { signInRequest } from "../../request/auth";
 import { throttle, debounce } from "lodash";
-import "../../../../public/login.css";
+import "../../../../public/css/login/login.css";
 import { EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH } from "../../constant";
 import { validateSignIn } from "../../utils/validator";
 

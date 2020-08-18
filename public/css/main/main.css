@@ -46,7 +46,7 @@
 }
 
 .main-body-background-div {
-  background-image: url(./background.jpg);
+  background-image: url(../../background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   height: 94%;
