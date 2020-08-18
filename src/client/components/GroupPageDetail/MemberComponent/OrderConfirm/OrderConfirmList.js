@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 
 class DishListUser extends Component {
   render() {
+    const { order } = this.props;
     return (
       <>
         <div className="row w-100 m-0">
@@ -24,13 +25,13 @@ class DishListUser extends Component {
         </div>
         <div className="group-container mt-4" style={{ position: "relative" }}>
           <ListGroup>
-            {this.props.order.dishes.map((dish) => {
+            {order.dishes.map((dish) => {
               if (dish.quantity > 0) {
                 return <OrderConfirmItem key={dish._id} dish={dish} />;
               }
             })}
           </ListGroup>
-          {this.props.order.dishes.length > 0 ? (
+          {order.dishes.length > 0 ? (
             <>
               <ListGroup.Item
                 style={{
@@ -42,7 +43,7 @@ class DishListUser extends Component {
                 className="float-right dish-label"
               >
                 <pre className="dish-label tab4">
-                  Total: {this.props.order.totalPrice} VND
+                  Total: {order.totalPrice} VND
                 </pre>
               </ListGroup.Item>
             </>

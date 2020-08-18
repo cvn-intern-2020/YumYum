@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
-import Validator from "validator";
 import { withRouter } from "react-router-dom";
 import GlobalAlert from "../Common/GlobalAlert";
 import { setAlert, hideAlert } from "../../actions/alert";
@@ -9,7 +8,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { signUpRequest } from "../../request/auth";
 import { throttle, debounce } from "lodash";
-import "../../../../public/signup.css";
+import "../../../../public/css/signup/signup.css";
 import {
   PHONE_MAX_LENGTH,
   EMAIL_MAX_LENGTH,
@@ -41,17 +40,12 @@ class SignUpBody extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleClick = async () => {
-    let validateResult = validateSignUp(
-      this.state.email,
-      this.state.password,
-      this.state.name,
-      this.state.phone
-    );
+    let { email, password, name, phone } = this.state;
+    let validateResult = validateSignUp(email, password, name, phone);
     if (!validateResult.status) {
       this.props.setAlert("danger", validateResult.message);
       return -1;
     }
-
     const signUpResult = await signUpRequest(this.state);
     if (!signUpResult.status) {
       this.props.setAlert("danger", signUpResult.message);
@@ -67,6 +61,7 @@ class SignUpBody extends Component {
     }
   }
   render() {
+    const {showAlert, type, hideAlert, message} = this.props;
     return (
       <div
         style={{
@@ -135,11 +130,11 @@ class SignUpBody extends Component {
             </Button>
           </div>
 
-          {this.props.showAlert ? (
+          {showAlert ? (
             <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
+              alertType={type}
+              toggleAlert={hideAlert}
+              message={message}
             />
           ) : (
             <></>

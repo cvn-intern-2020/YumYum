@@ -34,40 +34,45 @@ class AdminView extends Component {
       ...this.state,
       showAddMemberModal: !this.state.showAddMemberModal,
     });
+    this.props.hideAlert();
   };
   toggleEditDishesModal = async () => {
-    if (!this.state.showEditDishesModal) {
-      let result = await this.props.getDish(this.props.history);
+    const { getDish, history, updateToEditDish, hideAlert } = this.props;
+    const { showEditDishesModal } = this.state;
+    if (!showEditDishesModal) {
+      let result = await getDish(history);
       if (!result) {
-        this.props.history.push({
+        history.push({
           pathname: "/dish",
           state: { message: "Please create dish before edit in group" },
         });
         return;
       }
-      this.props.updateToEditDish();
+      updateToEditDish();
     }
     this.setState({
       ...this.state,
-      showEditDishesModal: !this.state.showEditDishesModal,
+      showEditDishesModal: !showEditDishesModal,
       err: "",
       showAlert: false,
     });
-    this.props.hideAlert();
+    hideAlert();
   };
 
   toggleOrdersListModal = async () => {
-    if (!this.state.showOrdersListModal) {
-      this.props.setOrderToGroup(this.props.match.params.groupId);
+    const { setOrderToGroup, match } = this.props;
+    const { showOrdersListModal } = this.state;
+    if (!showOrdersListModal) {
+      setOrderToGroup(match.params.groupId);
       this.setState({
         ...this.state,
-        showOrdersListModal: !this.state.showOrdersListModal,
+        showOrdersListModal: !showOrdersListModal,
       });
       return -1;
     }
     this.setState({
       ...this.state,
-      showOrdersListModal: !this.state.showOrdersListModal,
+      showOrdersListModal: !showOrdersListModal,
     });
   };
 
@@ -78,40 +83,42 @@ class AdminView extends Component {
     });
   };
   componentWillUnmount() {
-    if (this.props.showAlert) {
-      this.props.hideAlert();
+    const { showAlert, hideAlert } = this.props;
+    if (showAlert) {
+      hideAlert();
     }
   }
   render() {
-    let {
+    const {
       showAddMemberModal,
       showEditDishesModal,
       showOrdersListModal,
       showMemberListModal,
     } = this.state;
+    const { type, message, hideAlert, group, showAlert } = this.props;
     return (
       <>
         {!showAddMemberModal &&
         !showEditDishesModal &&
         !showOrdersListModal &&
         !showMemberListModal &&
-        this.props.showAlert ? (
+        showAlert ? (
           <GlobalAlert
-            alertType={this.props.type}
-            message={this.props.message}
-            toggleAlert={this.props.hideAlert}
+            alertType={type}
+            message={message}
+            toggleAlert={hideAlert}
           />
         ) : (
           <></>
         )}
 
         <AddMemberModal
-          show={this.state.showAddMemberModal}
+          show={showAddMemberModal}
           handleClose={this.toggleAddMemberModal}
-          groupId={this.props.group._id}
+          groupId={group._id}
         />
         <OrdersListModal
-          show={this.state.showOrdersListModal}
+          show={showOrdersListModal}
           handleClose={this.toggleOrdersListModal}
         />
         <ButtonBar
@@ -121,12 +128,12 @@ class AdminView extends Component {
           toggleMemberListModal={this.toggleMemberListModal}
         />
         <MemberListModal
-          show={this.state.showMemberListModal}
+          show={showMemberListModal}
           handleClose={this.toggleMemberListModal}
         />
-        {this.state.showEditDishesModal ? (
+        {showEditDishesModal ? (
           <EditDishesModal
-            show={this.state.showEditDishesModal}
+            show={showEditDishesModal}
             handleClose={this.toggleEditDishesModal}
             handleSaveNewDishes={this.handleSaveNewDishes}
           />

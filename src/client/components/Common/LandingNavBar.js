@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 export default class LandingNavBar extends Component {
   render() {
+    const { location } = this.props;
     return (
       <div>
         <Navbar
@@ -27,7 +28,7 @@ export default class LandingNavBar extends Component {
             </div>
             <div className="col-5"></div>
             <div className="col p-0">
-              {this.props.location.pathname == "/" ? (
+              {location.pathname == "/" ? (
                 <>
                   <Link to="/signup">
                     <Button

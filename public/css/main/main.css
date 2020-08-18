@@ -45,11 +45,11 @@
   border-radius: 0.5rem;
 }
 
-.main-body-background-div{
-    background-image: url(./public/background.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 94%;
+.main-body-background-div {
+  background-image: url(../../background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 94%;
 }
 
 .list-group-container{

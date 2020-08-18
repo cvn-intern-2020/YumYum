@@ -76,8 +76,16 @@ class AddMemberModal extends Component {
     this.props.setAlert("success", "Invite link copied in clipboard");
   };
   render() {
+    const {
+      show,
+      handleClose,
+      showAlert,
+      type,
+      hideAlert,
+      message,
+    } = this.props;
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title className="mr-5">Add New Member</Modal.Title>
           <Button
@@ -94,11 +102,11 @@ class AddMemberModal extends Component {
           </Button>
         </Modal.Header>
         <Modal.Body>
-          {this.props.showAlert ? (
+          {showAlert ? (
             <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
+              alertType={type}
+              toggleAlert={hideAlert}
+              message={message}
             />
           ) : (
             <></>

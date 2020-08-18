@@ -164,6 +164,12 @@ export const validateSignIn = (email, password) => {
       message: `Email not longer than ${GROUP_NAME_MAX_LENGTH}`,
     };
   }
+  if (!validator.isEmail(email)) {
+    return {
+      status: false,
+      message: "not email",
+    };
+  }
   //validate password
 
   if (password == "") {

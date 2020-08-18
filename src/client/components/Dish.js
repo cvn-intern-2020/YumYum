@@ -3,14 +3,15 @@ import MainNavBar from "./Common/MainNavBar";
 import DishBody from "./Dish/DishBody";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import "../../../public/dish.css";
-import "../../../public/group.css";
+import "../../../public/css/dish/dish.css";
+import "../../../public/css/group/group.css";
 
 class Dish extends Component {
   render() {
+    const { userName } = this.props;
     return (
       <div className="h-100">
-        <MainNavBar token={this.props.token} name={this.props.userName} />
+        <MainNavBar name={userName} />
         <DishBody {...this.props} />
       </div>
     );

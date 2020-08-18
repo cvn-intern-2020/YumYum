@@ -4,6 +4,7 @@ import OrderDetailList from "./Common/OrderDetailList";
 
 export default class OrderItem extends Component {
   render() {
+    const { order } = this.props;
     return (
       <ListGroup.Item className="w-100" style={{ backgroundColor: "white" }}>
         <Accordion defaultActiveKey="0">
@@ -17,7 +18,7 @@ export default class OrderItem extends Component {
                     marginLeft: "-1rem",
                   }}
                 >
-                  {String(this.props.order.orderDate).substr(0, 25)}
+                  {String(order.orderDate).substr(0, 25)}
                 </div>
                 <div
                   className="order-list-label col"
@@ -26,13 +27,13 @@ export default class OrderItem extends Component {
                     marginLeft: "1rem",
                   }}
                 >
-                  {this.props.order.userId.name}
+                  {order.userId.name}
                 </div>
               </div>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                <OrderDetailList order={this.props.order} />
+                <OrderDetailList order={order} />
               </Card.Body>
             </Accordion.Collapse>
           </Card>

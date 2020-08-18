@@ -10,7 +10,7 @@ import { setAlert, hideAlert } from "../../actions/alert";
 import GlobalAlert from "../Common/GlobalAlert";
 import { signInRequest } from "../../request/auth";
 import { throttle, debounce } from "lodash";
-import "../../../../public/login.css";
+import "../../../../public/css/login/login.css";
 import { EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH } from "../../constant";
 import { validateSignIn } from "../../utils/validator";
 
@@ -36,21 +36,23 @@ class BodyLogin extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleClick = async () => {
-    let validateResult = validateSignIn(this.state.email, this.state.password);
+    const { setAlert, setUser, history } = this.props;
+    const { email, password } = this.state;
+    let validateResult = validateSignIn(email, password);
     if (!validateResult.status) {
-      this.props.setAlert("danger", validateResult.message);
+      setAlert("danger", validateResult.message);
       return -1;
     }
 
     const signInResult = await signInRequest(this.state);
     if (!signInResult.status) {
       this.setState({ ...this.state, isButtonDisabled: false }, () => {
-        this.props.setAlert("danger", signInResult.message);
+        setAlert("danger", signInResult.message);
       });
     } else {
       this.setState({ ...this.state, isButtonDisabled: true }, () => {
-        this.props.setUser(signInResult.token);
-        this.props.history.push({
+        setUser(signInResult.token);
+        history.push({
           pathname: "/main",
           state: { token: signInResult.token },
         });
@@ -58,13 +60,16 @@ class BodyLogin extends Component {
     }
   };
   componentWillUnmount() {
+    const { showAlert, hideAlert } = this.props;
     this.debouncedEvent.cancel();
     this.handleClick.cancel();
-    if (this.props.showAlert) {
-      this.props.hideAlert();
+    if (showAlert) {
+      hideAlert();
     }
   }
   render() {
+    const { isButtonDisabled } = this.state;
+    const { showAlert, type, message, hideAlert } = this.props;
     return (
       <div
         style={{
@@ -109,7 +114,7 @@ class BodyLogin extends Component {
                 border: "none",
                 marginBottom: "1rem",
               }}
-              disabled={this.state.isButtonDisabled}
+              disabled={isButtonDisabled}
               onClick={this.handleClick}
             >
               <b>Login</b>
@@ -127,11 +132,11 @@ class BodyLogin extends Component {
               </Button>
             </Link>
           </div>
-          {this.props.showAlert ? (
+          {showAlert ? (
             <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
+              alertType={type}
+              toggleAlert={hideAlert}
+              message={message}
             />
           ) : (
             <></>

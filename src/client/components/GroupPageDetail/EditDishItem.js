@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -11,24 +11,20 @@ class EditDishItem extends Component {
     this.props.deleteEditedDish(this.props.dish);
   };
   render() {
+    const { dish, checked, handleSelectChange } = this.props;
     return (
       <ListGroup.Item>
         <div className="row w-100 m-0">
-          <div
-            className=" dish-label col-4">
-            {this.props.dish.dishName}
-          </div>
-          <div className="dish-label col-3 ">
-            {this.props.dish.dishPrice} VND
-          </div>
+          <div className=" dish-label col-4">{dish.dishName}</div>
+          <div className="dish-label col-3 ">{dish.dishPrice} VND</div>
           <div className="edit-dish-label col-5">
             <Form>
               <div key="default-checkbox" className="mb-3">
                 <Form.Check
                   type="checkbox"
-                  checked={this.props.checked}
-                  onChange={ this.props.handleSelectChange } 
-                  name={this.props.dish._id}
+                  checked={checked}
+                  onChange={handleSelectChange}
+                  name={dish._id}
                 />
               </div>
             </Form>

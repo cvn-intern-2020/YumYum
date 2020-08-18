@@ -14,26 +14,37 @@ class ConfirmDeleteModal extends Component {
     };
   }
   componentWillUnmount() {
+    const { showAlert, hideAlert } = this.props;
     this.debouncedEvent.cancel();
-    if (this.props.showAlert) {
-      this.props.hideAlert();
+    if (showAlert) {
+      hideAlert();
     }
   }
   render() {
+    const {
+      show,
+      handleClose,
+      dish,
+      showAlert,
+      type,
+      hideAlert,
+      message,
+      deleteDish,
+    } = this.props;
     return (
-      <Modal show={this.props.show} onHide={() => this.props.handleClose("")}>
+      <Modal show={show} onHide={() => handleClose("")}>
         <Modal.Header closeButton>
           <ModalTitle>Confrim Delete Dish</ModalTitle>
         </Modal.Header>
 
         <Modal.Body>
           {" "}
-          Are you sure want to delete "{this.props.dish.name}" dish?{" "}
-          {this.props.showAlert ? (
+          Are you sure want to delete "{dish.name}" dish?{" "}
+          {showAlert ? (
             <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
+              alertType={type}
+              toggleAlert={hideAlert}
+              message={message}
             />
           ) : (
             <></>
@@ -47,7 +58,7 @@ class ConfirmDeleteModal extends Component {
               border: "none",
             }}
             variant="primary"
-            onClick={this.debounceEvent(this.props.deleteDish, 250)}
+            onClick={this.debounceEvent(deleteDish, 250)}
           >
             Yes
           </Button>
@@ -58,7 +69,7 @@ class ConfirmDeleteModal extends Component {
               border: "none",
             }}
             variant="secondary"
-            onClick={()=>this.props.handleClose("")}
+            onClick={() => handleClose("")}
           >
             No
           </Button>

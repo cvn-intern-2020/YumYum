@@ -131,6 +131,27 @@ export const createGroup = (name, description) => {
   return { status: true };
 };
 
+export const validateAddMember = (email) => {
+  if (isUndefined(email)) {
+    return {
+      status: false,
+      message: "Please enter all fields required: email",
+    };
+  }
+  if (isEmpty(email)) {
+    return { status: false, message: "Email is empty" };
+  }
+  if (email.length > EMAIL_MAX_LENGTH) {
+    return {
+      status: false,
+      message: `Email is longer than ${EMAIL_MAX_LENGTH} characters`,
+    };
+  }
+  if (!isEmail(email)) {
+    return { status: false, message: "Email is invalid" };
+  }
+};
+
 export const validateLogin = (email, password) => {
   if (isUndefined(email) || isUndefined(password)) {
     return {

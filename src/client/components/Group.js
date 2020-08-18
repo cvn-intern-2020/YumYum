@@ -5,16 +5,17 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { clearGroup } from "../actions/group";
-import "../../../public/group.css";
+import "../../../public/css/group/group.css";
 
 class Group extends Component {
   componentWillUnmount() {
     this.props.clearGroup();
   }
   render() {
+    const { name } = this.props;
     return (
       <div className="h-100">
-        <MainNavBar token={this.props.token} name={this.props.name} />
+        <MainNavBar name={name} />
         <GroupBody />
       </div>
     );
