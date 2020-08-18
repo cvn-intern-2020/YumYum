@@ -4,7 +4,7 @@ import {
   deleteDish,
 } from "../services/dishService";
 import { pullDishFromGroup } from "../services/groupService";
-import { validateDish } from "../utils/validators";
+import { validateDish } from "../utils/validator";
 
 export const getDishByUserIdController = async (req, res) => {
   let userId = req._id;
