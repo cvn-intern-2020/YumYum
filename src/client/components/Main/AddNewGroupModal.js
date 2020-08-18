@@ -49,12 +49,23 @@ class AddNewGroupModal extends Component {
       this.props.setAlert("danger", "Group's name is empty");
       return -1;
     }
+    let cleanName = this.state.name.replace(/\s/g, "");
+    if (cleanName.length == 0) {
+      this.props.setAlert("danger", "Group name not allow all space");
+      return -1;
+    }
+
     if (this.state.description == "") {
       if (this.state.err != "") {
         this.props.setAlert("danger", "Group's description is empty");
         return -1;
       }
       this.props.setAlert("danger", "Group's description is empty");
+      return -1;
+    }
+    let cleanDescription = this.state.description.replace(/\s/g, "");
+    if (cleanDescription.length == 0) {
+      this.props.setAlert("danger", "Description not allow all space");
       return -1;
     }
     this.props.createGroup(this.state);
