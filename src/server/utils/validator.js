@@ -11,7 +11,7 @@ import {
   PASSWORD_MIN_LENGTH,
   DISH_MAX_LENGTH,
   PRICE_MAX_LENGTH,
-} from "../../client/constant";
+} from "../constants/input";
 
 export const isObjectID = (objectid) => {
   return mongoose.Types.ObjectId.isValid(objectid);
