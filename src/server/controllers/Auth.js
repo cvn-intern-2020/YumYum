@@ -1,9 +1,14 @@
 import { getUserByEmail } from "../services/userService";
 import { signUpService } from "../services/authService";
 import passwordCompare from "../utils/passwordCompare";
+import { validateRegister } from "../utils/validator";
 
 export const signUpController = async (req, res) => {
   let { name, phone, email, password } = req.body;
+  let validateResult = validateRegister(name, phone, email, password);
+  if (!validateResult.status) {
+    return res.status(400).json({ message: validateResult.message });
+  }
   let duplicate = await getUserByEmail(email);
   if (duplicate.status) {
     return res.status(400).json({ message: "Duplicate email!" });
