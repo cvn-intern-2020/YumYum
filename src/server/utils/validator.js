@@ -49,7 +49,7 @@ export const validateRegister = (name, phone, email, password) => {
     return { status: false, message: "Phone is invalid" };
   }
   if (email == "") {
-    return { status: false, message: "Email is invalid" };
+    return { status: false, message: "Email is empty" };
   }
   if (!isEmail(email)) {
     return { status: false, message: "Email is invalid" };
@@ -61,4 +61,30 @@ export const validateRegister = (name, phone, email, password) => {
     return { status: false, message: "Password is too short" };
   }
   return { status: true };
+};
+
+export const validateLogin = (email, password) => {
+  if (
+    isUndefined(email) ||
+    isUndefined(password)
+  ) {
+    return {
+      status: false,
+      message:
+        "Please enter all fields required: email, password",
+    };
+  }
+  if (email == "") {
+    return { status: false, message: "Email is empty" };
+  }
+  if (!isEmail(email)) {
+    return { status: false, message: "Email is invalid" };
+  }
+  if (password == "") {
+    return { status: false, message: "Password is empty" };
+  }
+  if (password.length < 6) {
+    return { status: false, message: "Password is too short" };
+  }
+  return {status: true};
 };
