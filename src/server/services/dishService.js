@@ -8,7 +8,7 @@ export const getDishByUserId = async (userId) => {
     .select("-deleteAt -userId")
     .lean();
   if (!result) {
-    return { message: "UserId does not exist", status: false };
+    return { message: "user does not exist", status: false };
   }
   return { result, status: true };
 };
@@ -20,14 +20,14 @@ export const getManyDishes = async (dishArray) => {
     .select("-deleteAt -userId")
     .lean(0);
   if (!result) {
-    return { message: "No dish found", status: false };
+    return { message: "No dishes found", status: false };
   }
   return { result, status: true };
 };
 
 export const createDish = async (name, price, userId) => {
   if (!isObjectID(userId)) {
-    return { message: "invalid ownerId", status: false };
+    return { message: "invalid user, check your Id", status: false };
   }
   let createdDish = await dishesModel.create({
     name,
@@ -50,7 +50,7 @@ export const deleteDish = async (userId, dishId) => {
   );
   if (!deletedDish) {
     return {
-      message: "dishId does not exist or not allowed to delete dish",
+      message: "dish does not exist or you are not allowed to delete dish",
       status: false,
     };
   }
