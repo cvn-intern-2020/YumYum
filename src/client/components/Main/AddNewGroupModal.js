@@ -8,7 +8,11 @@ import { setAlert, hideAlert } from "../../actions/alert";
 import { setUser } from "../../actions/user";
 import { createGroup } from "../../actions/group";
 import { debounce } from "lodash";
-import { GROUP_DESCRIPTION_MAX_LENGTH, GROUP_NAME_MAX_LENGTH } from "../../constant";
+import {
+  GROUP_DESCRIPTION_MAX_LENGTH,
+  GROUP_NAME_MAX_LENGTH,
+} from "../../constant";
+import { validateGroup } from "../../utils/validator";
 
 class AddNewGroupModal extends Component {
   constructor(props) {
@@ -41,33 +45,12 @@ class AddNewGroupModal extends Component {
     this.props.handleClose();
   };
   handleSaveNewGroup = async () => {
-    if (this.state.name == "") {
-      if (this.state.err != "") {
-        this.props.setAlert("danger", "Group's name is empty");
-        return -1;
-      }
-      this.props.setAlert("danger", "Group's name is empty");
-      return -1;
-    }
-    let cleanName = this.state.name.replace(/\s/g, "");
-    if (cleanName.length == 0) {
-      this.props.setAlert("danger", "Group name not allow all space");
+    let validateResult = validateGroup(this.state.name, this.state.description);
+    if (!validateResult.status) {
+      this.props.setAlert("danger", validateResult.message);
       return -1;
     }
 
-    if (this.state.description == "") {
-      if (this.state.err != "") {
-        this.props.setAlert("danger", "Group's description is empty");
-        return -1;
-      }
-      this.props.setAlert("danger", "Group's description is empty");
-      return -1;
-    }
-    let cleanDescription = this.state.description.replace(/\s/g, "");
-    if (cleanDescription.length == 0) {
-      this.props.setAlert("danger", "Description not allow all space");
-      return -1;
-    }
     this.props.createGroup(this.state);
     this.props.handleClose();
   };

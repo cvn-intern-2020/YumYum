@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { throttle, debounce } from "lodash";
-import validator from "validator";
 import { DISH_MAX_LENGTH, PRICE_MAX_LENGTH } from "../../constant";
+import { validateDish } from "../../utils/validator";
 
 class AddDishModal extends Component {
   constructor(props) {
@@ -40,31 +40,9 @@ class AddDishModal extends Component {
     this.props.handleClose();
   };
   handleClickAddDish = async () => {
-    if (this.state.name == "") {
-      if (this.state.err != "") {
-        this.props.setAlert("danger", "Name is empty");
-        return -1;
-      }
-      this.props.setAlert("danger", "Name is empty");
-      return -1;
-    }
-    if (this.state.price == "") {
-      if (this.state.err != "") {
-        this.props.setAlert("danger", "Price is empty");
-        return -1;
-      }
-      this.props.setAlert("danger", "Price is empty");
-      return -1;
-    }
-    const price = parseInt(this.state.price);
-
-    if (!validator.isNumeric(this.state.price) || price < 0) {
-      this.props.setAlert("danger", "Price is not numeric or smaller than 0");
-      return -1;
-    }
-    const cleanName = this.state.name.replace(/\s/g, "");
-    if (cleanName.length == 0) {
-      this.props.setAlert("danger", "Name not allow all space");
+    let validateResult = validateDish(this.state.name, this.state.price);
+    if (!validateResult.status) {
+      this.props.setAlert("danger", validateResult.message);
       return -1;
     }
 
