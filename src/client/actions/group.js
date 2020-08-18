@@ -18,7 +18,7 @@ import { getOrderByGroupIdRequest } from "../request/order";
 import { clearEditedDish } from "./dish";
 
 export const setGroup = (groupId) => async (dispatch) => {
-  let getGroupResult = await getGroupRequest(groupId);
+  const getGroupResult = await getGroupRequest(groupId);
   if (!getGroupResult.status) {
     return false;
   }
@@ -30,7 +30,7 @@ export const setGroup = (groupId) => async (dispatch) => {
 };
 
 export const setOrderToGroup = (groupId) => async (dispatch) => {
-  let getOrderByGroupIdResult = await getOrderByGroupIdRequest(groupId);
+  const getOrderByGroupIdResult = await getOrderByGroupIdRequest(groupId);
   if (!getOrderByGroupIdResult.status) {
     dispatch(setAlert("danger", getOrderByGroupIdResult.message));
   } else {
@@ -41,7 +41,7 @@ export const setOrderToGroup = (groupId) => async (dispatch) => {
 };
 
 export const addMember = (groupId, email) => async (dispatch) => {
-  let addMemberResult = await addMemberRequest(groupId, email);
+  const addMemberResult = await addMemberRequest(groupId, email);
   dispatch(
     setAlert(
       addMemberResult.status ? "success" : "danger",
@@ -53,7 +53,7 @@ export const addMember = (groupId, email) => async (dispatch) => {
 };
 
 export const createGroup = ({ name, description }) => async (dispatch) => {
-  let createGroupResult = await createGroupRequest({ name, description });
+  const createGroupResult = await createGroupRequest({ name, description });
   if (!createGroupResult.status) {
     dispatch(setAlert("danger", createGroupResult.message));
     return -1;

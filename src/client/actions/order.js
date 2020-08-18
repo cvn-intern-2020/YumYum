@@ -11,7 +11,7 @@ export const setOrder = () => async (dispatch, getState) => {
 };
 
 export const addToOrder = (dishId, isAdding) => async (dispatch, getState) => {
-  let dishes = getState().order.dishes;
+  const dishes = getState().order.dishes;
   let updatedDish = dishes.find((dish) => dish._id == dishId);
   if (isAdding) {
     updatedDish.quantity = updatedDish.quantity + 1;
@@ -25,13 +25,13 @@ export const addToOrder = (dishId, isAdding) => async (dispatch, getState) => {
 };
 
 export const createOrder = (groupId) => async (dispatch, getState) => {
-  let order = getState().order;
-  let dishArray = order.dishes.filter((dish) => dish.quantity > 0);
+  const order = getState().order;
+  const dishArray = order.dishes.filter((dish) => dish.quantity > 0);
   if (dishArray.length == 0) {
     dispatch(setAlert("danger", "No dish is ordered"));
     return -1;
   }
-  let createOrderResult = await createOrderRequest(
+  const createOrderResult = await createOrderRequest(
     groupId,
     dishArray,
     order.totalPrice
