@@ -3,9 +3,9 @@ import axios from "axios";
 export const createOrderRequest = (groupId, details, totalPrice) => {
   return axios
     .post(`${process.env.API_URL}/api/orders/new`, {
-      groupId: groupId,
+      groupId,
       details,
-      totalPrice: totalPrice,
+      totalPrice,
     })
     .then((res) => {
       return { status: true, message: "Add success", newOrder: res.data };

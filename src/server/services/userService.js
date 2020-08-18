@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 export const getUserByEmail = async (email) => {
   let result = await userModel
-    .findOne({ email: email })
+    .findOne({ email })
     .select("email password groups name")
     .lean();
   if (!result) {
@@ -14,10 +14,10 @@ export const getUserByEmail = async (email) => {
 
 export const createUser = async (email, phone, password, name) => {
   let result = await userModel.create({
-    name: name,
-    phone: phone,
-    email: email,
-    password: password,
+    name,
+    phone,
+    email,
+    password,
   });
   return { result, status: true };
 };

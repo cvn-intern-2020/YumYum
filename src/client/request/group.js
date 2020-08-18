@@ -3,8 +3,8 @@ import axios from "axios";
 export const createGroupRequest = ({ name, description }) => {
   return axios
     .post(`${process.env.API_URL}/api/groups/new`, {
-      name: name,
-      description: description,
+      name,
+      description,
     })
     .then(() => {
       return { status: true };
