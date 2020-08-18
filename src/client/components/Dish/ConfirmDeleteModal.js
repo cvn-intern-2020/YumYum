@@ -48,7 +48,6 @@ class ConfirmDeleteModal extends Component {
             }}
             variant="primary"
             onClick={this.debounceEvent(this.props.deleteDish, 250)}
-            
           >
             Yes
           </Button>
