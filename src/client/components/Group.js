@@ -15,7 +15,7 @@ class Group extends Component {
     const { name } = this.props;
     return (
       <div className="h-100">
-        <MainNavBar tname={name} />
+        <MainNavBar name={name} />
         <GroupBody />
       </div>
     );

@@ -12,7 +12,7 @@ class OrderDetailList extends Component {
             <b>Food Name</b>
           </div>
           <div className="dish-label col mt-4">
-            <b>Amount</b>
+            <b>Quantity</b>
           </div>
           <div className="dish-label col mt-4">
             <b>Price</b>
