@@ -13,27 +13,27 @@ export const getInviteController = async (req, res) => {
   let inviteToken = await findToken(inviteHash);
   if (!inviteToken) {
     return res
-      .status(400)
+      .status(HANDLED_ERROR_RESPONSE)
       .json({ message: "Invite hash is not valid or expired" });
   }
   jwt.verify(inviteToken, process.env.SECRET_KEY, async (err, decoded) => {
     if (err) {
       return res
-        .status(400)
+        .status(HANDLED_ERROR_RESPONSE)
         .json({ message: "Invite token is invalid or expired" });
     }
     let groupId = decoded.groupId;
     let user = await getUserById(userId);
     if (!user.status) {
-      return res.status(400).json({ message: "Email does not exist" });
+      return res.status(HANDLED_ERROR_RESPONSE).json({ message: "Email does not exist" });
     }
     user = user.result;
     if (user.groups.find((group) => group.groupId == groupId)) {
-      return res.status(400).json({ message: "Already in group" });
+      return res.status(HANDLED_ERROR_RESPONSE).json({ message: "Already in group" });
     }
     let inviteToGroupResult = await inviteMemberToGroup(user, groupId);
     if (!inviteToGroupResult.status) {
-      return res.status(400).json({ message: inviteToGroupResult.message });
+      return res.status(HANDLED_ERROR_RESPONSE).json({ message: inviteToGroupResult.message });
     }
 
     let addGroupToUserResult = await addGroupToUser(
@@ -43,9 +43,9 @@ export const getInviteController = async (req, res) => {
       false
     );
     if (!addGroupToUserResult.status) {
-      return res.status(400).json({ message: addGroupToUserResult.message });
+      return res.status(HANDLED_ERROR_RESPONSE).json({ message: addGroupToUserResult.message });
     }
-    return res.status(200).json({ groupId });
+    return res.status(OK_RESPONSE).json({ groupId });
   });
 };
 
@@ -54,7 +54,7 @@ export const createInviteController = async (req, res) => {
   let groupId = req.params.groupId;
   let isAllowedResult = isAllowedToEditGroup(groupId, ownerId);
   if (!isAllowedResult) {
-    return res.status(400).json({
+    return res.status(HANDLED_ERROR_RESPONSE).json({
       message: "not allowed to create invite link or group does not exist",
     });
   }
@@ -62,6 +62,6 @@ export const createInviteController = async (req, res) => {
   jwt.sign(payload, process.env.SECRET_KEY, async (err, token) => {
     let hash = await nanoid(10);
     await storeToken(hash, token);
-    return res.status(200).json({ hash });
+    return res.status(OK_RESPONSE).json({ hash });
   });
 };
