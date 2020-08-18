@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export default class GroupItem extends Component {
   render() {
+    const { groupId, name } = this.props;
     return (
       <ListGroup.Item style={{ padding: 0 }}>
         <Row>
@@ -30,9 +31,9 @@ export default class GroupItem extends Component {
                   position: "relative",
                   marginTop: "1.7rem",
                 }}
-                to={`/group/${this.props.groupId}`}
+                to={`/group/${groupId}`}
               >
-                <b>{this.props.name}</b>
+                <b>{name}</b>
               </Link>
             </div>
           </Col>

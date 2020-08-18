@@ -9,26 +9,43 @@ import { addEditedDish, deleteEditedDish } from "../../actions/dish";
 import GlobalAlert from "../Common/GlobalAlert";
 
 class EditDishesModal extends Component {
-
   handleUpdateDish = (e) => {
-    for (let dish of this.props.editedDishes) {
+    const {
+      editedDishes,
+      userDishes,
+      deleteEditedDish,
+      addEditedDish,
+    } = this.props;
+    for (let dish of editedDishes) {
       if (dish._id == e.target.name) {
-
-        this.props.deleteEditedDish(dish);
+        deleteEditedDish(dish);
         return;
       }
     }
-    this.props.addEditedDish(this.props.userDishes.find(dish => dish._id == e.target.name));
+    addEditedDish(userDishes.find((dish) => dish._id == e.target.name));
   };
   componentWillUnmount() {
-
-    if (this.props.showAlert) {
-      this.props.hideAlert();
+    const { showAlert, hideAlert } = this.props;
+    if (showAlert) {
+      hideAlert();
     }
   }
   render() {
+    const {
+      show,
+      handleClose,
+      showAlert,
+      type,
+      hideAlert,
+      message,
+      userDishes,
+      editedDishes,
+      showEditDishesModal,
+      updateEditedDish,
+      handleSaveNewDishes,
+    } = this.props;
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header
           closeButton
           style={{ backgroundColor: "#48BDFF", border: "none" }}
@@ -36,15 +53,15 @@ class EditDishesModal extends Component {
           <Modal.Title>Dishes list of your group</Modal.Title>
         </Modal.Header>
         <ModalBody className="p-0">
-          {this.props.showAlert ? (
+          {showAlert ? (
             <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
+              alertType={type}
+              toggleAlert={hideAlert}
+              message={message}
             />
           ) : (
-              <></>
-            )}
+            <></>
+          )}
         </ModalBody>
         <div className="edit-dish-list mt-0">
           <div className="row w-100 m-0">
@@ -60,9 +77,9 @@ class EditDishesModal extends Component {
           </div>
           <div className=" mt-4">
             <ListGroup>
-              {this.props.userDishes.map((dish) => {
+              {userDishes.map((dish) => {
                 let checked = false;
-                for (let editedDish of this.props.editedDishes) {
+                for (let editedDish of editedDishes) {
                   if (editedDish._id == dish._id) {
                     checked = true;
                     break;
@@ -70,10 +87,10 @@ class EditDishesModal extends Component {
                 }
                 return (
                   <EditDishItem
-                    show={this.props.showEditDishesModal}
+                    show={showEditDishesModal}
                     key={dish._id}
                     dish={dish}
-                    updateEditedDish={this.props.updateEditedDish}
+                    updateEditedDish={updateEditedDish}
                     checked={checked}
                     handleSelectChange={this.handleUpdateDish}
                   />
@@ -90,7 +107,7 @@ class EditDishesModal extends Component {
               border: "none",
             }}
             variant="primary"
-            onClick={this.props.handleSaveNewDishes}
+            onClick={handleSaveNewDishes}
           >
             Save
           </Button>
@@ -101,7 +118,7 @@ class EditDishesModal extends Component {
               border: "none",
             }}
             variant="secondary"
-            onClick={this.props.handleClose}
+            onClick={handleClose}
           >
             Cancel
           </Button>
@@ -120,7 +137,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert, addEditedDish, deleteEditedDish }, dispatch);
+  return bindActionCreators(
+    { setAlert, hideAlert, addEditedDish, deleteEditedDish },
+    dispatch
+  );
 }
 
 export default withRouter(

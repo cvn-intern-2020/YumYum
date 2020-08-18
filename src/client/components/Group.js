@@ -12,9 +12,10 @@ class Group extends Component {
     this.props.clearGroup();
   }
   render() {
+    const { name } = this.props;
     return (
       <div className="h-100">
-        <MainNavBar token={this.props.token} name={this.props.name} />
+        <MainNavBar name={name} />
         <GroupBody />
       </div>
     );

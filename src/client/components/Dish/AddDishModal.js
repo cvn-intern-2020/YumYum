@@ -31,29 +31,32 @@ class AddDishModal extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleCloseButton = () => {
+    const { hideAlert, handleClose } = this.props;
     this.setState({
       ...this.state,
       name: "",
       price: 0,
     });
-    this.props.hideAlert();
-    this.props.handleClose();
+    hideAlert();
+    handleClose();
   };
   handleClickAddDish = async () => {
-    let validateResult = validateDish(this.state.name, this.state.price);
+    const { setAlert, addDishToState } = this.props;
+    const { name, price } = this.state;
+    let validateResult = validateDish(name, price);
     if (!validateResult.status) {
-      this.props.setAlert("danger", validateResult.message);
+      setAlert("danger", validateResult.message);
       return -1;
     }
 
     const createDishResult = await createDishRequest({
-      name: this.state.name,
-      price: this.state.price * 1000,
+      name: name,
+      price: price * 1000,
     });
     if (!createDishResult.status) {
-      this.props.setAlert("danger", createDishResult.message);
+      setAlert("danger", createDishResult.message);
     } else {
-      this.props.addDishToState(createDishResult.newDish);
+      addDishToState(createDishResult.newDish);
     }
     this.setState({
       ...this.state,
@@ -62,24 +65,33 @@ class AddDishModal extends Component {
     });
   };
   componentWillUnmount() {
+    const { showAlert, hideAlert } = this.props;
     this.debouncedEvent.cancel();
     this.handleClickAddDish.cancel();
-    if (this.props.showAlert) {
-      this.props.hideAlert();
+    if (showAlert) {
+      hideAlert();
     }
   }
   render() {
+    const {
+      show,
+      handleClose,
+      showAlert,
+      type,
+      hideAlert,
+      message,
+    } = this.props;
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add A New Dish</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {this.props.showAlert ? (
+          {showAlert ? (
             <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
+              alertType={type}
+              toggleAlert={hideAlert}
+              message={message}
             />
           ) : (
             <></>
@@ -137,9 +149,7 @@ class AddDishModal extends Component {
               border: "none",
             }}
             variant="secondary"
-            onClick={() => {
-              this.handleCloseButton();
-            }}
+            onClick={this.handleCloseButton}
           >
             Close
           </Button>

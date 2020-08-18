@@ -7,17 +7,26 @@ import { connect } from "react-redux";
 
 class OrdersListModal extends Component {
   render() {
+    const {
+      type,
+      hideAlert,
+      message,
+      showAlert,
+      orders,
+      show,
+      handleClose,
+    } = this.props;
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Orders list of your group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {this.props.showAlert ? (
+          {showAlert ? (
             <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
+              alertType={type}
+              toggleAlert={hideAlert}
+              message={message}
             />
           ) : (
             <></>
@@ -41,11 +50,11 @@ class OrdersListModal extends Component {
               className="group-container mt-4"
               style={{ position: "relative" }}
             >
-              {this.props.orders.length == 0 ? (
+              {orders.length == 0 ? (
                 <></>
               ) : (
                 <ListGroup style={{ flexDirection: "col", borderRadius: "0" }}>
-                  {this.props.orders.map((order) => {
+                  {orders.map((order) => {
                     let date = new Date(order.orderDate);
                     order.orderDate = date;
                     return <OrderItem key={order._id} order={order} />;
@@ -63,7 +72,7 @@ class OrdersListModal extends Component {
               border: "none",
             }}
             variant="primary"
-            onClick={this.props.handleClose}
+            onClick={handleClose}
           >
             Close
           </Button>

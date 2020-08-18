@@ -18,29 +18,32 @@ class App extends Component {
   constructor(props) {
     super(props);
     axios.defaults.withCredentials = true;
+    const { clearUser, history } = this.props;
     window.addEventListener("storage", (e) => {
       if (e.newValue == "false") {
-        this.props.clearUser();
-        this.props.history.push("/");
+        clearUser();
+        history.push("/");
       }
     });
   }
   async componentDidMount() {
-    let isLogin = await this.props.setUser();
+    const { setUser, history, token, location } = this.props;
+    let isLogin = await setUser();
     if (!isLogin) {
-      this.props.history.push("/");
+      history.push("/");
     } else {
       if (
-        this.props.token &&
-        this.props.token != "" &&
-        ["/login", "/signup", "/"].includes(this.props.location.pathname)
+        token &&
+        token != "" &&
+        ["/login", "/signup", "/"].includes(location.pathname)
       ) {
-        this.props.history.push("/main");
+        history.push("/main");
       }
     }
   }
 
   render() {
+    const { token } = this.props;
     return (
       <>
         <Suspense fallback={<div className="loader"></div>}>
@@ -48,7 +51,7 @@ class App extends Component {
             <Route path="/main" render={() => <Main {...this.props} />} exact />
             <Route
               path="/"
-              token={this.props.token}
+              token={token}
               render={() => <Landing {...this.props} />}
               exact
             />

@@ -10,10 +10,12 @@ import "../../../../public/css/index.css";
 
 class MainNavBar extends Component {
   handleLogout = () => {
-    this.props.clearUser();
-    this.props.history.push("/");
+    const { clearUser, history } = this.props;
+    clearUser();
+    history.push("/");
   };
   render() {
+    const { name } = this.props;
     return (
       <div>
         <Navbar
@@ -62,7 +64,7 @@ class MainNavBar extends Component {
                   borderRadius: "0.5rem",
                 }}
               >
-                {this.props.name}
+                {name}
               </b>
             </div>
           </div>

@@ -4,8 +4,9 @@ import OrderConfirmList from "./OrderConfirm/OrderConfirmList";
 
 export default class OrderConfirmModal extends Component {
   render() {
+    const { show, handleClose, handleCreateOrder } = this.props;
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Please confirm your order</Modal.Title>
         </Modal.Header>
@@ -21,8 +22,8 @@ export default class OrderConfirmModal extends Component {
             }}
             variant="primary"
             onClick={() => {
-              this.props.handleClose();
-              this.props.handleCreateOrder();
+              handleClose();
+              handleCreateOrder();
             }}
           >
             Yes
@@ -34,9 +35,7 @@ export default class OrderConfirmModal extends Component {
               border: "none",
             }}
             variant="secondary"
-            onClick={() => {
-              this.props.handleClose();
-            }}
+            onClick={handleClose}
           >
             No
           </Button>

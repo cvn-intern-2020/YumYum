@@ -38,7 +38,6 @@ export const createOrder = (groupId) => async (dispatch, getState) => {
   );
   if (!createOrderResult.status) {
     dispatch(setAlert("danger", createOrderResult.message));
-    this.props.setAlert("danger", createOrderResult.message);
     return -1;
   }
   let dishes = getState().group.dishes;

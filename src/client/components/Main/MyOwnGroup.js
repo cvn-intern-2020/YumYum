@@ -4,6 +4,7 @@ import GroupItem from "./GroupItem";
 
 export default class MyOwnGroup extends PureComponent {
   render() {
+    const { toggleAddGroupModal, ownGroups } = this.props;
     return (
       <>
         <Container fluid>
@@ -19,7 +20,7 @@ export default class MyOwnGroup extends PureComponent {
                   backgroundColor: "#FFE500",
                   color: "#080024",
                 }}
-                onClick={this.props.toggleAddGroupModal}
+                onClick={toggleAddGroupModal}
               >
                 ADD NEW GROUP
               </Button>
@@ -29,7 +30,7 @@ export default class MyOwnGroup extends PureComponent {
 
         <Container fluid className="pr-0 my-joined-own-group-container">
           <ListGroup className="list-group-container">
-            {this.props.ownGroups.map((group) => {
+            {ownGroups.map((group) => {
               return (
                 <GroupItem
                   name={group.name}

@@ -7,10 +7,11 @@ import { bindActionCreators } from "redux";
 import { addToOrder } from "../../../actions/order";
 class DishItemUser extends Component {
   render() {
+    const { dish, addToOrder, order } = this.props;
     return (
       <ListGroup.Item>
         <div className="row w-100 m-0">
-          <div className=" dish-label col">{this.props.dish.dishName} </div>
+          <div className=" dish-label col">{dish.dishName} </div>
           <div
             style={{ fontSize: "1.6rem" }}
             className="dish-label-quantity col "
@@ -24,16 +25,14 @@ class DishItemUser extends Component {
                 paddingTop: 0,
                 boxShadow: "none",
               }}
-              onClick={() => this.props.addToOrder(this.props.dish._id, false)}
+              onClick={() => addToOrder(dish._id, false)}
             >
               -
             </Button>
-            {this.props.order.dishes.length == 0 ? (
+            {order.dishes.length == 0 ? (
               <> </>
             ) : (
-              this.props.order.dishes.find(
-                (dish) => dish._id == this.props.dish._id
-              ).quantity
+              order.dishes.find((dish) => dish._id == dish._id).quantity
             )}
             <Button
               style={{
@@ -44,19 +43,18 @@ class DishItemUser extends Component {
                 paddingTop: 0,
                 boxShadow: "none",
               }}
-              onClick={() => this.props.addToOrder(this.props.dish._id, true)}
+              onClick={() => addToOrder(dish._id, true)}
             >
               +
             </Button>
           </div>
-          <div className="dish-label col ">{this.props.dish.dishPrice} VND</div>
+          <div className="dish-label col ">{dish.dishPrice} VND</div>
           <div className="dish-label col">
-            {this.props.order.dishes.length == 0 ? (
+            {order.dishes.length == 0 ? (
               <> </>
             ) : (
-              this.props.order.dishes.find(
-                (dish) => dish._id == this.props.dish._id
-              ).quantity * this.props.dish.dishPrice
+              order.dishes.find((dish) => dish._id == dish._id).quantity *
+              dish.dishPrice
             )}
           </div>
         </div>

@@ -26,8 +26,9 @@ class MemberView extends Component {
   }
 
   toggleOrdersListModal = async () => {
+    const { setOrderToGroup, match } = this.props;
     if (!this.state.showOrdersListModal) {
-      this.props.setOrderToGroup(this.props.match.params.groupId);
+      setOrderToGroup(match.params.groupId);
       this.setState({
         ...this.state,
         showOrdersListModal: !this.state.showOrdersListModal,
@@ -41,20 +42,21 @@ class MemberView extends Component {
   };
 
   toggleConfirmOrderModal = () => {
-    if (
-      this.props.order.dishes.filter((dish) => dish.quantity > 0).length == 0
-    ) {
-      this.props.setAlert("danger", "You haven't order anything yet");
+    const { order, setAlert } = this.props;
+    const { showConfirmOrderModal } = this.state;
+    if (order.dishes.filter((dish) => dish.quantity > 0).length == 0) {
+      setAlert("danger", "You haven't order anything yet");
       return -1;
     }
     this.setState({
       ...this.state,
-      showConfirmOrderModal: !this.state.showConfirmOrderModal,
+      showConfirmOrderModal: !showConfirmOrderModal,
     });
   };
 
   handleCreateOrder = async () => {
-    this.props.createOrder(this.props.group._id);
+    const { createOrder, group } = this.props;
+    createOrder(group._id);
   };
 
   toggleMemberListModal = () => {
@@ -64,25 +66,28 @@ class MemberView extends Component {
     });
   };
   componentWillUnmount() {
-    if (this.props.showAlert) {
-      this.props.hideAlert();
+    const { showAlert, hideAlert } = this.props;
+    if (showAlert) {
+      hideAlert();
     }
   }
   render() {
-    let {
+    const {
       showConfirmOrderModal,
       showOrdersListModal,
       showMemberListModal,
     } = this.state;
+    const { showAlert, type, message, hideAlert } = this.props;
     return (
       <>
         {!showConfirmOrderModal &&
         !showOrdersListModal &&
-        !showMemberListModal && this.props.showAlert ? (
+        !showMemberListModal &&
+        showAlert ? (
           <GlobalAlert
-            alertType={this.props.type}
-            message={this.props.message}
-            toggleAlert={this.props.hideAlert}
+            alertType={type}
+            message={message}
+            toggleAlert={hideAlert}
           />
         ) : (
           <></>
@@ -90,26 +95,24 @@ class MemberView extends Component {
 
         <>
           <OrdersListModal
-            show={this.state.showOrdersListModal}
+            show={showOrdersListModal}
             handleClose={this.toggleOrdersListModal}
           />
           <OrderConfirmModal
-            show={this.state.showConfirmOrderModal}
-            dishes={this.state.dishes}
+            show={showConfirmOrderModal}
             handleClose={this.toggleConfirmOrderModal}
             handleCreateOrder={this.handleCreateOrder}
-            totalPrice={this.state.totalPrice}
           />
           <ButtonBar
             toggleOrdersListModal={this.toggleOrdersListModal}
             toggleMemberListModal={this.toggleMemberListModal}
           />
           <MemberListModal
-            show={this.state.showMemberListModal}
+            show={showMemberListModal}
             handleClose={this.toggleMemberListModal}
           />
           <DishListUser
-            show={this.state.showMemberListModal}
+            show={showMemberListModal}
             toggleConfirmOrderModal={this.toggleConfirmOrderModal}
           ></DishListUser>
         </>

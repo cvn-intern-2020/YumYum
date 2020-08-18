@@ -7,9 +7,10 @@ import "../../../public/css/main/main.css";
 
 class Main extends Component {
   render() {
+    const {name} = this.props;
     return (
       <div className="h-100">
-        <MainNavBar name={this.props.name} />
+        <MainNavBar name={name} />
         <MainBody />
       </div>
     );

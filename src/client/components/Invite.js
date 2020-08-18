@@ -18,36 +18,39 @@ class Invite extends Component {
     };
   }
   async componentDidMount() {
-    let inviteHash = this.props.match.params.inviteHash;
+    const { match, setAlert, history, setUser } = this.props;
+    let inviteHash = match.params.inviteHash;
     let inviteResult = await getInviteRequest(inviteHash);
     if (!inviteResult.status) {
       this.setState({ isCheckingInvite: false });
-      this.props.setAlert("danger", inviteResult.message);
+      setAlert("danger", inviteResult.message);
       if (inviteResult.errCode == 401) {
         return;
       }
-      setTimeout(() => this.props.history.push("/main"), 7000);
+      setTimeout(() => history.push("/main"), 7000);
     } else {
-      this.props.setUser();
-      this.props.history.push(`/group/${inviteResult.groupId}`);
+      setUser();
+      history.push(`/group/${inviteResult.groupId}`);
     }
   }
   render() {
+    const { name, type, hideAlert, message, showAlert } = this.props;
+    const { isCheckingInvite } = this.state;
     return (
       <div className="h-100">
-        <MainNavBar name={this.props.name} />
-        {this.props.showAlert ? (
+        <MainNavBar name={name} />
+        {showAlert ? (
           <GlobalAlert
-            alertType={this.props.type}
-            toggleAlert={this.props.hideAlert}
-            message={this.props.message}
+            alertType={type}
+            toggleAlert={hideAlert}
+            message={message}
           />
         ) : (
           <></>
         )}
 
         <div className="main-body-background-div"></div>
-        {this.state.isCheckingInvite ? <div className="loader"></div> : <></>}
+        {isCheckingInvite ? <div className="loader"></div> : <></>}
       </div>
     );
   }
