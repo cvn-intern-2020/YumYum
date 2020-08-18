@@ -57,23 +57,6 @@ class EditDishesModal extends Component {
             <div className="dish-label col-3 mt-4">
               <b>Price</b>
             </div>
-            <div className="edit-dish-label col-5 mt-4">
-              <div style={{ backgroundColor: "#48BDFF" }}>
-                <Button
-                  style={{
-                    backgroundColor: "#28a745",
-                    color: "#080024",
-                    border: "none",
-                    float: "right",
-                    marginLeft: "1rem",
-                  }}
-                  variant="primary"
-                  onClick={this.handleAddDish}
-                >
-                  Add
-                </Button>
-              </div>
-            </div>
           </div>
           <div className=" mt-4">
             <ListGroup>
