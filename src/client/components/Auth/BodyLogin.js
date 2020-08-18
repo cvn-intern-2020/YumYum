@@ -53,7 +53,7 @@ class BodyLogin extends Component {
       return -1;
     }
 
-    let signInResult = await signInRequest(this.state);
+    const signInResult = await signInRequest(this.state);
     if (!signInResult.status) {
       this.setState({ ...this.state, isButtonDisabled: false }, () => {
         this.props.setAlert("danger", signInResult.message);
