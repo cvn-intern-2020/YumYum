@@ -6,8 +6,8 @@ import GlobalAlert from "../Common/GlobalAlert";
 import { debounce } from "lodash";
 
 class ConfirmDeleteModal extends Component {
-  debounceEvent(...args) {
-    this.debouncedEvent = debounce(...args);
+  debounceEvent(cb, duration) {
+    this.debouncedEvent = debounce(cb, duration);
     return (e) => {
       e.persist();
       return this.debouncedEvent(e);
@@ -41,9 +41,7 @@ class ConfirmDeleteModal extends Component {
               border: "none",
             }}
             variant="primary"
-            onClick={() => {
-              this.debounceEvent(this.props.deleteDish(), 250);
-            }}
+            onClick={this.props.deleteDish}
           >
             Yes
           </Button>
@@ -54,9 +52,7 @@ class ConfirmDeleteModal extends Component {
               border: "none",
             }}
             variant="secondary"
-            onClick={() => {
-              this.debounceEvent(this.props.handleClose(""), 250);
-            }}
+            onClick={this.props.handleClose}
           >
             No
           </Button>
