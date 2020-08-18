@@ -7,17 +7,9 @@ import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { addEditedDish, editDish, deleteEditedDish } from "../../actions/dish";
 import GlobalAlert from "../Common/GlobalAlert";
-import { debounce } from "lodash";
 
 class EditDishesModal extends Component {
 
-  debounceEvent(...args) {
-    this.debouncedEvent = debounce(...args);
-    return (e) => {
-      e.persist();
-      return this.debouncedEvent(e);
-    };
-  }
   handleUpdateDish = (e) => {
     for (let dish of this.props.editedDishes) {
       if (dish._id == e.target.name) {
@@ -29,7 +21,7 @@ class EditDishesModal extends Component {
     this.props.addEditedDish(this.props.userDishes.find(dish => dish._id == e.target.name));
   };
   componentWillUnmount() {
-    this.debouncedEvent.cancel();
+
     if (this.props.showAlert) {
       this.props.hideAlert();
     }
