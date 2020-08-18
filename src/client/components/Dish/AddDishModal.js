@@ -109,8 +109,7 @@ class AddDishModal extends Component {
               <Form.Control
                 className="w-25 col ml-3"
                 type="text"
-                pattern="\d*"
-                maxLength="9"
+                pattern="[0-9]{10}"
                 placeholder="Enter price "
                 name="price"
                 onChange={this.debounceEvent(this.handleChange, 250)}
