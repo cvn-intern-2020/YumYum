@@ -99,3 +99,9 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.form-check-input{
+  width: 2rem;
+  height: 2rem;
+  margin-left: 10rem;
+}

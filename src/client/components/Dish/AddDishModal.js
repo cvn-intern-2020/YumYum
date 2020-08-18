@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { throttle, debounce } from "lodash";
+import validator from "validator";
+import { DISH_MAX_LENGTH, PRICE_MAX_LENGTH } from "../../constant";
 
 class AddDishModal extends Component {
   constructor(props) {
@@ -54,7 +56,19 @@ class AddDishModal extends Component {
       this.props.setAlert("danger", "Price is empty");
       return -1;
     }
-    let createDishResult = await createDishRequest({
+    const price = parseInt(this.state.price);
+
+    if (!validator.isNumeric(this.state.price) || price < 0) {
+      this.props.setAlert("danger", "Price is not numeric or smaller than 0");
+      return -1;
+    }
+    const cleanName = this.state.name.replace(/\s/g, "");
+    if (cleanName.length == 0) {
+      this.props.setAlert("danger", "Name not allow all space");
+      return -1;
+    }
+
+    const createDishResult = await createDishRequest({
       name: this.state.name,
       price: this.state.price * 1000,
     });
@@ -100,7 +114,7 @@ class AddDishModal extends Component {
                 name="name"
                 placeholder="Enter dish name"
                 onChange={this.debounceEvent(this.handleChange, 250)}
-                maxLength={20}
+                maxLength={DISH_MAX_LENGTH}
               />
             </Form.Group>
 
@@ -109,8 +123,7 @@ class AddDishModal extends Component {
               <Form.Control
                 className="w-25 col ml-3"
                 type="text"
-                pattern="\d*"
-                maxLength="9"
+                maxLength={PRICE_MAX_LENGTH}
                 placeholder="Enter price "
                 name="price"
                 onChange={this.debounceEvent(this.handleChange, 250)}
@@ -134,7 +147,7 @@ class AddDishModal extends Component {
             }}
             variant="primary"
             onClick={() => {
-              this.handleClickAddDish();
+              this.debounceEvent(this.handleClickAddDish(), 250);
             }}
           >
             Save

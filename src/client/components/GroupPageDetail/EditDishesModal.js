@@ -5,43 +5,23 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
-import { addEditedDish } from "../../actions/dish";
+import { addEditedDish, editDish, deleteEditedDish } from "../../actions/dish";
 import GlobalAlert from "../Common/GlobalAlert";
-import { debounce } from "lodash";
 
 class EditDishesModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: "",
-    };
-  }
-  componentDidMount() {
-    this.setState({ selected: this.props.userDishes[0] });
-  }
-  debounceEvent(...args) {
-    this.debouncedEvent = debounce(...args);
-    return (e) => {
-      e.persist();
-      return this.debouncedEvent(e);
-    };
-  }
-  handleSelectChange = (e) => {
-    this.setState({
-      selected: this.props.userDishes[e.target.selectedIndex],
-    });
-  };
-  handleAddDish = () => {
+
+  handleUpdateDish = (e) => {
     for (let dish of this.props.editedDishes) {
-      if (dish._id == this.state.selected._id) {
-        this.props.setAlert("danger", "Dish has already in Menu");
+      if (dish._id == e.target.name) {
+
+        this.props.deleteEditedDish(dish);
         return;
       }
     }
-    this.props.addEditedDish(this.state.selected);
+    this.props.addEditedDish(this.props.userDishes.find(dish => dish._id == e.target.name));
   };
   componentWillUnmount() {
-    this.debouncedEvent.cancel();
+
     if (this.props.showAlert) {
       this.props.hideAlert();
     }
@@ -63,8 +43,8 @@ class EditDishesModal extends Component {
               message={this.props.message}
             />
           ) : (
-            <></>
-          )}
+              <></>
+            )}
         </ModalBody>
         <div className="edit-dish-list mt-0">
           <div className="row w-100 m-0">
@@ -77,58 +57,25 @@ class EditDishesModal extends Component {
             <div className="dish-label col-3 mt-4">
               <b>Price</b>
             </div>
-            <div className="edit-dish-label col-5 mt-4">
-              <div style={{ backgroundColor: "#48BDFF" }}>
-                <Button
-                  style={{
-                    backgroundColor: "#28a745",
-                    color: "#080024",
-                    border: "none",
-                    float: "right",
-                    marginLeft: "1rem",
-                  }}
-                  variant="primary"
-                  onClick={this.handleAddDish}
-                >
-                  Add
-                </Button>
-
-                <select
-                  onChange={this.debounceEvent(this.handleSelectChange, 250)}
-                  className="custom-select"
-                  style={{
-                    width: "14rem",
-                    float: "left",
-                    overflowY: "auto",
-                    overflowX: "hidden",
-                    height: "3rem",
-                  }}
-                >
-                  {this.props.userDishes.map((dish) => {
-                    return (
-                      <option
-                        key={dish._id}
-                        className="pl-5"
-                        style={{ color: "#080024" }}
-                        id={dish._id}
-                      >
-                        {dish.dishName} - {dish.dishPrice} VND
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-            </div>
           </div>
           <div className=" mt-4">
             <ListGroup>
-              {this.props.editedDishes.map((dish) => {
+              {this.props.userDishes.map((dish) => {
+                let checked = false;
+                for (let editedDish of this.props.editedDishes) {
+                  if (editedDish._id == dish._id) {
+                    checked = true;
+                    break;
+                  }
+                }
                 return (
                   <EditDishItem
                     show={this.props.showEditDishesModal}
                     key={dish._id}
                     dish={dish}
                     updateEditedDish={this.props.updateEditedDish}
+                    checked={checked}
+                    handleSelectChange={this.handleUpdateDish}
                   />
                 );
               })}
@@ -173,7 +120,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert, addEditedDish }, dispatch);
+  return bindActionCreators({ setAlert, hideAlert, addEditedDish, deleteEditedDish }, dispatch);
 }
 
 export default withRouter(

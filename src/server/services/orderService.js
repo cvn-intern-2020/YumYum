@@ -15,10 +15,10 @@ export const getOrderByGroupId = async (groupId) => {
 };
 export const createOrder = async (groupId, userId, details, totalPrice) => {
   if (!isObjectID(groupId)) {
-    return { message: "invalid groupId", status: false };
+    return { message: "invalid group, check your Id", status: false };
   }
   if (!isObjectID(userId)) {
-    return { message: "invalid userId", status: false };
+    return { message: "invalid user, check your Id", status: false };
   }
   let createdOrder = await OrdersModel.create({
     groupId,

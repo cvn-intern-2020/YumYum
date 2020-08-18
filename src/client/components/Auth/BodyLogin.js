@@ -12,6 +12,7 @@ import GlobalAlert from "../Common/GlobalAlert";
 import { signInRequest } from "../../request/auth";
 import { throttle, debounce } from "lodash";
 import "../../../../public/login.css";
+import { EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH } from "../../constant";
 
 class BodyLogin extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class BodyLogin extends Component {
       return -1;
     }
 
-    let signInResult = await signInRequest(this.state);
+    const signInResult = await signInRequest(this.state);
     if (!signInResult.status) {
       this.setState({ ...this.state, isButtonDisabled: false }, () => {
         this.props.setAlert("danger", signInResult.message);
@@ -95,7 +96,7 @@ class BodyLogin extends Component {
               placeholder="Enter email"
               name="email"
               onChange={this.debounceEvent(this.handleChange, 250)}
-              maxLength={50}
+              maxLength={EMAIL_MAX_LENGTH}
             />
           </Form.Group>
 
@@ -106,7 +107,7 @@ class BodyLogin extends Component {
               placeholder="Password"
               name="password"
               onChange={this.debounceEvent(this.handleChange, 250)}
-              maxLength={50}
+              maxLength={PASSWORD_MAX_LENGTH}
             />
           </Form.Group>
 
