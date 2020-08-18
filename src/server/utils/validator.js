@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { isNumber, isNaN, isUndefined } from "lodash";
-import { isEmail, isNumeric } from "validator";
+import { isEmail, isNumeric, isEmpty } from "validator";
 
 export const isObjectID = (objectid) => {
   return mongoose.Types.ObjectId.isValid(objectid);
@@ -13,7 +13,7 @@ export const validateDish = (name, price) => {
       message: "Please enter all fields required: name and price",
     };
   }
-  if (name == "") {
+  if (isEmpty(name, { ignore_whitespace: true })) {
     return { status: false, message: "Name is empty" };
   }
   if (isNaN(price) || !isNumber(price) || price < 0) {
@@ -35,26 +35,22 @@ export const validateRegister = (name, phone, email, password) => {
         "Please enter all fields required: name, phone, email and password",
     };
   }
-  if (name == "") {
+  if (isEmpty(name, { ignore_whitespace: true })) {
     return { status: false, message: "Name is empty" };
   }
-  name = name.replace(/\s/g, "");
-  if (name.length == 0) {
-    return { status: false, message: "Name can't be all spaces" };
-  }
-  if (phone == "") {
+  if (isEmpty(phone, { ignore_whitespace: true })) {
     return { status: false, message: "Phone is empty" };
   }
   if (isNaN(phone) || !isNumeric(phone) || phone.length != 10) {
     return { status: false, message: "Phone is invalid" };
   }
-  if (email == "") {
+  if (isEmpty(email, { ignore_whitespace: true })) {
     return { status: false, message: "Email is empty" };
   }
   if (!isEmail(email)) {
     return { status: false, message: "Email is invalid" };
   }
-  if (password == "") {
+  if (isEmpty(password)) {
     return { status: false, message: "Password is empty" };
   }
   if (password.length < 6) {
