@@ -5,22 +5,31 @@ import { connect } from "react-redux";
 
 class ButtonBar extends Component {
   render() {
+    const {
+      toggleAddMemberModal,
+      toggleEditDishesModal,
+      toggleOrdersListModal,
+      toggleMemberListModal,
+      groupName,
+      ownerId,
+      userId,
+    } = this.props;
     return (
       <div className="row w-100 m-0">
         <div className="col-4">
-          {this.props.userId == this.props.ownerId ? (
+          {userId == ownerId ? (
             <>
               <Button
                 style={{ backgroundColor: "#FF5522", color: "#080024" }}
                 className="float-left mt-4 ml-5 group-button"
-                onClick={this.props.toggleAddMemberModal}
+                onClick={toggleAddMemberModal}
               >
                 Add Member
               </Button>
               <Button
                 style={{ backgroundColor: "#FF5522", color: "#080024" }}
                 className="float-left mt-4 ml-5 group-button"
-                onClick={this.props.toggleEditDishesModal}
+                onClick={toggleEditDishesModal}
               >
                 Edit Dishes
               </Button>
@@ -34,21 +43,21 @@ class ButtonBar extends Component {
           className="mt-4 col-4"
           style={{ fontSize: "40px", textAlign: "center", color: "white" }}
         >
-          {this.props.groupName}
+          {groupName}
         </div>
 
         <div className="col-4">
           <Button
             style={{ backgroundColor: "#FF5522", color: "#080024" }}
             className="float-right mt-4 mr-5 group-button"
-            onClick={this.props.toggleOrdersListModal}
+            onClick={toggleOrdersListModal}
           >
             Show Order
           </Button>
           <Button
             style={{ backgroundColor: "#FF5522", color: "#080024" }}
             className="float-right mt-4 mr-5 group-button"
-            onClick={this.props.toggleMemberListModal}
+            onClick={toggleMemberListModal}
           >
             Show Member
           </Button>

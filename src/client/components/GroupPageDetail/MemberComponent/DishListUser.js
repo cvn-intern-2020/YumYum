@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 
 class DishListUser extends Component {
   render() {
+    const { dishes, totalPrice, toggleConfirmOrderModal } = this.props;
     return (
       <div className="text-center-group">
         <div className="row w-100 m-0">
@@ -24,11 +25,11 @@ class DishListUser extends Component {
         </div>
         <div className="group-container mt-4">
           <ListGroup>
-            {this.props.dishes.map((dish) => {
+            {dishes.map((dish) => {
               return <DishItemUser key={dish._id} dish={dish} />;
             })}
           </ListGroup>
-          {this.props.dishes.length > 0 ? (
+          {dishes.length > 0 ? (
             <>
               <ListGroup.Item
                 style={{
@@ -39,9 +40,7 @@ class DishListUser extends Component {
                 }}
                 className="float-right dish-label"
               >
-                <pre className="dish-label tab4">
-                  Total: {this.props.totalPrice} VND
-                </pre>
+                <pre className="dish-label tab4">Total: {totalPrice} VND</pre>
               </ListGroup.Item>
               <ListGroup.Item
                 style={{
@@ -62,7 +61,7 @@ class DishListUser extends Component {
                     width: "15%",
                     borderRadius: "2rem",
                   }}
-                  onClick={this.props.toggleConfirmOrderModal}
+                  onClick={toggleConfirmOrderModal}
                 >
                   <b>ORDER</b>
                 </Button>

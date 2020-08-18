@@ -6,13 +6,14 @@ export default class DishItem extends Component {
     this.props.toggleConfirmDeleteModal(this.props.dish._id);
   };
   render() {
+    const { dish } = this.props;
     return (
       <ListGroup.Item>
         <div className="row w-100 m-0">
           <div className=" dish-label col">
-            Name:{"  "} {this.props.dish.name}
+            Name:{"  "} {dish.name}
             <br></br>
-            Price:{"  "} {this.props.dish.price} VND
+            Price:{"  "} {dish.price} VND
           </div>
 
           <div className="dish-label col">

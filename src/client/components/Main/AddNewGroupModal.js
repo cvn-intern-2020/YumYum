@@ -34,6 +34,7 @@ class AddNewGroupModal extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   handleCloseButton = () => {
+    const { hideAlert, handleClose } = this.props;
     this.setState({
       ...this.state,
       name: "",
@@ -41,37 +42,47 @@ class AddNewGroupModal extends Component {
       err: "",
       showAlert: false,
     });
-    this.props.hideAlert();
-    this.props.handleClose();
+    hideAlert();
+    handleClose();
   };
   handleSaveNewGroup = async () => {
-    let validateResult = validateGroup(this.state.name, this.state.description);
+    const { createGroup, handleClose, setAlert } = this.props;
+    const { name, description } = this.state;
+    let validateResult = validateGroup(name, description);
     if (!validateResult.status) {
-      this.props.setAlert("danger", validateResult.message);
+      setAlert("danger", validateResult.message);
       return -1;
     }
-
-    this.props.createGroup(this.state);
-    this.props.handleClose();
+    createGroup(this.state);
+    handleClose();
   };
   componentWillUnmount() {
-    if (this.props.showAlert) {
-      this.props.hideAlert();
+    const { showAlert, hideAlert } = this.props;
+    if (showAlert) {
+      hideAlert();
     }
     this.debouncedEvent.cancel();
   }
   render() {
+    const {
+      show,
+      handleClose,
+      showAlert,
+      type,
+      hideAlert,
+      message,
+    } = this.props;
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add A New Group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {this.props.showAlert ? (
+          {showAlert ? (
             <GlobalAlert
-              alertType={this.props.type}
-              toggleAlert={this.props.hideAlert}
-              message={this.props.message}
+              alertType={type}
+              toggleAlert={hideAlert}
+              message={message}
             />
           ) : (
             <></>
@@ -110,9 +121,7 @@ class AddNewGroupModal extends Component {
               border: "none",
             }}
             variant="primary"
-            onClick={() => {
-              this.handleSaveNewGroup();
-            }}
+            onClick={this.handleSaveNewGroup}
           >
             Save
           </Button>
@@ -123,9 +132,7 @@ class AddNewGroupModal extends Component {
               border: "none",
             }}
             variant="secondary"
-            onClick={() => {
-              this.handleCloseButton();
-            }}
+            onClick={this.handleCloseButton}
           >
             Close
           </Button>

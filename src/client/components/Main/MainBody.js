@@ -23,33 +23,34 @@ class MainBody extends Component {
     });
   };
   componentDidMount() {
-    if (this.props._id == "") {
-      this.props.setUser(this.props.token);
+    const { _id, token, setUser } = this.props;
+    if (_id == "") {
+      setUser(token);
     }
   }
 
   render() {
+    const { groups, token } = this.props;
+    const { showAddGroupModal } = this.state;
     return (
       <div className="main-body-background-div">
         <Container className=" main-body-group-container" fluid>
           <Suspense fallback={<div className="loader"></div>}>
-            {this.props.groups ? (
+            {groups ? (
               <>
                 <AddNewGroupModal
-                  show={this.state.showAddGroupModal}
+                  show={showAddGroupModal}
                   handleClose={this.toggleAddGroupModal}
-                  token={this.props.token}
+                  token={token}
                 />
                 <MyJoinedGroup
-                  joinedGroups={this.props.groups.filter(
+                  joinedGroups={groups.filter(
                     (group) => group.isOwner == false
                   )}
                 />
 
                 <MyOwnGroup
-                  ownGroups={this.props.groups.filter(
-                    (group) => group.isOwner == true
-                  )}
+                  ownGroups={groups.filter((group) => group.isOwner == true)}
                   toggleAddGroupModal={this.toggleAddGroupModal}
                 />
               </>

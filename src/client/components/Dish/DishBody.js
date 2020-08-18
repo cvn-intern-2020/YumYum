@@ -32,9 +32,11 @@ class DishBody extends Component {
   };
 
   deleteDish = async () => {
-    const deleteDishResult = await deleteDishRequest(this.state.selected);
+    const { setAlert } = this.props;
+    const { selected } = this.state;
+    const deleteDishResult = await deleteDishRequest(selected);
     if (!deleteDishResult.status) {
-      this.props.setAlert("danger", deleteDishResult.message);
+      setAlert("danger", deleteDishResult.message);
       return -1;
     }
     this.setState(
@@ -79,6 +81,14 @@ class DishBody extends Component {
     }
   }
   render() {
+    const { type, hideAlert, message } = this.props;
+    const {
+      showConfirmDeleteModal,
+      dishes,
+      selected,
+      showAddDishModal,
+      name,
+    } = this.state;
     return (
       <div
         style={{
@@ -90,9 +100,9 @@ class DishBody extends Component {
       >
         {this.props.location.state ? (
           <GlobalAlert
-            alertType={this.props.type}
-            toggleAlert={this.props.hideAlert}
-            message={this.props.message}
+            alertType={type}
+            toggleAlert={hideAlert}
+            message={message}
           />
         ) : (
           <></>
@@ -101,20 +111,16 @@ class DishBody extends Component {
           <></>
         ) : (
           <ConfirmDeleteModal
-            show={this.state.showConfirmDeleteModal}
+            show={showConfirmDeleteModal}
             handleClose={this.toggleConfirmDeleteModal}
             deleteDish={this.deleteDish}
-            dish={
-              this.state.dishes.filter(
-                (dish) => dish._id == this.state.selected
-              )[0]
-            }
+            dish={dishes.filter((dish) => dish._id == selected)[0]}
             {...this.props}
           />
         )}
         {
           <AddDishModal
-            show={this.state.showAddDishModal}
+            show={showAddDishModal}
             handleClose={this.toggleAddDishModal}
             addDishToState={this.addDishToState}
             {...this.props}
@@ -127,7 +133,7 @@ class DishBody extends Component {
             className="mt-4 col-4"
             style={{ fontSize: "40px", textAlign: "center", color: "white" }}
           >
-            {this.state.name}
+            {name}
           </div>
 
           <div className="col-4">
@@ -154,7 +160,7 @@ class DishBody extends Component {
           </div>
           <div className="dish-container mt-4">
             <ListGroup>
-              {this.state.dishes.map((dish) => (
+              {dishes.map((dish) => (
                 <DishItem
                   key={dish._id}
                   dish={dish}

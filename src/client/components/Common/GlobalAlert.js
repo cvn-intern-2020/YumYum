@@ -9,14 +9,15 @@ export default class GlobalAlert extends Component {
     clearTimeout(this.timer);
   }
   render() {
+    let { alertType, toggleAlert, message } = this.props;
     return (
       <Alert
-        variant={this.props.alertType}
+        variant={alertType}
         dismissible
-        onClose={this.props.toggleAlert}
+        onClose={toggleAlert}
         className="text-center mb-0"
       >
-        {this.props.message}
+        {message}
       </Alert>
     );
   }

@@ -25,6 +25,8 @@ class GroupBody extends Component {
     }
   }
   render() {
+    const { group, userId } = this.props;
+    const { doesGroupExist } = this.state;
     return (
       <div
         style={{
@@ -34,14 +36,18 @@ class GroupBody extends Component {
           height: "94%",
         }}
       >
-        {this.props.group._id == "" ? (
+        {group._id == "" ? (
           <>
-            {this.state.doesGroupExist ? <div className="loader"></div> : <PageNotFound />}
+            {doesGroupExist ? <div className="loader"></div> : <PageNotFound />}
           </>
-        ) : this.props.group.ownerId == this.props.userId ? (
-          <Suspense fallback={<div className="loader"></div>}><AdminView /></Suspense>
+        ) : group.ownerId == userId ? (
+          <Suspense fallback={<div className="loader"></div>}>
+            <AdminView />
+          </Suspense>
         ) : (
-          <Suspense fallback={<div className="loader"></div>}><MemberView /></Suspense>
+          <Suspense fallback={<div className="loader"></div>}>
+            <MemberView />
+          </Suspense>
         )}
       </div>
     );
