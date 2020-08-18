@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
-import Validator from "validator";
 import { setUser } from "../../actions/user";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -13,6 +12,7 @@ import { signInRequest } from "../../request/auth";
 import { throttle, debounce } from "lodash";
 import "../../../../public/login.css";
 import { EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH } from "../../constant";
+import { validateSignIn } from "../../utils/validator";
 
 class BodyLogin extends Component {
   constructor(props) {
@@ -36,20 +36,9 @@ class BodyLogin extends Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
   handleClick = async () => {
-    if (this.state.email == "") {
-      this.props.setAlert("danger", "Email is empty");
-      return -1;
-    }
-    if (!Validator.isEmail(this.state.email)) {
-      this.props.setAlert("danger", "not email");
-      return -1;
-    }
-    if (this.state.password == "") {
-      this.props.setAlert("danger", "Password is empty");
-      return -1;
-    }
-    if (this.state.password.length < 6) {
-      this.props.setAlert("danger", "not valid pass");
+    let validateResult = validateSignIn(this.state.email, this.state.password);
+    if (!validateResult.status) {
+      this.props.setAlert("danger", validateResult.message);
       return -1;
     }
 
