@@ -56,19 +56,19 @@ class AddDishModal extends Component {
       this.props.setAlert("danger", "Price is empty");
       return -1;
     }
-    let price = parseInt(this.state.price);
+    const price = parseInt(this.state.price);
 
     if (!validator.isNumeric(this.state.price) || price < 0) {
       this.props.setAlert("danger", "Price is not numeric or smaller than 0");
       return -1;
     }
-    let cleanName = this.state.name.replace(/\s/g, "");
+    const cleanName = this.state.name.replace(/\s/g, "");
     if (cleanName.length == 0) {
       this.props.setAlert("danger", "Name not allow all space");
       return -1;
     }
 
-    let createDishResult = await createDishRequest({
+    const createDishResult = await createDishRequest({
       name: this.state.name,
       price: this.state.price * 1000,
     });
