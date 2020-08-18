@@ -63,8 +63,8 @@ class EditDishesModal extends Component {
               message={this.props.message}
             />
           ) : (
-            <></>
-          )}
+              <></>
+            )}
         </ModalBody>
         <div className="edit-dish-list mt-0">
           <div className="row w-100 m-0">
@@ -122,7 +122,7 @@ class EditDishesModal extends Component {
           </div>
           <div className=" mt-4">
             <ListGroup>
-              {this.props.editedDishes.map((dish) => {
+              {this.props.userDishes.map((dish) => {
                 return (
                   <EditDishItem
                     show={this.props.showEditDishesModal}
