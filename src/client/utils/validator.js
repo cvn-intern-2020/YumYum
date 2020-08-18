@@ -164,7 +164,7 @@ export const validateSignIn = (email, password) => {
       message: `Email not longer than ${GROUP_NAME_MAX_LENGTH}`,
     };
   }
-  if (!validator.isEmail(this.state.email)) {
+  if (!validator.isEmail(email)) {
     return {
       status: false,
       message: "not email",
