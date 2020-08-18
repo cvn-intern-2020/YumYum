@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { setUser } from "../../actions/user";
-import { createGroupRequest } from "../../request/group";
 import { createGroup } from "../../actions/group";
 import { debounce } from "lodash";
+import { GROUP_DESCRIPTION_MAX_LENGTH, GROUP_NAME_MAX_LENGTH } from "../../constant";
 
 class AddNewGroupModal extends Component {
   constructor(props) {
@@ -101,7 +101,7 @@ class AddNewGroupModal extends Component {
                 name="name"
                 placeholder="Enter group name"
                 onChange={this.debounceEvent(this.handleChange, 250)}
-                maxLength={20}
+                maxLength={GROUP_NAME_MAX_LENGTH}
               />
             </Form.Group>
 
@@ -114,7 +114,7 @@ class AddNewGroupModal extends Component {
                 placeholder="Enter description"
                 name="description"
                 onChange={this.debounceEvent(this.handleChange, 250)}
-                maxLength={100}
+                maxLength={GROUP_DESCRIPTION_MAX_LENGTH}
               />
             </Form.Group>
           </Form>
