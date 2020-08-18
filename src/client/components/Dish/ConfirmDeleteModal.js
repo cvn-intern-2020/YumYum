@@ -13,6 +13,12 @@ class ConfirmDeleteModal extends Component {
       return this.debouncedEvent(e);
     };
   }
+  componentWillUnmount() {
+    this.debouncedEvent.cancel();
+    if (this.props.showAlert) {
+      this.props.hideAlert();
+    }
+  }
   render() {
     return (
       <Modal show={this.props.show} onHide={() => this.props.handleClose("")}>
@@ -41,7 +47,8 @@ class ConfirmDeleteModal extends Component {
               border: "none",
             }}
             variant="primary"
-            onClick={this.props.deleteDish}
+            onClick={this.debounceEvent(this.props.deleteDish, 250)}
+            
           >
             Yes
           </Button>
@@ -52,7 +59,7 @@ class ConfirmDeleteModal extends Component {
               border: "none",
             }}
             variant="secondary"
-            onClick={this.props.handleClose}
+            onClick={()=>this.props.handleClose("")}
           >
             No
           </Button>

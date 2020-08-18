@@ -59,11 +59,34 @@ export const validateRegister = (name, phone, email, password) => {
   return { status: true };
 };
 
-export const validateLogin = (email, password) => {
+export const createGroup = (name, description) => {
+  if (
+    isUndefined(name) ||
+    isUndefined(description)  ) {
+    return {
+      status: false,
+      message:
+        "Please enter all fields required: name, description",
+    };
+  }
+  if (isEmpty(name, { ignore_whitespace: true })) {
+    return { status: false, message: "Name is empty" };
+  }
+  if (name.length > 20) {
+    return { status: false, message: "Name is too long" };
+  }
+  if (isEmpty(description, { ignore_whitespace: true })) {
+    return { status: false, message: "description is empty" };
+  }
+  if (description.length > 100) {
+    return { status: false, message: "description is too long" };
+  }
+  return { status: true };};
+
+  export const validateLogin = (email, password) => {
   if (
     isUndefined(email) ||
-    isUndefined(password)
-  ) {
+    isUndefined(password)  ) {
     return {
       status: false,
       message:
