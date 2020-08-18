@@ -46,8 +46,20 @@ class SignUpBody extends Component {
       this.props.setAlert("danger", "Name is empty");
       return -1;
     }
+
+    let cleanUserName = this.state.name.replace(/\s/g, "");
+    if (cleanUserName.length == 0) {
+      this.props.setAlert("danger", "Name not allow all space");
+      return -1;
+    }
+
     if (this.state.phone == "") {
       this.props.setAlert("danger", "Phone is empty");
+      return -1;
+    }
+    let cleanPhone = this.state.phone.replace(/\s/g, "");
+    if (cleanPhone.length == 0) {
+      this.props.setAlert("danger", "Phone number not allow all space");
       return -1;
     }
 
@@ -60,7 +72,8 @@ class SignUpBody extends Component {
       return -1;
     }
     if (
-      this.state.phone.length != 10 ||
+      this.state.phone.length < 10 ||
+      this.state.phone.length > 11 ||
       !Validator.isNumeric(this.state.phone)
     ) {
       this.props.setAlert("danger", "Phone number must be 10 number");
