@@ -43,7 +43,6 @@ export const signOutRequest = () => {
   return axios
     .get(`${process.env.API_URL}/api/auth/signout`)
     .then(() => {
-      console.log(true);
       return true;
     })
     .catch(() => {

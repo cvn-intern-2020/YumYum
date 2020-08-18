@@ -18,8 +18,8 @@ class Invite extends Component {
     };
   }
   async componentDidMount() {
-    let inviteHash = this.props.match.params.inviteHash;
-    let inviteResult = await getInviteRequest(inviteHash);
+    const inviteHash = this.props.match.params.inviteHash;
+    const inviteResult = await getInviteRequest(inviteHash);
     if (!inviteResult.status) {
       this.setState({ isCheckingInvite: false });
       this.props.setAlert("danger", inviteResult.message);

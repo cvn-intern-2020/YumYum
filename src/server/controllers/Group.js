@@ -11,8 +11,8 @@ import mongoose from "mongoose";
 import { OK_RESPONSE, HANDLED_ERROR_RESPONSE } from "../constants/http";
 
 export const getGroupController = async (req, res) => {
-  let groupId = req.params.groupId;
-  let userId = req._id;
+  const groupId = req.params.groupId;
+  const userId = req._id;
   let result = await getGroupById(groupId);
   if (!result.status) {
     return res.status(HANDLED_ERROR_RESPONSE).json({ message: result.message });
@@ -32,11 +32,11 @@ export const getGroupController = async (req, res) => {
 };
 
 export const addMemberController = async (req, res) => {
-  let userEmail = req.body.userEmail;
-  let ownerId = req._id;
-  let groupId = req.params.groupId;
+  const userEmail = req.body.userEmail;
+  const ownerId = req._id;
+  const groupId = req.params.groupId;
 
-  let isallowed = await isAllowedToEditGroup(groupId, ownerId);
+  const isallowed = await isAllowedToEditGroup(groupId, ownerId);
   if (!isallowed) {
     return res.status(HANDLED_ERROR_RESPONSE).json({ message: "Not allowed to add member" });
   }
@@ -53,12 +53,12 @@ export const addMemberController = async (req, res) => {
     }
   }
 
-  let addMemberResult = await addMemberToGroup(ownerId, user, groupId);
+  const addMemberResult = await addMemberToGroup(ownerId, user, groupId);
   if (!addMemberResult.status) {
     return res.status(HANDLED_ERROR_RESPONSE).json({ message: addMemberResult.message });
   }
 
-  let addGroupResult = await addGroupToUser(
+  const addGroupResult = await addGroupToUser(
     user._id,
     groupId,
     addMemberResult.result.name,
@@ -71,15 +71,15 @@ export const addMemberController = async (req, res) => {
 };
 
 export const createNewGroupController = async (req, res) => {
-  let { name, description } = req.body;
-  let ownerId = req._id;
+  const { name, description } = req.body;
+  const ownerId = req._id;
   if (!name) {
     return res.status(HANDLED_ERROR_RESPONSE).json({ message: "Name field is empty" });
   }
   if (!description) {
     return res.status(HANDLED_ERROR_RESPONSE).json({ message: "Description field is empty" });
   }
-  let { result, status } = await createGroup(name, ownerId, description);
+  const { result, status } = await createGroup(name, ownerId, description);
   if (!status) {
     return res.status(HANDLED_ERROR_RESPONSE).json({ message: "something went wrong" });
   }
@@ -88,17 +88,17 @@ export const createNewGroupController = async (req, res) => {
 
 export const editDishesController = async (req, res) => {
   let dishes = req.body.dishes;
-  let groupId = req.params.groupId;
-  let isAllowedToEdit = await isAllowedToEditGroup(groupId, req._id);
+  const groupId = req.params.groupId;
+  const isAllowedToEdit = await isAllowedToEditGroup(groupId, req._id);
   if (!isAllowedToEdit) {
     return res.status(HANDLED_ERROR_RESPONSE).json({ message: "Not allowed to edit dishes" });
   }
   dishes = dishes.map((dish) => mongoose.Types.ObjectId(dish));
-  let newDishes = await getManyDishes(dishes);
+  const newDishes = await getManyDishes(dishes);
   if (!newDishes.status || newDishes.result.length < dishes.length) {
     return res.status(HANDLED_ERROR_RESPONSE).json({ message: "dishId does not exist" });
   }
-  let editedDishes = await editDishes(groupId, dishes);
+  const editedDishes = await editDishes(groupId, dishes);
   if (!editedDishes.status) {
     return res.status(HANDLED_ERROR_RESPONSE).json({ message: editedDishes.message });
   }

@@ -3,7 +3,7 @@ import OrdersModel from "../models/orders";
 import { isObjectID } from "../utils/validator";
 
 export const getOrderByGroupId = async (groupId) => {
-  let groupOrders = await OrdersModel.find({
+  const groupOrders = await OrdersModel.find({
     groupId: mongoose.Types.ObjectId(groupId),
   })
     .select("-groupId -__v").populate({
@@ -20,7 +20,7 @@ export const createOrder = async (groupId, userId, details, totalPrice) => {
   if (!isObjectID(userId)) {
     return { message: "invalid user, check your Id", status: false };
   }
-  let createdOrder = await OrdersModel.create({
+  const createdOrder = await OrdersModel.create({
     groupId,
     userId,
     details,

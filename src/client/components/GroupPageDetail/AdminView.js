@@ -37,7 +37,7 @@ class AdminView extends Component {
   };
   toggleEditDishesModal = async () => {
     if (!this.state.showEditDishesModal) {
-      let result = await this.props.getDish(this.props.history);
+      const result = await this.props.getDish(this.props.history);
       if (!result) {
         this.props.history.push({
           pathname: "/dish",

@@ -16,7 +16,6 @@ export const createOrderRequest = (groupId, details, totalPrice) => {
         errCode: err.response.status,
         message: err.response.data.message,
       };
-      // return { status: false, message: err.response.data.message };
     });
 };
 

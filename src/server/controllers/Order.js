@@ -11,12 +11,14 @@ import { doDishesExist } from "../services/dishService";
 import { OK_RESPONSE, HANDLED_ERROR_RESPONSE } from "../constants/http";
 
 export const getOrderByGroupIdController = async (req, res) => {
-  let groupId = req.params.groupId;
+  const groupId = req.params.groupId;
   if (!isObjectID(groupId)) {
-    return res.status(HANDLED_ERROR_RESPONSE).json({ message: "Invalid GroupId" });
+    return res
+      .status(HANDLED_ERROR_RESPONSE)
+      .json({ message: "Invalid GroupId" });
   }
-  let userId = req._id;
-  let result = await isAllowedToReadOrders(groupId, userId);
+  const userId = req._id;
+  const result = await isAllowedToReadOrders(groupId, userId);
   if (!result) {
     return res.status(HANDLED_ERROR_RESPONSE).json({
       message: "Not alow to read order in group",
@@ -32,9 +34,9 @@ export const getOrderByGroupIdController = async (req, res) => {
   return res.status(OK_RESPONSE).json(getOrderResult);
 };
 export const createNewOrderController = async (req, res) => {
-  let userId = req._id;
-  let { details, totalPrice, groupId } = req.body;
-  console.log(req.body);
+  const userId = req._id;
+  const { totalPrice, groupId } = req.body;
+  let { details } = req.body;
   if (!(await isUserInGroup(userId, groupId))) {
     return res.status(HANDLED_ERROR_RESPONSE).json({
       message: "groupId does not exist or not allowed to order in this group",
@@ -56,27 +58,29 @@ export const createNewOrderController = async (req, res) => {
     });
   }
   details = convertToObjectId(details);
-  let dishExistResult = await doDishesExist(details);
+  const dishExistResult = await doDishesExist(details);
   if (!dishExistResult) {
     return res.status(HANDLED_ERROR_RESPONSE).json({
       message: "dishId sent does not exist or deleted",
     });
   }
-  let dishesInGroupResult = await areDishesInGroup(groupId, details);
+  const dishesInGroupResult = await areDishesInGroup(groupId, details);
   if (!dishesInGroupResult) {
     return res.status(HANDLED_ERROR_RESPONSE).json({
       message: "dishId sent is not in group",
     });
   }
 
-  let createOrderResult = await createOrder(
+  const createOrderResult = await createOrder(
     groupId,
     userId,
     details,
     totalPrice
   );
   if (!createOrderResult.status) {
-    return res.status(HANDLED_ERROR_RESPONSE).json({ message: "something went wrong" });
+    return res
+      .status(HANDLED_ERROR_RESPONSE)
+      .json({ message: "something went wrong" });
   }
   return res.status(OK_RESPONSE).json({ message: createOrderResult.message });
 };

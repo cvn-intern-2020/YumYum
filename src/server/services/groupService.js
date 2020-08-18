@@ -16,7 +16,7 @@ export const isAllowedToEditGroup = async (groupId, userId) => {
   if (!isObjectID(groupId)) {
     return { message: "invalid group, check your Id", status: false };
   }
-  let result = await groupModel
+  const result = await groupModel
     .findOne({
       _id: mongoose.Types.ObjectId(groupId),
       ownerId: mongoose.Types.ObjectId(userId),
@@ -30,7 +30,7 @@ export const isAllowedToEditGroup = async (groupId, userId) => {
 };
 
 export const isUserInGroup = async (userId, groupId) => {
-  let result = await groupModel
+  const result = await groupModel
     .findOne({
       $and: [
         { "users.userId": mongoose.Types.ObjectId(userId) },
@@ -49,7 +49,7 @@ export const getGroupById = async (groupId) => {
   if (!isObjectID(groupId)) {
     return { message: "invalid group, check your Id", status: false };
   }
-  let result = await groupModel
+  const result = await groupModel
     .findOne({
       _id: mongoose.Types.ObjectId(groupId),
     })
@@ -61,7 +61,7 @@ export const getGroupById = async (groupId) => {
 };
 
 export const inviteMemberToGroup = async (user, groupId) => {
-  let result = await groupModel.findOneAndUpdate(
+  const result = await groupModel.findOneAndUpdate(
     {
       _id: mongoose.Types.ObjectId(groupId),
     },
@@ -88,7 +88,7 @@ export const addMemberToGroup = async (ownerId, user, groupId) => {
     return { message: "invalid group, check your Id", status: false };
   }
 
-  let result = await groupModel.findOneAndUpdate(
+  const result = await groupModel.findOneAndUpdate(
     {
       _id: mongoose.Types.ObjectId(groupId),
       ownerId: mongoose.Types.ObjectId(ownerId),
@@ -112,12 +112,12 @@ export const createGroup = async (name, ownerId, description) => {
   if (!isObjectID(ownerId)) {
     return { message: "invalid owner, check your Id", status: false };
   }
-  let createdGroup = await groupModel.create({
+  const createdGroup = await groupModel.create({
     name,
     ownerId,
     description,
   });
-  let addGroupResult = await addGroupToUser(
+  const addGroupResult = await addGroupToUser(
     ownerId,
     createdGroup._id,
     name,
@@ -130,7 +130,7 @@ export const createGroup = async (name, ownerId, description) => {
 };
 
 export const pullDishFromGroup = async (dishId) => {
-  let pullResult = await groupModel.updateMany(
+  const pullResult = await groupModel.updateMany(
     {
       dishes: mongoose.Types.ObjectId(dishId),
     },
@@ -144,8 +144,8 @@ export const pullDishFromGroup = async (dishId) => {
 };
 
 export const areDishesInGroup = async (groupId, dishDetails) => {
-  let dishArray = dishDetails.map((detail) => detail.dishId);
-  let groupFound = await groupModel
+  const dishArray = dishDetails.map((detail) => detail.dishId);
+  const groupFound = await groupModel
     .findOne({
       _id: mongoose.Types.ObjectId(groupId),
       dishes: { $all: dishArray },
@@ -162,7 +162,7 @@ export const editDishes = async (groupId, dishes) => {
   if (!isObjectID(groupId)) {
     return { message: "invalid group, check your Id", status: false };
   }
-  let editDishes = await groupModel.findOneAndUpdate(
+  const editDishes = await groupModel.findOneAndUpdate(
     {
       _id: groupId,
     },

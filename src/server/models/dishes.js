@@ -10,20 +10,5 @@ export const DishesSchema = new Dishes({
   userId: { type: ObjectId, required: true, ref: "Users" },
 });
 
-DishesSchema.statics.getDishById = async function (dishId) {
-  let result = await this.findOne({ _id: mongoose.Types.ObjectId(dishId) })
-    .select("-_id")
-    .lean();
-  return result;
-};
-
-DishesSchema.statics.createDish = async function (name, price, userId) {
-  let result = await this.create({
-    name: name,
-    price: price,
-    userId: mongoose.Types.ObjectId(userId),
-  });
-  return result;
-};
 const dishesModel = mongoose.model("Dishes", DishesSchema);
 export default dishesModel;

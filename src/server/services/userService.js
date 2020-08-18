@@ -2,7 +2,7 @@ import userModel from "../models/users";
 import mongoose from "mongoose";
 
 export const getUserByEmail = async (email) => {
-  let result = await userModel
+  const result = await userModel
     .findOne({ email: email })
     .select("email password groups name")
     .lean();
@@ -13,7 +13,7 @@ export const getUserByEmail = async (email) => {
 };
 
 export const createUser = async (email, phone, password, name) => {
-  let result = await userModel.create({
+  const result = await userModel.create({
     name: name,
     phone: phone,
     email: email,
@@ -23,7 +23,7 @@ export const createUser = async (email, phone, password, name) => {
 };
 
 export const getUserById = async (userId) => {
-  let result = await userModel
+  const result = await userModel
     .findOne({ _id: mongoose.Types.ObjectId(userId) })
     .select("-password -__v")
     .lean();
@@ -34,7 +34,7 @@ export const getUserById = async (userId) => {
 };
 
 export const addGroupToUser = async (userId, groupId, name, isOwner) => {
-  let result = await userModel.findOneAndUpdate(
+  const result = await userModel.findOneAndUpdate(
     {
       _id: mongoose.Types.ObjectId(userId),
     },

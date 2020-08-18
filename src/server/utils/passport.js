@@ -10,7 +10,7 @@ module.exports = (passport) => {
     new JwtStrategy(
       { ...opts, jwtFromRequest: (req) => req.cookies.token },
       async (req, jwt_payload, done) => {
-        let user = await getUserById(jwt_payload._id);
+        const user = await getUserById(jwt_payload._id);
         if (user) {
           req._id = jwt_payload._id;
           return done(null, user);

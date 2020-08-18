@@ -9,7 +9,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_ALERT: {
-      let { message, type } = action.payload;
+      const { message, type } = action.payload;
       return { message, type, showAlert: true };
     }
     case HIDE_ALERT: {

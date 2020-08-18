@@ -3,7 +3,7 @@ import dishesModel from "../models/dishes";
 import { isObjectID } from "../utils/validator";
 
 export const getDishByUserId = async (userId) => {
-  let result = await dishesModel
+  const result = await dishesModel
     .find({ userId: mongoose.Types.ObjectId(userId), deleteAt: null })
     .select("-deleteAt -userId")
     .lean();
@@ -14,7 +14,7 @@ export const getDishByUserId = async (userId) => {
 };
 
 export const getManyDishes = async (dishArray) => {
-  let result = await dishesModel
+  const result = await dishesModel
     .find({ $and: [{ _id: { $in: [...dishArray] } }, { deleteAt: null }] })
     .sort("")
     .select("-deleteAt -userId")
@@ -29,7 +29,7 @@ export const createDish = async (name, price, userId) => {
   if (!isObjectID(userId)) {
     return { message: "invalid user, check your Id", status: false };
   }
-  let createdDish = await dishesModel.create({
+  const createdDish = await dishesModel.create({
     name,
     price,
     userId: mongoose.Types.ObjectId(userId),
@@ -41,7 +41,7 @@ export const createDish = async (name, price, userId) => {
 };
 
 export const deleteDish = async (userId, dishId) => {
-  let deletedDish = await dishesModel.findOneAndUpdate(
+  const deletedDish = await dishesModel.findOneAndUpdate(
     {
       _id: mongoose.Types.ObjectId(dishId),
       userId: mongoose.Types.ObjectId(userId),

@@ -16,7 +16,7 @@ class GroupBody extends Component {
     };
   }
   async componentDidMount() {
-    let result = await this.props.setGroup(this.props.match.params.groupId);
+    const result = await this.props.setGroup(this.props.match.params.groupId);
     this.setState({ doesGroupExist: result });
   }
   componentWillUnmount() {

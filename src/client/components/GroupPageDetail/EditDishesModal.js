@@ -5,23 +5,22 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
-import { addEditedDish, editDish, deleteEditedDish } from "../../actions/dish";
+import { addEditedDish, deleteEditedDish } from "../../actions/dish";
 import GlobalAlert from "../Common/GlobalAlert";
 
 class EditDishesModal extends Component {
-
   handleUpdateDish = (e) => {
     for (let dish of this.props.editedDishes) {
       if (dish._id == e.target.name) {
-
         this.props.deleteEditedDish(dish);
         return;
       }
     }
-    this.props.addEditedDish(this.props.userDishes.find(dish => dish._id == e.target.name));
+    this.props.addEditedDish(
+      this.props.userDishes.find((dish) => dish._id == e.target.name)
+    );
   };
   componentWillUnmount() {
-
     if (this.props.showAlert) {
       this.props.hideAlert();
     }
@@ -43,8 +42,8 @@ class EditDishesModal extends Component {
               message={this.props.message}
             />
           ) : (
-              <></>
-            )}
+            <></>
+          )}
         </ModalBody>
         <div className="edit-dish-list mt-0">
           <div className="row w-100 m-0">
@@ -137,7 +136,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setAlert, hideAlert, addEditedDish, deleteEditedDish }, dispatch);
+  return bindActionCreators(
+    { setAlert, hideAlert, addEditedDish, deleteEditedDish },
+    dispatch
+  );
 }
 
 export default withRouter(

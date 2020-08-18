@@ -4,7 +4,6 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import * as actionCreators from "./actions/types";
 
-const initialState = {};
 const composeEnhancers = composeWithDevTools({
   actionCreators,
   trace: true,

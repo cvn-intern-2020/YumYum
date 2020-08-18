@@ -67,7 +67,7 @@ class AddMemberModal extends Component {
     }
   }
   generateInviteLink = async () => {
-    let createInviteResult = await createInviteRequest(this.props.groupId);
+    const createInviteResult = await createInviteRequest(this.props.groupId);
     if (!createInviteResult.status) {
       this.props.setAlert("danger", createInviteResult.message);
       return -1;
