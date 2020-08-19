@@ -33,8 +33,8 @@ class App extends Component {
       history.push("/");
     } else {
       if (
-        token &&
-        token != "" &&
+        // token &&
+        // token != "" &&
         ["/login", "/signup", "/"].includes(location.pathname)
       ) {
         history.push("/main");
