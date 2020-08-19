@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Modal, ListGroup } from "react-bootstrap";
-import GlobalAlert from "../Common/GlobalAlert";
+import GlobalAlert from "../../Common/GlobalAlert";
 import OrderItem from "./OrderItem";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";

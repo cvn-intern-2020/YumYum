@@ -3,14 +3,14 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import DishListUser from "./MemberComponent/DishListUser";
 import OrderConfirmModal from "./MemberComponent/OrderConfirmModal";
-import ButtonBar from "./ButtonBar";
+import ButtonBar from "./Common/ButtonBar";
 import { bindActionCreators } from "redux";
 import { setAlert, hideAlert } from "../../actions/alert";
 import { setGroup, setOrderToGroup } from "../../actions/group";
 import { addToOrder, createOrder } from "../../actions/order";
 import GlobalAlert from "../Common/GlobalAlert";
-import OrdersListModal from "./OrdersListModal";
-import MemberListModal from "./MemberListModal";
+import OrdersListModal from "./Common/OrdersListModal";
+import MemberListModal from "./Common/MemberListModal";
 import { getDish } from "../../actions/dish";
 import { throttle } from "lodash";
 

@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { deleteEditedDish } from "../../actions/dish";
+import { deleteEditedDish } from "../../../actions/dish";
 
 class EditDishItem extends Component {
   handleClickDelete = () => {
