@@ -59,7 +59,7 @@ export const deleteDish = (dishId) => async (dispatch) => {
 
 export const updateToEditDish = () => async (dispatch, getState) => {
   const groupId = getState().group._id;
-  dispatch(getDish());
+  // dispatch(getDish());
   dispatch(setGroup(groupId));
   const dishes = getState().group.dishes;
   dispatch({ type: UPDATE_DISH_TO_EDIT, payload: dishes });
