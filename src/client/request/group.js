@@ -10,6 +10,9 @@ export const createGroupRequest = ({ name, description }) => {
       return { status: true };
     })
     .catch((err) => {
+      if (err.response.status == 401) {
+        window.location.replace(process.env.FRONT_END_URL);
+      }
       return {
         status: false,
         errCode: err.response.status,
@@ -25,6 +28,9 @@ export const getGroupRequest = (groupId) => {
       return { status: true, groupData: res.data };
     })
     .catch((err) => {
+      if (err.response.status == 401) {
+        window.location.replace(process.env.FRONT_END_URL);
+      }
       return {
         status: false,
         errCode: err.response.status,
@@ -42,6 +48,9 @@ export const addMemberRequest = (groupId, email) => {
       return { status: true, message: "Add Sucessfully" };
     })
     .catch((err) => {
+      if (err.response.status == 401) {
+        window.location.replace(process.env.FRONT_END_URL);
+      }
       return {
         status: false,
         errCode: err.response.status,
@@ -59,6 +68,9 @@ export const editDishesInGroupRequest = (groupId, dishArray) => {
       return { status: true, newDishes: res.data.newDishes };
     })
     .catch((err) => {
+      if (err.response.status == 401) {
+        window.location.replace(process.env.FRONT_END_URL);
+      }
       return {
         status: false,
         errCode: err.response.status,

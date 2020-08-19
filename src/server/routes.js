@@ -2,51 +2,28 @@ const express = require("express");
 const router = express.Router();
 import passport from "passport";
 
-router.use(
-  "/groups",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
+const authenticator = (req, res, next) =>
+  passport.authenticate("jwt", { session: false }, (err, user) => {
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "You are not logged in or cookie has expired" });
+    }
     next();
-  },
-  require("./routes/groups")
-);
-router.use(
-  "/auth/signin",
-  (req, res, next) => {
-    next();
-  },
-  require("./routes/auth/signin")
-);
+  })(req, res, next);
+
+router.use("/groups", authenticator, require("./routes/groups"));
+router.use("/auth/signin", require("./routes/auth/signin"));
 
 router.use("/auth/signup", require("./routes/auth/signup"));
 
-router.use(
-  "/users",
-  passport.authenticate("jwt", { session: false }),
-  require("./routes/users")
-);
+router.use("/users", authenticator, require("./routes/users"));
 
-router.use(
-  "/dishes",
-  passport.authenticate("jwt", { session: false }),
-  require("./routes/dishes")
-);
+router.use("/dishes", authenticator, require("./routes/dishes"));
 
-router.use(
-  "/orders",
-  passport.authenticate("jwt", { session: false }),
-  require("./routes/orders")
-);
+router.use("/orders", authenticator, require("./routes/orders"));
 
-router.use(
-  "/invite",
-  passport.authenticate("jwt", { session: false }),
-  require("./routes/invite")
-);
+router.use("/invite", authenticator, require("./routes/invite"));
 
-router.use(
-  "/auth/signout",
-  passport.authenticate("jwt", { session: false }),
-  require("./routes/auth/signout")
-);
+router.use("/auth/signout", authenticator, require("./routes/auth/signout"));
 module.exports = router;

@@ -11,6 +11,9 @@ export const createOrderRequest = (groupId, details, totalPrice) => {
       return { status: true, message: "Add success", newOrder: res.data };
     })
     .catch((err) => {
+      if (err.response.status == 401) {
+        window.location.replace(process.env.FRONT_END_URL);
+      }
       return {
         status: false,
         errCode: err.response.status,
@@ -27,6 +30,9 @@ export const getOrderByGroupIdRequest = (groupId) => {
       return { status: true, groupOrdersData: res.data };
     })
     .catch((err) => {
+      if (err.response.status == 401) {
+        window.location.replace(process.env.FRONT_END_URL);
+      }
       return {
         status: false,
         errCode: err.response.status,
