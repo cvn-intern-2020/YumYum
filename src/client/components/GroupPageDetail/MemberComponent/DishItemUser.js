@@ -32,7 +32,8 @@ class DishItemUser extends Component {
             {order.dishes.length == 0 ? (
               <> </>
             ) : (
-              order.dishes.find((dish) => dish._id == dish._id).quantity
+              order.dishes.find((dishInOrder) => dishInOrder._id == dish._id)
+                .quantity
             )}
             <Button
               style={{
@@ -53,7 +54,7 @@ class DishItemUser extends Component {
             {order.dishes.length == 0 ? (
               <> </>
             ) : (
-              order.dishes.find((dish) => dish._id == dish._id).quantity *
+              order.dishes.find((dishInOrder) => dishInOrder._id == dish._id).quantity *
               dish.dishPrice
             )}
           </div>
