@@ -36,10 +36,11 @@ export const addMemberController = async (req, res) => {
   let userEmail = req.body.userEmail;
   let ownerId = req._id;
   let groupId = req.params.groupId;
-  if (!validateAddMember.status) {
+  let validateAddMemberResult = validateAddMember(userEmail);
+  if (!validateAddMemberResult.status) {
     return res
       .status(HANDLED_ERROR_RESPONSE)
-      .json({ message: validateAddMember.message });
+      .json({ message: validateAddMemberResult.message });
   }
   let isallowed = await isAllowedToEditGroup(groupId, ownerId);
   if (!isallowed) {

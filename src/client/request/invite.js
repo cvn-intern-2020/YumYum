@@ -7,6 +7,9 @@ export const getInviteRequest = (inviteHash) => {
       return { status: true, groupId: res.data.groupId };
     })
     .catch((err) => {
+      if (err.response.status == 401) {
+        window.location.replace(process.env.FRONT_END_URL);
+      }
       return {
         status: false,
         errCode: err.response.status,
@@ -22,6 +25,9 @@ export const createInviteRequest = (groupId) => {
       return { status: true, hash: res.data.hash };
     })
     .catch((err) => {
+      if (err.response.status == 401) {
+        window.location.replace(process.env.FRONT_END_URL);
+      }
       return {
         status: false,
         errCode: err.response.status,

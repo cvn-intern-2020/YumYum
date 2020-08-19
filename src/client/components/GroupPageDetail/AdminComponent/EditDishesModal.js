@@ -4,9 +4,9 @@ import EditDishItem from "./EditDishItem";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setAlert, hideAlert } from "../../actions/alert";
-import { addEditedDish, deleteEditedDish } from "../../actions/dish";
-import GlobalAlert from "../Common/GlobalAlert";
+import { setAlert, hideAlert } from "../../../actions/alert";
+import { addEditedDish, deleteEditedDish } from "../../../actions/dish";
+import GlobalAlert from "../../Common/GlobalAlert";
 
 class EditDishesModal extends Component {
   handleUpdateDish = (e) => {

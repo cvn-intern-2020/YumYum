@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ListGroup, Accordion, Card } from "react-bootstrap";
-import OrderDetailList from "./Common/OrderDetailList";
+import OrderDetailList from "./OrderDetailList";
 
 export default class OrderItem extends Component {
   render() {

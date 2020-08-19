@@ -1,7 +1,8 @@
 import Redis from "redis";
+
 const redis = Redis.createClient({
-  host: "redis-11382.c51.ap-southeast-2-1.ec2.cloud.redislabs.com",
-  port: 11382,
+  host: process.env.REDIS_HOST,
+  port: parseInt(process.env.REDIS_PORT),
   password: process.env.REDIS_SECRET,
 });
 

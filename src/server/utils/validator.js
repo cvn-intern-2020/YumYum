@@ -150,6 +150,7 @@ export const validateAddMember = (email) => {
   if (!isEmail(email)) {
     return { status: false, message: "Email is invalid" };
   }
+  return { status: true };
 };
 
 export const validateLogin = (email, password) => {
