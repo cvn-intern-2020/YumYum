@@ -1,7 +1,7 @@
 # YumYum
 [![<ORG_NAME>](https://circleci.com/gh/cvn-intern-2020/YumYum.svg?style=shield)](<LINK>)
 
-This project intends to be a simulation project while doing internships at Cybozu Vietnam. This is built with MERN Stack.
+This project intends to be a simulation project while doing internship at Cybozu Vietnam. This is built with MERN Stack.
 
 ### Setup
 
