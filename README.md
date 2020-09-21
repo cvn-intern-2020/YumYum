@@ -63,7 +63,7 @@ See also the list of [contributors](https://github.com/cvn-intern-2020/YumYum/gr
 ---
 ## Support
 
-Reach out to me at one of the following places!
+Reach out to us at one of the following places!
 
 - Website at <a href="https://www.facebook.com/zodiac3011" target="_blank">`fb.com/zodiac3011`</a>
 - Website at <a href="https://www.linkedin.com/in/huy-b-hoang/" target="_blank">`linkedin.com/in/huy-b-hoang/`</a>
